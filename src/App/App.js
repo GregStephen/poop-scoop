@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.scss';
+import fbConnect from '../helpers/data/fbConnection';
+
+fbConnect();
 
 class App extends React.Component {
   render() {
