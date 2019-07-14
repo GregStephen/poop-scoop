@@ -1,10 +1,14 @@
 import React from 'react';
 
+import yelpData from '../../helpers/data/yelpData';
 import './Home.scss';
 
 class Home extends React.Component {
   state = {
     search: '',
+    yelpResults: [],
+    latitude: 36.1627,
+    longitude: -86.7816,
   }
 
   handleChange = (e) => {
@@ -12,8 +16,16 @@ class Home extends React.Component {
   };
 
   yelpSearch = (e) => {
+    const { latitude, longitude, search } = this.state;
     e.preventDefault();
     console.error(this.state.search);
+    yelpData.searchBusinessesByTerm(search, latitude, longitude)
+      .then((res) => {
+        console.error(res);
+        const yelpRes = res;
+        this.setState({ yelpResults: yelpRes });
+      })
+      .catch(err => console.error('cant get yelp data', err));
   }
 
   render() {

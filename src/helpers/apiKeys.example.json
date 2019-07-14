@@ -7,5 +7,9 @@
     "storageBucket": "",
     "messagingSenderId": "",
     "appId": ""
+  },
+  "YelpKeys": {
+    "apiKey" : "",
+    "clientId" : ""
   }
 }
