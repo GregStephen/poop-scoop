@@ -1,0 +1,14 @@
+{
+  "restroom0": {
+    "restroomType": "Unisex",
+    "hex": "U+26A5"
+  },
+  "restroom1": {
+    "restroomType": "Male",
+    "hex": "U+2642"
+  },
+  "restroom2": {
+    "restroomType": "Female",
+    "hex": "U+2640"
+  }
+}

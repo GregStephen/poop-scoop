@@ -1,0 +1,11 @@
+{
+  "rating1": {
+    "uid": "bloopbloop",
+    "businessId": "business1",
+    "cleanliness": 3,
+    "decor": 5,
+    "restroomType": "restroom1",
+    "review": "It's kinda clean but it looks super cool",
+    "timeStamp": "07032019"
+  }
+}
