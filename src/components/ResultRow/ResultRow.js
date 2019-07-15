@@ -48,13 +48,28 @@ class ResultRow extends React.Component {
     const { restroomTypes } = this.props;
     restroomTypes.forEach((type) => {
       if (type.id === 'restroom0') {
-        const unisexRatings = reviews.filter(review => review.restroomType === type.id);
+        const unisexRatings = [];
+        const unisexRatingsMatch = reviews.filter(review => review.restroomType === type.id);
+        unisexRatingsMatch.forEach((match) => {
+          const justRatings = ((match.decor + match.cleanliness) / 2);
+          unisexRatings.push(justRatings);
+        });
         this.setState({ unisexRatings });
       } else if (type.id === 'restroom1') {
-        const maleRatings = reviews.filter(review => review.restroomType === type.id);
+        const maleRatings = [];
+        const maleRatingsMatch = reviews.filter(review => review.restroomType === type.id);
+        maleRatingsMatch.forEach((match) => {
+          const justRatings = ((match.decor + match.cleanliness) / 2);
+          maleRatings.push(justRatings);
+        });
         this.setState({ maleRatings });
       } else if (type.id === 'restroom2') {
-        const femaleRatings = reviews.filter(review => review.restroomType === type.id);
+        const femaleRatings = [];
+        const femaleRatingsMatch = reviews.filter(review => review.restroomType === type.id);
+        femaleRatingsMatch.forEach((match) => {
+          const justRatings = ((match.decor + match.cleanliness) / 2);
+          femaleRatings.push(justRatings);
+        });
         this.setState({ femaleRatings });
       }
     });
@@ -90,13 +105,45 @@ class ResultRow extends React.Component {
 
   render() {
     const { result } = this.props;
-    const { reviews } = this.state;
+    const {
+      reviews,
+      unisexRatings,
+      maleRatings,
+      femaleRatings,
+    } = this.state;
 
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
-
       return (
       <Review key={ firstReview.id } review={ firstReview.review }/>
+      );
+    };
+
+    const ratingDisplay = (unisexRatingsArray, maleRatingsArray, femaleRatingsArray) => {
+      let unisexRating = '';
+      let maleRating = '';
+      let femaleRating = '';
+      if (unisexRatingsArray.length > 0) {
+        unisexRating = this.ratingMath(unisexRatingsArray);
+      } else {
+        unisexRating = 'No Rating';
+      }
+      if (maleRatingsArray.length > 0) {
+        maleRating = this.ratingMath(maleRatingsArray);
+      } else {
+        maleRating = 'No Rating';
+      }
+      if (femaleRatingsArray.length > 0) {
+        femaleRating = this.ratingMath(femaleRatingsArray);
+      } else {
+        femaleRating = 'No Rating';
+      }
+      return (
+        <div className='col-12 row'>
+          <p className='unisexRating col-4'>{unisexRating}</p>
+          <p className='maleRating col-4'>{maleRating}</p>
+          <p className='femaleRating col-4'>{femaleRating}</p>
+        </div>
       );
     };
 
@@ -112,6 +159,9 @@ class ResultRow extends React.Component {
               <h2 className="card-title">{result.name}</h2>
               <p>{result.location.address1}</p>
               { reviewDisplay(reviews) }
+              <div className='container'>
+              { ratingDisplay(unisexRatings, maleRatings, femaleRatings) }
+              </div>
             </div>
           </div>
         </div>
