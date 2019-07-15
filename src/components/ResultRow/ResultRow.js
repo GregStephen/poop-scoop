@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Review from '../Review/Review';
+
 import businessData from '../../helpers/data/businessData';
 import ratingData from '../../helpers/data/ratingData';
 
@@ -38,12 +40,12 @@ class ResultRow extends React.Component {
     businessData.getBusinessesById(result.id)
       .then((business) => {
         if (business) {
-          console.error(business);
+          console.error('business', business);
           this.setState({ business });
           ratingData.getRatingByBusinessId(business.id)
             .then((reviews) => {
-              if (reviews) {
-                console.error(reviews);
+              if (reviews.length > 0) {
+                console.error('reviews', reviews);
                 this.setState({ reviews });
               }
             });
@@ -54,14 +56,18 @@ class ResultRow extends React.Component {
   render() {
     const { result } = this.props;
     const { reviews } = this.state;
-    const reviewDisplay = reviews.map(review => (
-        <p key={review.id}>{review.review}</p>
-    ));
+    const reviewDisplay = (reviewsArray) => {
+      const firstReview = reviewsArray[0];
+      console.error('first', firstReview);
+      return (
+      <Review key={ firstReview.id } review={ firstReview.review }/>
+      );
+    };
 
     return (
       <li className="ResultRow">
         {result.name}
-        { reviewDisplay }
+        { reviewDisplay(reviews) }
       </li>
     );
   }
