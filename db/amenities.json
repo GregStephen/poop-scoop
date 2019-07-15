@@ -1,12 +1,12 @@
 {
   "amenity1": {
-    "businessId": "business1",
+    "businessId": "business2",
     "type": "type0",
     "status": true,
     "restroomType": "restroom1"
   },
   "amenity2": {
-    "businessId": "business1",
+    "businessId": "business2",
     "type": "type1",
     "status": false,
     "restroomType": "restroom1"  

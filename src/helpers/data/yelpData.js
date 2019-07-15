@@ -52,6 +52,7 @@ const searchBusinessesByTerm = (term, latitude, longitude) => new Promise((resol
             longitude
           }
           distance
+          photos
         }
       }
     }

@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Review from '../Review/Review';
 
 import businessData from '../../helpers/data/businessData';
 import ratingData from '../../helpers/data/ratingData';
+import amenityData from '../../helpers/data/amenityData';
 
 import yelpDataShape from '../../helpers/propz/yelpDataShape';
 import './ResultRow.scss';
@@ -29,10 +31,13 @@ class ResultRow extends React.Component {
   state = {
     business: businessUndefined,
     reviews: ratingUndefined,
+    amenities: [],
   }
 
   static propTypes = {
     result: yelpDataShape.yelpDataShape,
+    restroomTypes: PropTypes.array.isRequired,
+    amenityTypes: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
@@ -40,13 +45,17 @@ class ResultRow extends React.Component {
     businessData.getBusinessesById(result.id)
       .then((business) => {
         if (business) {
-          console.error('business', business);
           this.setState({ business });
           ratingData.getRatingByBusinessId(business.id)
             .then((reviews) => {
               if (reviews.length > 0) {
-                console.error('reviews', reviews);
                 this.setState({ reviews });
+              }
+            });
+          amenityData.getAmenitiesByBusinessId(business.id)
+            .then((amenities) => {
+              if (amenities.length > 0) {
+                this.setState({ amenities });
               }
             });
         }
@@ -65,10 +74,22 @@ class ResultRow extends React.Component {
     };
 
     return (
-      <li className="ResultRow">
-        {result.name}
-        { reviewDisplay(reviews) }
-      </li>
+      <div className="ResultRow col-12 mb-2">
+      <div className="card">
+        <div className="row no-gutters">
+          <div className="col-md-4">
+            <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>
+          </div>
+          <div className="col-md-8">
+            <div className="card-body">
+              <h2 className="card-title">{result.name}</h2>
+              <p>{result.location.address1}</p>
+              { reviewDisplay(reviews) }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     );
   }
 }
