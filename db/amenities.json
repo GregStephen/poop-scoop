@@ -10,5 +10,29 @@
     "type": "type1",
     "status": false,
     "restroomType": "restroom1"  
+  },
+  "amenity3": {
+    "businessId": "business3",
+    "type": "type1",
+    "status": false,
+    "restroomType": "restroom1"  
+  },
+  "amenity4": {
+    "businessId": "business3",
+    "type": "type0",
+    "status": true,
+    "restroomType": "restroom0"  
+  },
+  "amenity5": {
+    "businessId": "business2",
+    "type": "type0",
+    "status": true,
+    "restroomType": "restroom0"  
+  },
+  "amenity6": {
+    "businessId": "business2",
+    "type": "type0",
+    "status": true,
+    "restroomType": "restroom2"  
   }
 }

@@ -59,7 +59,7 @@ class Home extends React.Component {
       <ResultRow
       key={ result.id }
       result={ result }
-      restroomTypes={restroomTypes}
+      restroomTypes={ restroomTypes }
       amenityTypes={ amenityTypes }
       />
     ));

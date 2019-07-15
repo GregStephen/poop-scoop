@@ -25,5 +25,32 @@
     "restroomType": "restroom1",
     "review": "This Bathroom is disgusting",
     "timeStamp": "07032019"
+  },
+  "rating4": {
+    "uid": "bloopbloop",
+    "businessId": "business2",
+    "cleanliness": 1,
+    "decor": 5,
+    "restroomType": "restroom0",
+    "review": "This Bathroom is disgusting",
+    "timeStamp": "07032019"
+  },
+  "rating5": {
+    "uid": "bloopbloop",
+    "businessId": "business2",
+    "cleanliness": 4,
+    "decor": 3,
+    "restroomType": "restroom0",
+    "review": "This Bathroom is great",
+    "timeStamp": "07032019"
+  },
+  "rating6": {
+    "uid": "bloopbloop",
+    "businessId": "business3",
+    "cleanliness": 1,
+    "decor": 5,
+    "restroomType": "restroom2",
+    "review": "This Bathroom is disgusting",
+    "timeStamp": "07032019"
   }
 }

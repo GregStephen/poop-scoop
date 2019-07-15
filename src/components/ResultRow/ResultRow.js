@@ -32,6 +32,9 @@ class ResultRow extends React.Component {
     business: businessUndefined,
     reviews: ratingUndefined,
     amenities: [],
+    maleRatings: [],
+    femaleRatings: [],
+    unisexRatings: [],
   }
 
   static propTypes = {
@@ -39,6 +42,23 @@ class ResultRow extends React.Component {
     restroomTypes: PropTypes.array.isRequired,
     amenityTypes: PropTypes.object.isRequired,
   }
+
+  seperateRatings = () => {
+    const { reviews } = this.state;
+    const { restroomTypes } = this.props;
+    restroomTypes.forEach((type) => {
+      if (type.id === 'restroom0') {
+        const unisexRatings = reviews.filter(review => review.restroomType === type.id);
+        this.setState({ unisexRatings });
+      } else if (type.id === 'restroom1') {
+        const maleRatings = reviews.filter(review => review.restroomType === type.id);
+        this.setState({ maleRatings });
+      } else if (type.id === 'restroom2') {
+        const femaleRatings = reviews.filter(review => review.restroomType === type.id);
+        this.setState({ femaleRatings });
+      }
+    });
+  };
 
   componentDidMount() {
     const { result } = this.props;
@@ -50,6 +70,7 @@ class ResultRow extends React.Component {
             .then((reviews) => {
               if (reviews.length > 0) {
                 this.setState({ reviews });
+                this.seperateRatings();
               }
             });
           amenityData.getAmenitiesByBusinessId(business.id)
@@ -62,12 +83,18 @@ class ResultRow extends React.Component {
       });
   }
 
+  ratingMath = (ratings) => {
+    const total = ratings.reduce((acc, c) => acc + c, 0);
+    return total / ratings.length;
+  };
+
   render() {
     const { result } = this.props;
     const { reviews } = this.state;
+
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
-      console.error('first', firstReview);
+
       return (
       <Review key={ firstReview.id } review={ firstReview.review }/>
       );
