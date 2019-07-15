@@ -35,6 +35,10 @@ class ResultRow extends React.Component {
     maleRatings: [],
     femaleRatings: [],
     unisexRatings: [],
+    changingTables: [],
+    unisexTables: [],
+    maleTables: [],
+    femaleTables: [],
   }
 
   static propTypes = {
@@ -75,6 +79,23 @@ class ResultRow extends React.Component {
     });
   };
 
+  seperateChangingTables = () => {
+    const { changingTables } = this.state;
+    const { restroomTypes } = this.props;
+    restroomTypes.forEach((type) => {
+      if (type.id === 'restroom0') {
+        const unisexTables = changingTables.filter(table => table.restroomType === type.id);
+        this.setState({ unisexTables });
+      } else if (type.id === 'restroom1') {
+        const maleTables = changingTables.filter(table => table.restroomType === type.id);
+        this.setState({ maleTables });
+      } else if (type.id === 'restroom2') {
+        const femaleTables = changingTables.filter(table => table.restroomType === type.id);
+        this.setState({ femaleTables });
+      }
+    });
+  };
+
   componentDidMount() {
     const { result } = this.props;
     businessData.getBusinessesById(result.id)
@@ -92,6 +113,9 @@ class ResultRow extends React.Component {
             .then((amenities) => {
               if (amenities.length > 0) {
                 this.setState({ amenities });
+                const changingTables = amenities.filter(amenity => amenity.type === 'type0');
+                this.setState({ changingTables });
+                this.seperateChangingTables();
               }
             });
         }
@@ -110,6 +134,9 @@ class ResultRow extends React.Component {
       unisexRatings,
       maleRatings,
       femaleRatings,
+      maleTables,
+      femaleTables,
+      unisexTables,
     } = this.state;
 
     const reviewDisplay = (reviewsArray) => {
@@ -147,6 +174,15 @@ class ResultRow extends React.Component {
       );
     };
 
+    const changingTableDisplay = (uniTables, mTables, fTables) => (
+        <div className='col-12 row'>
+          <p className="col">Changing Tables: </p>
+          <p className="col">{uniTables.length > 0 ? `${uniTables[0].status}` : ''}</p>
+          <p className="col">{mTables.length > 0 ? `${mTables[0].status}` : ''}</p>
+          <p className="col">{fTables.length > 0 ? `${fTables[0].status}` : ''}</p>
+        </div>
+    );
+
     return (
       <div className="ResultRow col-12 mb-2">
       <div className="card">
@@ -161,6 +197,9 @@ class ResultRow extends React.Component {
               { reviewDisplay(reviews) }
               <div className='container'>
               { ratingDisplay(unisexRatings, maleRatings, femaleRatings) }
+              </div>
+              <div className='container'>
+                { changingTableDisplay(unisexTables, maleTables, femaleTables)}
               </div>
             </div>
           </div>
