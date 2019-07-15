@@ -2,6 +2,8 @@ import React from 'react';
 
 import ResultRow from '../ResultRow/ResultRow';
 
+import restroomType from '../../helpers/data/restroomTypeData';
+import amenityTypeData from '../../helpers/data/amenityTypeData';
 import yelpData from '../../helpers/data/yelpData';
 // import pScoopBizData from '../../helpers/data/businessData';
 
@@ -9,6 +11,8 @@ import './Home.scss';
 
 class Home extends React.Component {
   state = {
+    restroomTypes: [],
+    amenityTypes: {},
     search: '',
     yelpResults: [],
     latitude: 36.1627,
@@ -36,10 +40,28 @@ class Home extends React.Component {
       .catch(err => console.error('cant get yelp data', err));
   }
 
+  componentDidMount() {
+    restroomType.getRestroomType()
+      .then((restroomTypes) => {
+        this.setState({ restroomTypes });
+      })
+      .catch();
+    amenityTypeData.getAmenityTypes()
+      .then((amenityTypes) => {
+        this.setState({ amenityTypes });
+      })
+      .catch();
+  }
+
   render() {
-    const { yelpResults } = this.state;
+    const { yelpResults, restroomTypes, amenityTypes } = this.state;
     const resultComponents = yelpResults.map(result => (
-      <ResultRow key={ result.id } result={ result } />
+      <ResultRow
+      key={ result.id }
+      result={ result }
+      restroomTypes={ restroomTypes }
+      amenityTypes={ amenityTypes }
+      />
     ));
     return (
       <div className="Home">
@@ -47,10 +69,12 @@ class Home extends React.Component {
         <form onSubmit={this.yelpSearch}>
           <input type="input" name="search" id="search" value={this.state.search} onChange={this.handleChange}></input>
           <button type="submit" className="btn btn-danger">Search</button>
-          <ul>
-            { resultComponents }
-          </ul>
         </form>
+        <div className="container">
+          <div className="row">
+          { resultComponents }
+          </div>
+        </div>
       </div>
     );
   }

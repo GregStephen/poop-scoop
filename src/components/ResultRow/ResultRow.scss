@@ -1,3 +1,14 @@
 .ResultRow {
   display: block;
+  max-height: 15em;
+  .unisexRating {
+    color: green;
+  }
+  .maleRating {
+    color: blue;
+  }
+  .femaleRating {
+    color: pink;
+
+  }
 }
