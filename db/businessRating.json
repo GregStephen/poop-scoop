@@ -11,10 +11,19 @@
   "rating2": {
     "uid": "bloopbloop",
     "businessId": "business2",
-    "cleanliness": 3,
+    "cleanliness": 2,
     "decor": 5,
     "restroomType": "restroom1",
-    "review": "It's kinda clean but it looks super cool",
+    "review": "Gross",
+    "timeStamp": "07032019"
+  },
+  "rating3": {
+    "uid": "bloopbloop",
+    "businessId": "business2",
+    "cleanliness": 1,
+    "decor": 5,
+    "restroomType": "restroom1",
+    "review": "This Bathroom is disgusting",
     "timeStamp": "07032019"
   }
 }
