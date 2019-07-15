@@ -38,11 +38,13 @@ const searchBusinessesByTerm = (term, latitude, longitude) => new Promise((resol
         sort_by: "distance") {
         total
         business {
+          id
           name
           location {
             address1
             city
             state
+            postal_code
           }
           phone
           coordinates {
