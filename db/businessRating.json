@@ -7,5 +7,14 @@
     "restroomType": "restroom1",
     "review": "It's kinda clean but it looks super cool",
     "timeStamp": "07032019"
+  },
+  "rating2": {
+    "uid": "bloopbloop",
+    "businessId": "business2",
+    "cleanliness": 3,
+    "decor": 5,
+    "restroomType": "restroom1",
+    "review": "It's kinda clean but it looks super cool",
+    "timeStamp": "07032019"
   }
 }

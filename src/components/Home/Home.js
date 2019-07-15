@@ -1,7 +1,10 @@
 import React from 'react';
 
 import ResultRow from '../ResultRow/ResultRow';
+
 import yelpData from '../../helpers/data/yelpData';
+// import pScoopBizData from '../../helpers/data/businessData';
+
 import './Home.scss';
 
 class Home extends React.Component {
@@ -10,6 +13,7 @@ class Home extends React.Component {
     yelpResults: [],
     latitude: 36.1627,
     longitude: -86.7816,
+    businessResults: [],
   }
 
   handleChange = (e) => {
@@ -17,13 +21,16 @@ class Home extends React.Component {
   };
 
   yelpSearch = (e) => {
-    const { latitude, longitude, search } = this.state;
+    const {
+      latitude,
+      longitude,
+      search,
+    } = this.state;
     e.preventDefault();
-    console.error(this.state.search);
     yelpData.searchBusinessesByTerm(search, latitude, longitude)
       .then((res) => {
-        console.error(res);
         const yelpRes = res;
+        console.error(yelpRes);
         this.setState({ yelpResults: yelpRes });
       })
       .catch(err => console.error('cant get yelp data', err));
