@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Review from '../Review/Review';
@@ -130,6 +131,7 @@ class ResultRow extends React.Component {
   render() {
     const { result } = this.props;
     const {
+      business,
       reviews,
       unisexRatings,
       maleRatings,
@@ -138,7 +140,8 @@ class ResultRow extends React.Component {
       femaleTables,
       unisexTables,
     } = this.state;
-
+    const bizLink = `/business/${result.id}`;
+    const bizSearch = `?biz=${business.id}`;
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
       return (
@@ -192,7 +195,7 @@ class ResultRow extends React.Component {
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <h2 className="card-title">{result.name}</h2>
+              <Link to={{ pathname: bizLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
               <p>{result.location.address1}</p>
               { reviewDisplay(reviews) }
               <div className='container'>
