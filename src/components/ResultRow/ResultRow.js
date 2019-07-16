@@ -177,9 +177,9 @@ class ResultRow extends React.Component {
     const changingTableDisplay = (uniTables, mTables, fTables) => (
         <div className='col-12 row'>
           <p className="col">Changing Tables: </p>
-          <p className="col">{uniTables.length > 0 ? `${uniTables[0].status}` : ''}</p>
-          <p className="col">{mTables.length > 0 ? `${mTables[0].status}` : ''}</p>
-          <p className="col">{fTables.length > 0 ? `${fTables[0].status}` : ''}</p>
+          <p className="col">{uniTables.length > 0 ? `${uniTables[0].status}` : 'Unknown'}</p>
+          <p className="col">{mTables.length > 0 ? `${mTables[0].status}` : 'Unknown'}</p>
+          <p className="col">{fTables.length > 0 ? `${fTables[0].status}` : 'Unknown'}</p>
         </div>
     );
 
