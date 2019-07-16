@@ -5,7 +5,6 @@ import ResultRow from '../ResultRow/ResultRow';
 import restroomType from '../../helpers/data/restroomTypeData';
 import amenityTypeData from '../../helpers/data/amenityTypeData';
 import yelpData from '../../helpers/data/yelpData';
-// import pScoopBizData from '../../helpers/data/businessData';
 
 import './Home.scss';
 

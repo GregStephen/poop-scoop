@@ -63,4 +63,30 @@ const searchBusinessesByTerm = (term, latitude, longitude) => new Promise((resol
     .catch(err => reject(err));
 });
 
-export default { searchBusinessesByTerm, client };
+const getSingleBusiness = yelpId => new Promise((resolve, reject) => {
+  client.query({
+    query: gql`
+    query {
+      business(id: "${yelpId}") {
+        name
+        location {
+          address1
+          city
+          state
+          postal_code
+        }
+        phone
+        coordinates {
+          latitude
+          longitude
+        }
+        photos
+      }
+    }
+    `,
+  }).then((res) => {
+    resolve(res.data.business);
+  }).catch(err => reject(err));
+});
+
+export default { searchBusinessesByTerm, client, getSingleBusiness };
