@@ -10,6 +10,8 @@ import Home from '../components/Home/Home';
 import User from '../components/User/User';
 import Business from '../components/Business/Business';
 import ReviewPage from '../components/ReviewPage/ReviewPage';
+
+import userData from '../helpers/data/userData';
 import yelpClient from '../helpers/data/yelpData';
 
 
@@ -29,11 +31,18 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
+    userObj: {},
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        userData.getUserByUID(user.uid)
+          .then((resp) => {
+            const userObj = resp;
+            this.setState({ userObj });
+          })
+          .catch();
         this.setState({ authed: true });
       } else {
         this.setState({ authed: false });
