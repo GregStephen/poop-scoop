@@ -19,4 +19,6 @@ const getUserByUID = uid => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getUserByUID };
+const postUser = userObj => axios.post(`${firebaseUrl}/user.json`, userObj);
+
+export default { getUserByUID, postUser };
