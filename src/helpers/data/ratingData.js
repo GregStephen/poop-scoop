@@ -19,4 +19,20 @@ const getRatingByBusinessId = businessId => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getRatingByBusinessId };
+const getRatingByUserId = uid => new Promise((resolve, reject) => {
+  axios.get(`${firebaseUrl}/businessRating.json?orderBy="uid"&equalTo="${uid}"`)
+    .then((results) => {
+      const reviewResults = results.data;
+      const reviews = [];
+      if (reviewResults !== null) {
+        Object.keys(reviewResults).forEach((reviewId) => {
+          reviewResults[reviewId].id = reviewId;
+          reviews.push(reviewResults[reviewId]);
+        });
+      }
+      resolve(reviews);
+    })
+    .catch(err => reject(err));
+});
+
+export default { getRatingByBusinessId, getRatingByUserId };

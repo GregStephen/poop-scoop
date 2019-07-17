@@ -19,4 +19,6 @@ const getBusinessesById = yelpId => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getBusinessesById };
+const getSingleBusiness = id => axios.get(`${firebaseUrl}/business/${id}.json`);
+
+export default { getBusinessesById, getSingleBusiness };

@@ -18,19 +18,25 @@ const defaultUser = {
 
 class NewUserPage extends React.Component {
   state = {
+    email: '',
+    password: '',
     newUser: defaultUser,
   }
 
   formSubmit = (e) => {
     e.preventDefault();
-    const dateCreated = moment();
-    console.error('dateCreated', dateCreated);
-    const saveMe = { ...this.state.newUser };
-    saveMe.uid = firebase.auth().currentUser.uid;
-    saveMe.dateCreated = dateCreated;
-    userData.postUser(saveMe)
-      .then(() => this.props.history.push('/home'))
-      .catch(err => console.error('unable to save', err));
+    const { email, password } = this.state;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        const dateCreated = moment();
+        const saveMe = { ...this.state.newUser };
+        saveMe.uid = firebase.auth().currentUser.uid;
+        saveMe.dateCreated = dateCreated;
+        userData.postUser(saveMe)
+          .then(() => this.props.history.push('/home'))
+          .catch(err => console.error('unable to save', err));
+      })
+      .catch(err => console.error('trouble logging in with email', err));
   }
 
   formFieldStringState = (e) => {
@@ -39,8 +45,14 @@ class NewUserPage extends React.Component {
     this.setState({ newUser: tempUser });
   }
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
+
   render() {
-    const { newUser } = this.state;
+    const { newUser, email, password } = this.state;
     return (
       <div className="NewUserPage">
         <h1>JOIN US!</h1>
@@ -54,6 +66,29 @@ class NewUserPage extends React.Component {
             value={newUser.name}
             onChange={this.formFieldStringState}
             placeholder="John"
+            required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+            type="email"
+            className="form-control"
+            id="email"
+            value={email}
+            onChange={this.handleChange}
+            placeholder="John@PoopScoop.com"
+            required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+            type="password"
+            className="form-control"
+            id="password"
+            value={password}
+            onChange={this.handleChange}
             required
             />
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink as RRNavLink } from 'react-router-dom';
+import { NavLink as RRNavLink, Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import {
@@ -19,10 +19,18 @@ import userData from '../../helpers/data/userData';
 
 import './MyNavbar.scss';
 
+const defaultUser = {
+  id: '',
+  name: '',
+  city: '',
+  state: '',
+  imageUrl: '',
+};
+
 class MyNavbar extends React.Component {
   state = {
     isOpen: false,
-    user: {},
+    user: defaultUser,
   }
 
   static propTypes = {
@@ -35,15 +43,27 @@ class MyNavbar extends React.Component {
     });
   }
 
+  componentDidMount() {
+    const { authed } = this.props;
+    if (authed) {
+      const firebaseId = firebase.auth().currentUser.uid;
+      userData.getUserByUID(firebaseId)
+        .then((user) => {
+          this.setState({ user });
+        }).catch();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.authed !== prevProps.authed) {
       if (this.props.authed) {
         const firebaseId = firebase.auth().currentUser.uid;
         userData.getUserByUID(firebaseId)
           .then((user) => {
-            console.error(user);
             this.setState({ user });
           }).catch();
+      } else {
+        this.setState({ user: defaultUser });
       }
     }
   }
@@ -54,33 +74,37 @@ class MyNavbar extends React.Component {
   };
 
   render() {
-    const { authed } = this.props;
     const { user } = this.state;
+    const { authed } = this.props;
     const buildNavbar = () => {
+      let userLink = '';
+      if (user !== undefined) {
+        userLink = `/user/${user.id}`;
+      }
       if (authed) {
         return (
-            <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret className="navbar-user-button">
-                  <img className="navbar-user-image" src={user.imageUrl} alt="the user"></img>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem header>
-                    <div>
-                      <p>{user.name}</p>
-                      <p>{user.city}</p>
-                    </div>
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Account Settings
-                  </DropdownItem>
-                  <DropdownItem onClick={this.logMeOut}>
-                      Log Out
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
+          <Nav className="ml-auto" navbar>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret className="navbar-user-button">
+                <img className="navbar-user-image" src={user.imageUrl} alt="the user"></img>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem header>
+                  <div>
+                    <p>{user.name}</p>
+                    <p>{user.city}</p>
+                  </div>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>
+                  <Link to={userLink}>Account Settings</Link>
+                </DropdownItem>
+                <DropdownItem onClick={this.logMeOut}>
+                    Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
         );
       } return ('');
     };

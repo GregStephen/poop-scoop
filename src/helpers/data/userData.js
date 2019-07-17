@@ -21,4 +21,14 @@ const getUserByUID = uid => new Promise((resolve, reject) => {
 
 const postUser = userObj => axios.post(`${firebaseUrl}/user.json`, userObj);
 
-export default { getUserByUID, postUser };
+const getUserById = id => axios.get(`${firebaseUrl}/user/${id}.json`);
+
+const deleteUser = id => axios.delete(`${firebaseUrl}/user/${id}.json`);
+
+export default
+{
+  getUserByUID,
+  postUser,
+  getUserById,
+  deleteUser,
+};
