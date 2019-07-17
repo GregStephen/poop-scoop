@@ -1,3 +1,9 @@
 .MyNavbar {
   display: block;
+  .navbar-user-button{
+    width: 5em;
+    .navbar-user-image {
+      width: 100%;
+    }
+  }
 }
