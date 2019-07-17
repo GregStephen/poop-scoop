@@ -12,8 +12,6 @@ import {
   DropdownMenu,
   DropdownToggle,
   DropdownItem,
-  NavItem,
-  NavLink,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
@@ -33,12 +31,6 @@ class MyNavbar extends React.Component {
       isOpen: !this.state.isOpen,
     });
   }
-
-  logIn = (e) => {
-    e.preventDefault();
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  };
 
   logMeOut = (e) => {
     e.preventDefault();
@@ -70,7 +62,7 @@ class MyNavbar extends React.Component {
             </UncontrolledDropdown>
           </Nav>
         );
-      } return (<Nav className="ml-auto" navbar><NavItem><NavLink onClick={this.logIn}>Log In/ Sign Up</NavLink></NavItem></Nav>);
+      } return ('');
     };
 
     return (

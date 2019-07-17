@@ -1,10 +1,13 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import ResultRow from '../ResultRow/ResultRow';
 
 import restroomType from '../../helpers/data/restroomTypeData';
 import amenityTypeData from '../../helpers/data/amenityTypeData';
 import yelpData from '../../helpers/data/yelpData';
+import userData from '../../helpers/data/userData';
 
 import './Home.scss';
 
@@ -40,16 +43,25 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    restroomType.getRestroomType()
-      .then((restroomTypes) => {
-        this.setState({ restroomTypes });
-      })
-      .catch();
-    amenityTypeData.getAmenityTypes()
-      .then((amenityTypes) => {
-        this.setState({ amenityTypes });
-      })
-      .catch();
+    const firebaseId = firebase.auth().currentUser.uid;
+    userData.getUserByUID(firebaseId)
+      .then((resp) => {
+        if (resp === undefined) {
+          console.error('new User');
+          this.props.history.push('/new-user');
+        } else {
+          restroomType.getRestroomType()
+            .then((restroomTypes) => {
+              this.setState({ restroomTypes });
+            })
+            .catch();
+          amenityTypeData.getAmenityTypes()
+            .then((amenityTypes) => {
+              this.setState({ amenityTypes });
+            })
+            .catch();
+        }
+      }).catch(err => console.error('can not get user', err));
   }
 
   render() {
