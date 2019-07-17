@@ -15,11 +15,14 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+import userData from '../../helpers/data/userData';
+
 import './MyNavbar.scss';
 
 class MyNavbar extends React.Component {
   state = {
     isOpen: false,
+    user: {},
   }
 
   static propTypes = {
@@ -32,6 +35,19 @@ class MyNavbar extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.authed !== prevProps.authed) {
+      if (this.props.authed) {
+        const firebaseId = firebase.auth().currentUser.uid;
+        userData.getUserByUID(firebaseId)
+          .then((user) => {
+            console.error(user);
+            this.setState({ user });
+          }).catch();
+      }
+    }
+  }
+
   logMeOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
@@ -39,28 +55,32 @@ class MyNavbar extends React.Component {
 
   render() {
     const { authed } = this.props;
+    const { user } = this.state;
     const buildNavbar = () => {
       if (authed) {
         return (
-          <Nav className="ml-auto" navbar>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                User
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem header>
-                    User Name
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Account Settings
-                </DropdownItem>
-                <DropdownItem onClick={this.logMeOut}>
-                    Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
+            <Nav className="ml-auto" navbar>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret className="navbar-user-button">
+                  <img className="navbar-user-image" src={user.imageUrl} alt="the user"></img>
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem header>
+                    <div>
+                      <p>{user.name}</p>
+                      <p>{user.city}</p>
+                    </div>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Account Settings
+                  </DropdownItem>
+                  <DropdownItem onClick={this.logMeOut}>
+                      Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </Nav>
         );
       } return ('');
     };
