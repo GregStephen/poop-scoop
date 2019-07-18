@@ -1,8 +1,12 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import {
+  Modal, ModalHeader,
+} from 'reactstrap';
 
 import SingleReview from '../SingleReview/SingleReview';
+import EditUserModalForm from '../EditUserModalForm/EditUserModalForm';
 import userData from '../../helpers/data/userData';
 import reviewData from '../../helpers/data/ratingData';
 import restroomTypeData from '../../helpers/data/restroomTypeData';
@@ -14,9 +18,10 @@ class User extends React.Component {
     user: {},
     reviews: [],
     restroomTypes: [],
+    editUserModal: false,
   }
 
-  componentDidMount() {
+  loadPage = () => {
     const userId = this.props.match.params.id;
     userData.getUserById(userId)
       .then((userPromise) => {
@@ -30,6 +35,23 @@ class User extends React.Component {
     restroomTypeData.getRestroomType()
       .then(restroomTypes => this.setState({ restroomTypes }))
       .catch();
+  }
+
+  componentDidMount() {
+    this.loadPage();
+  }
+
+  toggleUserEdit = () => {
+    this.setState(prevState => ({
+      editUserModal: !prevState.editUserModal,
+    }));
+  }
+
+  updateUser = (userObj) => {
+    const userId = this.props.match.params.id;
+    userData.putUser(userObj, userId).then(() => {
+      this.loadPage();
+    }).catch();
   }
 
   deleteProfile = (e) => {
@@ -57,11 +79,21 @@ class User extends React.Component {
         <p>Number of reviews: {reviews.length}</p>
         <p>{user.city}</p>
         <p>{user.state}</p>
-        {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-info">Edit Profile</button> : ''}
+        {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-info" onClick={this.toggleUserEdit}>Edit Profile</button> : ''}
         {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-danger" onClick={this.deleteProfile}>Delete Profile</button> : ''}
         <div>
           <h1>Ratings</h1>
         { displayReviews }
+        </div>
+        <div>
+          <Modal isOpen={this.state.editUserModal} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggle}>Edit Yo Self!</ModalHeader>
+            <EditUserModalForm
+            toggleUserEdit={this.toggleUserEdit}
+            user={user}
+            updateUser={this.updateUser}
+            />
+          </Modal>
         </div>
       </div>
     );

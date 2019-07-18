@@ -25,10 +25,13 @@ const getUserById = id => axios.get(`${firebaseUrl}/user/${id}.json`);
 
 const deleteUser = id => axios.delete(`${firebaseUrl}/user/${id}.json`);
 
+const putUser = (userObj, id) => axios.put(`${firebaseUrl}/user/${id}.json`, userObj);
+
 export default
 {
   getUserByUID,
   postUser,
   getUserById,
   deleteUser,
+  putUser,
 };
