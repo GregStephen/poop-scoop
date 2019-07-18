@@ -28,7 +28,7 @@ class NewUserPage extends React.Component {
     const { email, password } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const dateCreated = moment();
+        const dateCreated = moment().format('YYYY-MM-DD');
         const saveMe = { ...this.state.newUser };
         saveMe.uid = firebase.auth().currentUser.uid;
         saveMe.dateCreated = dateCreated;
