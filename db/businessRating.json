@@ -1,6 +1,6 @@
 {
   "rating1": {
-    "uid": "bloopbloop",
+    "uid": "user1",
     "businessId": "business1",
     "cleanliness": 3,
     "decor": 5,
@@ -9,7 +9,7 @@
     "timeStamp": "07032019"
   },
   "rating2": {
-    "uid": "bloopbloop",
+    "uid": "user1",
     "businessId": "business2",
     "cleanliness": 2,
     "decor": 5,
@@ -45,7 +45,7 @@
     "timeStamp": "07032019"
   },
   "rating6": {
-    "uid": "bloopbloop",
+    "uid": "user1",
     "businessId": "business3",
     "cleanliness": 1,
     "decor": 5,
