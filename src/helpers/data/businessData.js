@@ -21,4 +21,6 @@ const getBusinessesById = yelpId => new Promise((resolve, reject) => {
 
 const getSingleBusiness = id => axios.get(`${firebaseUrl}/business/${id}.json`);
 
-export default { getBusinessesById, getSingleBusiness };
+const postNewBiz = newBiz => axios.post(`${firebaseUrl}/business.json`, newBiz);
+
+export default { getBusinessesById, getSingleBusiness, postNewBiz };
