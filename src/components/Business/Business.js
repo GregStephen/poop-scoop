@@ -2,6 +2,8 @@ import React from 'react';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 
+import ReviewOnBusinessPage from '../ReviewOnBusinessPage/ReviewOnBusinessPage';
+
 import yelpData from '../../helpers/data/yelpData';
 import ratingData from '../../helpers/data/ratingData';
 import amenityData from '../../helpers/data/amenityData';
@@ -77,6 +79,18 @@ class Business extends React.Component {
     });
   };
 
+  setRatingStuff = (e) => {
+    const values = queryString.parse(this.props.location.search);
+    const bizId = values.biz;
+    ratingData.getRatingByBusinessId(bizId)
+      .then((reviews) => {
+        if (reviews.length > 0) {
+          this.setState({ reviews });
+          this.seperateRatings();
+        }
+      });
+  }
+
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
     const bizId = values.biz;
@@ -90,13 +104,7 @@ class Business extends React.Component {
             yelpData.getSingleBusiness(yelpId)
               .then((yelpResults) => {
                 this.setState({ yelpResults });
-                ratingData.getRatingByBusinessId(bizId)
-                  .then((reviews) => {
-                    if (reviews.length > 0) {
-                      this.setState({ reviews });
-                      this.seperateRatings();
-                    }
-                  });
+                this.setRatingStuff();
                 amenityData.getAmenitiesByBusinessId(bizId)
                   .then((amenities) => {
                     if (amenities.length > 0) {
@@ -170,12 +178,28 @@ class Business extends React.Component {
       );
     };
 
+    deleteReview = (id) => {
+      ratingData.deleteReviewFromDatabase(id)
+        .then(() => this.setRatingStuff())
+        .catch(err => console.error('can not delete review', err));
+    }
+
     render() {
-      const { yelpResults } = this.state;
+      const { yelpResults, reviews, restroomTypes } = this.state;
       const { yelpId } = this.props.match.params;
       const values = queryString.parse(this.props.location.search);
       const bizLink = `/review/${yelpId}`;
       const bizSearch = `?biz=${values.biz}`;
+
+      const displayReviews = reviews.map(review => (
+      <ReviewOnBusinessPage
+      key={ review.id }
+      restroomTypes={ restroomTypes }
+      review={ review }
+      deleteReview={ this.deleteReview }
+      />
+      ));
+
       return (
       <div className="Business">
         <img className="businessPhoto" src={yelpResults.photos} alt=''></img>
@@ -183,6 +207,10 @@ class Business extends React.Component {
         <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
         <div className="business-body container">
           { this.businessStuff() }
+        </div>
+        <div className="reviews">
+          <h1>Reviews!</h1>
+          { displayReviews }
         </div>
       </div>
       );
