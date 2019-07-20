@@ -94,24 +94,17 @@ class ReviewPage extends React.Component {
   amenityList = () => {
     const { amenityTypes, businessAmenities, newReview } = this.state;
     const amenTypesKeys = Object.keys(amenityTypes);
-    const removeTheseFromList = [];
     // sorts thru restroom types and only have the amenities for the bathroom picked
     const specificAmenities = businessAmenities.filter(amenity => amenity.restroomType === newReview.restroomType);
-    specificAmenities.forEach((amenity) => {
-      const amenitiesToRemove = amenTypesKeys.filter(key => key === amenity.type);
-      removeTheseFromList.push(amenitiesToRemove[0]);
-    });
     const amenitiesToShowAsOptions = amenTypesKeys;
-    removeTheseFromList.forEach((alreadyListed) => {
-      const pos = amenTypesKeys.indexOf(alreadyListed);
+    specificAmenities.forEach((alreadyListed) => {
+      const pos = amenTypesKeys.indexOf(alreadyListed.type);
       amenitiesToShowAsOptions.splice(pos, 1);
     });
     console.error('show these', amenitiesToShowAsOptions);
-    console.error('remove from list array ', removeTheseFromList);
     // need to get the names of the types from the original amenityType Array
     // then find a way to map them all into options
     return (
-
       <option defaultValue>Pick options this bathroom has</option>
       // { amenitiesToShowAsOptions.map(object => (
       // <option key={object} value={object}>{object}</option>

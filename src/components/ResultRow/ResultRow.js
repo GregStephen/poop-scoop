@@ -140,12 +140,17 @@ class ResultRow extends React.Component {
       femaleTables,
       unisexTables,
     } = this.state;
-    const bizLink = `/business/${result.id}`;
+    const bizLink = `/review/${result.id}`;
     const bizSearch = `?biz=${business.id}`;
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
       return (
-      <Review key={ firstReview.id } review={ firstReview.review }/>
+      <Review
+        key={ firstReview.id }
+        review={ firstReview.review }
+        bizLink={ bizLink }
+        bizSearch= { bizSearch }
+      />
       );
     };
 
