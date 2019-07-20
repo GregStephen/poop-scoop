@@ -19,4 +19,6 @@ const getAmenitiesByBusinessId = businessId => new Promise((resolve, reject) => 
     .catch(err => reject(err));
 });
 
-export default { getAmenitiesByBusinessId };
+const addAnAmenity = amenity => axios.post(`${firebaseUrl}/amenities.json`, amenity);
+
+export default { getAmenitiesByBusinessId, addAnAmenity };
