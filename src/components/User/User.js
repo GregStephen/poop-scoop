@@ -26,7 +26,7 @@ class User extends React.Component {
     userData.getUserById(userId)
       .then((userPromise) => {
         this.setState({ user: userPromise.data });
-        reviewData.getRatingByUserId(userId)
+        reviewData.getRatingByUserId(this.state.user.uid)
           .then((reviewArray) => {
             this.setState({ reviews: reviewArray });
           });

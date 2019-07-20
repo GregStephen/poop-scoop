@@ -37,7 +37,7 @@ class MyNavbar extends React.Component {
     authed: PropTypes.bool.isRequired,
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen,
     });

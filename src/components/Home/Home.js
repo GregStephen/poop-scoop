@@ -36,7 +36,6 @@ class Home extends React.Component {
     yelpData.searchBusinessesByTerm(search, latitude, longitude)
       .then((res) => {
         const yelpRes = res;
-        console.error(yelpRes);
         this.setState({ yelpResults: yelpRes });
       })
       .catch(err => console.error('cant get yelp data', err));
@@ -47,7 +46,6 @@ class Home extends React.Component {
     userData.getUserByUID(firebaseId)
       .then((resp) => {
         if (resp === undefined) {
-          console.error('new User');
           this.props.history.push('/new-user');
         } else {
           restroomType.getRestroomType()
