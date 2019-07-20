@@ -201,7 +201,6 @@ class ReviewPage extends React.Component {
     const reviewToSave = { ...newReview };
     reviewToSave.uid = firebase.auth().currentUser.uid;
     reviewToSave.businessId = bizId;
-    console.error(reviewToSave);
     amenitiesTheyDoNotHave.forEach((amenity) => {
       const amenityToAdd = {};
       amenityToAdd.businessId = bizId;

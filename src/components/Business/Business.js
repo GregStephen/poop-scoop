@@ -197,6 +197,7 @@ class Business extends React.Component {
       restroomTypes={ restroomTypes }
       review={ review }
       deleteReview={ this.deleteReview }
+      yelpId={ yelpId }
       />
       ));
 

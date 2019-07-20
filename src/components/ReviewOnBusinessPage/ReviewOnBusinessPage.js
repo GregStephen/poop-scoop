@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import PropTypes from 'prop-types';
@@ -10,6 +11,7 @@ class ReviewOnBusinessPage extends React.Component {
     review: PropTypes.object,
     restroomTypes: PropTypes.array,
     deleteReview: PropTypes.func,
+    yelpId: PropTypes.string,
   }
 
   showRestroomType = (e) => {
@@ -24,14 +26,25 @@ class ReviewOnBusinessPage extends React.Component {
     deleteReview(id);
   }
 
+  editThisReview = (e) => {
+    e.preventDefault();
+    console.error('edit!');
+  }
+
   render() {
-    const { review } = this.props;
+    const { review, yelpId } = this.props;
+    const bizLink = `/edit-review/${yelpId}`;
+    const bizSearch = `?biz=${review.businessId}&review=${review.id}`;
     return (
       <div className="ReviewOnBusinessPage">
         <p>"{review.review}"</p>
         { this.showRestroomType() }
         { review.uid === firebase.auth().currentUser.uid
-          ? <button className="btn btn-danger" onClick={this.deleteThisReview}>Delete</button>
+          ? <div>
+            <button className="btn btn-danger" onClick={this.deleteThisReview}>Delete</button>
+            <Link className="btn btn-info" to={{ pathname: bizLink, search: bizSearch }}>Edit</Link>
+
+          </div>
           : ''
         }
       </div>
