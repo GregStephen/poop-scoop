@@ -35,4 +35,6 @@ const getRatingByUserId = uid => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getRatingByBusinessId, getRatingByUserId };
+const addNewReview = review => axios.post(`${firebaseUrl}/businessRating.json`, review);
+
+export default { getRatingByBusinessId, getRatingByUserId, addNewReview };

@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class Review extends React.Component {
@@ -8,9 +8,12 @@ class Review extends React.Component {
   }
 
   showReview = () => {
-    const { review } = this.props;
+    const { review, bizLink, bizSearch } = this.props;
     if (review === 'undefined') {
-      return (<p>No Reviews Yet! <a href="www.google.com">Be the first!</a></p>);
+      return (
+      <p>No Reviews Yet!
+        <Link to={{ pathname: bizLink, search: bizSearch }}>Be the first!</Link>
+      </p>);
     }
     return (
       <p>"{review}"</p>

@@ -140,12 +140,18 @@ class ResultRow extends React.Component {
       femaleTables,
       unisexTables,
     } = this.state;
-    const bizLink = `/business/${result.id}`;
+    const bizLink = `/review/${result.id}`;
+    const bizPageLink = `/business/${result.id}`;
     const bizSearch = `?biz=${business.id}`;
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
       return (
-      <Review key={ firstReview.id } review={ firstReview.review }/>
+      <Review
+        key={ firstReview.id }
+        review={ firstReview.review }
+        bizLink={ bizLink }
+        bizSearch= { bizSearch }
+      />
       );
     };
 
@@ -195,7 +201,7 @@ class ResultRow extends React.Component {
           </div>
           <div className="col-md-8">
             <div className="card-body">
-              <Link to={{ pathname: bizLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
+              <Link to={{ pathname: bizPageLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
               <p>{result.location.address1}</p>
               { reviewDisplay(reviews) }
               <div className='container'>

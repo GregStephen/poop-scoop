@@ -1,5 +1,6 @@
 import React from 'react';
 import queryString from 'query-string';
+import { Link } from 'react-router-dom';
 
 import yelpData from '../../helpers/data/yelpData';
 import ratingData from '../../helpers/data/ratingData';
@@ -79,7 +80,6 @@ class Business extends React.Component {
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
     const bizId = values.biz;
-    console.error(bizId);
     const { yelpId } = this.props.match.params;
     restroomType.getRestroomType()
       .then((restroomTypes) => {
@@ -172,10 +172,15 @@ class Business extends React.Component {
 
     render() {
       const { yelpResults } = this.state;
+      const { yelpId } = this.props.match.params;
+      const values = queryString.parse(this.props.location.search);
+      const bizLink = `/review/${yelpId}`;
+      const bizSearch = `?biz=${values.biz}`;
       return (
       <div className="Business">
         <img className="businessPhoto" src={yelpResults.photos} alt=''></img>
         <h1>{yelpResults.name}</h1>
+        <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
         <div className="business-body container">
           { this.businessStuff() }
         </div>
