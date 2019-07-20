@@ -39,6 +39,15 @@ const addNewReview = review => axios.post(`${firebaseUrl}/businessRating.json`, 
 
 const deleteReviewFromDatabase = id => axios.delete(`${firebaseUrl}/businessRating/${id}.json`);
 
+const getRatingById = id => axios.get(`${firebaseUrl}/businessRating/${id}.json`);
+
+const editReview = (review, id) => axios.put(`${firebaseUrl}/businessRating/${id}.json`, review);
+
 export default {
-  getRatingByBusinessId, getRatingByUserId, addNewReview, deleteReviewFromDatabase,
+  getRatingByBusinessId,
+  getRatingByUserId,
+  addNewReview,
+  deleteReviewFromDatabase,
+  getRatingById,
+  editReview,
 };

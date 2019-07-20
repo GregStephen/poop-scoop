@@ -11,6 +11,7 @@ import Home from '../components/Home/Home';
 import User from '../components/User/User';
 import Business from '../components/Business/Business';
 import ReviewPage from '../components/ReviewPage/ReviewPage';
+import EditReview from '../components/EditReview/EditReview';
 import NewUserPage from '../components/NewUserPage/NewUserPage';
 
 import yelpClient from '../helpers/data/yelpData';
@@ -70,6 +71,7 @@ class App extends React.Component {
                 <Route path='/new-user' component={NewUserPage} authed={authed}/>
                 <PrivateRoute path='/business/:yelpId' component={Business} authed={authed}/>
                 <PrivateRoute path='/review/:yelpId' component={ReviewPage} authed={authed}/>
+                <PrivateRoute path='/edit-review/:yelpId' component={EditReview} authed={authed}/>
                 <Redirect from='*' to='/auth'/>
               </Switch>
             </React.Fragment>
