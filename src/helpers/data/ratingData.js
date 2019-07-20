@@ -37,4 +37,8 @@ const getRatingByUserId = uid => new Promise((resolve, reject) => {
 
 const addNewReview = review => axios.post(`${firebaseUrl}/businessRating.json`, review);
 
-export default { getRatingByBusinessId, getRatingByUserId, addNewReview };
+const deleteReviewFromDatabase = id => axios.delete(`${firebaseUrl}/businessRating/${id}.json`);
+
+export default {
+  getRatingByBusinessId, getRatingByUserId, addNewReview, deleteReviewFromDatabase,
+};
