@@ -1,0 +1,9 @@
+.SingleReview {
+  display: block;
+  border: 1px solid black;
+}
+
+.SingleReview .single-review-photo {
+  width: 5em;
+}
+/*# sourceMappingURL=SingleReview.css.map */

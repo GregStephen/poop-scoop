@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACR,OAAO,EAAE,KAAK;CAOf;;AARD,AAEE,SAFO,CAEP,mBAAmB,CAAA;EACjB,KAAK,EAAE,GAAG;CAIX;;AAPH,AAII,SAJK,CAEP,mBAAmB,CAEjB,kBAAkB,CAAC;EACjB,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "MyNavbar.scss"
+    ],
+    "names": [],
+    "file": "MyNavbar.css"
+}
