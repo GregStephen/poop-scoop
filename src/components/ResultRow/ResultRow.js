@@ -10,6 +10,7 @@ import amenityData from '../../helpers/data/amenityData';
 
 import yelpDataShape from '../../helpers/propz/yelpDataShape';
 import './ResultRow.scss';
+import { throwServerError } from 'apollo-link-http-common';
 
 const businessUndefined = {
   yelpId: 'undefined',
@@ -46,6 +47,17 @@ class ResultRow extends React.Component {
     result: yelpDataShape.yelpDataShape,
     restroomTypes: PropTypes.array.isRequired,
     amenityTypes: PropTypes.object.isRequired,
+    addMarker: PropTypes.func.isRequired,
+  }
+
+  makeTheMarker = () => {
+    const { addMarker, result } = this.props;
+    const newMarker = {
+      name: result.name,
+      latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+      image: result.image_url,
+    };
+    addMarker(newMarker);
   }
 
   seperateRatings = () => {
@@ -121,6 +133,7 @@ class ResultRow extends React.Component {
             });
         }
       });
+    this.makeTheMarker();
   }
 
   ratingMath = (ratings) => {

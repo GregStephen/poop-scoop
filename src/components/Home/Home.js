@@ -2,6 +2,7 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import Map from '../Map/Map';
 import ResultRow from '../ResultRow/ResultRow';
 
 import restroomType from '../../helpers/data/restroomTypeData';
@@ -10,33 +11,41 @@ import yelpData from '../../helpers/data/yelpData';
 import userData from '../../helpers/data/userData';
 
 import './Home.scss';
+import 'leaflet/dist/leaflet.css';
 
 class Home extends React.Component {
   state = {
     restroomTypes: [],
     amenityTypes: {},
-    search: '',
     yelpResults: [],
     latitude: 36.1627,
     longitude: -86.7816,
     businessResults: [],
+    markersData: [],
   }
-
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
 
   yelpSearch = (e) => {
     const {
       latitude,
       longitude,
-      search,
     } = this.state;
     e.preventDefault();
-    yelpData.searchBusinessesByTerm(search, latitude, longitude)
+    yelpData.searchBusinessesByTerm(latitude, longitude)
       .then((res) => {
         const yelpRes = res;
+        this.setState({ markersData: [] });
         this.setState({ yelpResults: yelpRes });
+        this.state.yelpResults.map(result => (
+          this.setState({
+            markersData: [
+              ...this.state.markersData,
+              {
+                title: result.name,
+                latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+                image: result.photos,
+              }],
+          })
+        ));
       })
       .catch(err => console.error('cant get yelp data', err));
   }
@@ -62,23 +71,47 @@ class Home extends React.Component {
       }).catch(err => console.error('can not get user', err));
   }
 
+  addMarker = (markerInfo) => {
+    this.setState({
+      markersData: [
+        ...this.state.markersData,
+        {
+          title: markerInfo.name,
+          latLng: markerInfo.latLng,
+          image: markerInfo.image,
+        }],
+    });
+  }
+
+  findDude = (latLing) => {
+    this.setState({ latitude: latLing.lat, longitude: latLing.lng });
+  }
+
   render() {
-    const { yelpResults, restroomTypes, amenityTypes } = this.state;
+    const {
+      yelpResults, restroomTypes, amenityTypes, markersData,
+    } = this.state;
     const resultComponents = yelpResults.map(result => (
       <ResultRow
       key={ result.id }
       result={ result }
       restroomTypes={ restroomTypes }
       amenityTypes={ amenityTypes }
+      addMarker={ this.addMarker }
       />
     ));
     return (
       <div className="Home">
         <h1>Wecome to PoopScoop!</h1>
         <form onSubmit={this.yelpSearch}>
-          <input type="input" name="search" id="search" value={this.state.search} onChange={this.handleChange}></input>
-          <button type="submit" className="btn btn-danger">Search</button>
+          <button type="submit" className="btn btn-danger">Search Restrooms Near Me</button>
         </form>
+        <div className="mapDiv">
+          <Map
+            markersData={ markersData }
+            findDude={ this.findDude }
+          />
+        </div>
         <div className="container">
           <div className="row">
           { resultComponents }

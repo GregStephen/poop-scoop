@@ -26,12 +26,12 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
 });
 
-const searchBusinessesByTerm = (term, latitude, longitude) => new Promise((resolve, reject) => {
+const searchBusinessesByTerm = (latitude, longitude) => new Promise((resolve, reject) => {
   client
     .query({
       query: gql`
     query {
-      search(term: "${term}",
+      search(
         latitude: ${latitude},
         longitude: ${longitude},
         radius: 3000,

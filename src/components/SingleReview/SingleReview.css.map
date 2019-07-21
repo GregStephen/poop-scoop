@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,OAAO,EAAE,KAAK;EACd,MAAM,EAAE,eAAe;CAIxB;;AAND,AAGE,aAHW,CAGX,oBAAoB,CAAC;EACnB,KAAK,EAAE,GAAG;CACX",
+    "sources": [
+        "SingleReview.scss"
+    ],
+    "names": [],
+    "file": "SingleReview.css"
+}

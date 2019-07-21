@@ -1,0 +1,17 @@
+.ResultRow {
+  display: block;
+  max-height: 15em;
+}
+
+.ResultRow .unisexRating {
+  color: green;
+}
+
+.ResultRow .maleRating {
+  color: blue;
+}
+
+.ResultRow .femaleRating {
+  color: pink;
+}
+/*# sourceMappingURL=ResultRow.css.map */

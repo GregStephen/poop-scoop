@@ -1,0 +1,12 @@
+.MyNavbar {
+  display: block;
+}
+
+.MyNavbar .navbar-user-button {
+  width: 5em;
+}
+
+.MyNavbar .navbar-user-button .navbar-user-image {
+  width: 100%;
+}
+/*# sourceMappingURL=MyNavbar.css.map */

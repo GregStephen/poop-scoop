@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACV,OAAO,EAAE,KAAK;CACf",
+    "sources": [
+        "EditReview.scss"
+    ],
+    "names": [],
+    "file": "EditReview.css"
+}
