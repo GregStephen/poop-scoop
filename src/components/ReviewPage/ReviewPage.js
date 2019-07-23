@@ -100,10 +100,10 @@ class ReviewPage extends React.Component {
     const { newReview } = this.state;
     const decorButtons = [];
     for (let i = 1; i < newReview.decor + 1; i += 1) {
-      decorButtons.push(<button className="btn btn-success" id="decor" key={i} value={i} onClick={this.setCleanlinessDecorValue}>{i}</button>);
+      decorButtons.push(<button type="button" className="fas fa-star fa-2x" id="decor" key={i} value={i} onClick={this.setCleanlinessDecorValue}></button>);
     }
     for (let m = newReview.decor + 1; m < 6; m += 1) {
-      decorButtons.push(<button className="btn btn-danger" id="decor" key={m} value={m} onClick={this.setCleanlinessDecorValue}>{m}</button>);
+      decorButtons.push(<button type="button" className="far fa-star fa-2x" id="decor" key={m} value={m} onClick={this.setCleanlinessDecorValue}></button>);
     }
     return decorButtons;
   }
@@ -112,10 +112,10 @@ class ReviewPage extends React.Component {
     const { newReview } = this.state;
     const cleanlinessButtons = [];
     for (let i = 1; i < newReview.cleanliness + 1; i += 1) {
-      cleanlinessButtons.push(<button className="btn btn-success" id="cleanliness" key={i} value={i} onClick={this.setCleanlinessDecorValue}>{i}</button>);
+      cleanlinessButtons.push(<button type="button" className="fas fa-star fa-2x" id="cleanliness" key={i} value={i} onClick={this.setCleanlinessDecorValue}></button>);
     }
     for (let m = newReview.cleanliness + 1; m < 6; m += 1) {
-      cleanlinessButtons.push(<button className="btn btn-danger" id="cleanliness" key={m} value={m} onClick={this.setCleanlinessDecorValue}>{m}</button>);
+      cleanlinessButtons.push(<button type="button" className="far fa-star fa-2x" id="cleanliness" key={m} value={m} onClick={this.setCleanlinessDecorValue}></button>);
     }
     return cleanlinessButtons;
   }
