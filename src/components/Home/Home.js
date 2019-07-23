@@ -102,9 +102,8 @@ class Home extends React.Component {
     ));
     return (
       <div className="Home">
-        <h1>Wecome to PoopScoop!</h1>
         <form onSubmit={this.yelpSearch}>
-          <button type="submit" className="btn btn-danger">Search Restrooms Near Me</button>
+          <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="mapDiv">
           <Map

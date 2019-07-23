@@ -17,6 +17,7 @@ class SingleReview extends React.Component {
         yelpData.getSingleBusiness(businessPromise.data.yelpId)
           .then((yelpResp) => {
             this.setState({ yelpResp });
+            this.setState({ yelpId: businessPromise.data.yelpId });
           });
       })
       .catch(err => console.error('trouble with getting single business data', err));
@@ -24,28 +25,41 @@ class SingleReview extends React.Component {
 
   render() {
     const { review } = this.props;
-    const { yelpResp } = this.state;
-    const bizLink = `/business${yelpResp.id}`;
+    const { yelpId, yelpResp } = this.state;
+    const bizLink = `/business/${yelpId}`;
     const bizSearch = `?biz=${review.businessId}`;
     const forWhichBathroom = () => {
       const { restroomTypes } = this.props;
       const restroom = restroomTypes.filter(type => type.id === review.restroomType);
       return (
-        <div>
+        <div className="col-4 single-review-sex">
           <p>{restroom[0].restroomType}</p>
         </div>
       );
     };
     return (
-      <div className="SingleReview">
-        <div>
-        <Link to={{ pathname: bizLink, search: bizSearch }}><p>{yelpResp.name}</p></Link>
-          <img className="single-review-photo"src={yelpResp.photos} alt=''></img>
-          <p>Cleanliness: {review.cleanliness}</p>
-          <p>Decor: {review.decor}</p>
-          <p>{review.review}</p>
-          { forWhichBathroom() }
-        </div>
+      <div className="SingleReview col-8 card">
+        {/* <div className="card"> */}
+          <div className="row no-gutters">
+            <div className="col-3">
+             <img className="single-review-photo img-fluid"src={yelpResp.photos} alt=''></img>
+            </div>
+            <div className="card-body col-9 row">
+              <Link className="single-review-name col-6" to={{ pathname: bizLink, search: bizSearch }}>{yelpResp.name}</Link>
+              <div className="col-2">
+                <p className="single-review-date">Date</p>
+              </div>
+              { forWhichBathroom() }
+              <div className="row col-12">
+                <p className="col">Cleanliness: {review.cleanliness}</p>
+                <p className="col">Decor: {review.decor}</p>
+              </div>
+              <div className="col-12">
+                <p>"{review.review}"</p>
+              </div>
+            </div>
+          </div>
+        {/* </div> */}
       </div>
     );
   }

@@ -1,7 +1,15 @@
 .SingleReview {
   display: block;
   border: 1px solid black;
-  .single-review-photo {
-    width: 5em;
+  .single-review-name {
+    font-size: 1.75em;
+    text-align: start;
+  }
+  .single-review-sex {
+    text-align: end;
+    font-size: 1.3em;
+  }
+  .single-review-date {
+    text-align: start;
   }
 }

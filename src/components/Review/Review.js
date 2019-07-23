@@ -12,7 +12,7 @@ class Review extends React.Component {
     if (review === 'undefined') {
       return (
       <p>No Reviews Yet!
-        <Link to={{ pathname: bizLink, search: bizSearch }}>Be the first!</Link>
+        <Link to={{ pathname: bizLink, search: bizSearch }}> Be the first!</Link>
       </p>);
     }
     return (

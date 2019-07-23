@@ -83,7 +83,9 @@ class User extends React.Component {
         {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-danger" onClick={this.deleteProfile}>Delete Profile</button> : ''}
         <div>
           <h1>Ratings</h1>
-        { displayReviews }
+          <div className="row justify-content-center">
+            { displayReviews }
+          </div>
         </div>
         <div>
           <Modal isOpen={this.state.editUserModal} toggle={this.toggleModal}>
