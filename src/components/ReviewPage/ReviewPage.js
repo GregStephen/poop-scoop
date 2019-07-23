@@ -228,11 +228,11 @@ class ReviewPage extends React.Component {
       <div className="ReviewPage">
         <h1>Review {yelpResults.name}!</h1>
         <div className="row mb-4 mt-4">
-        <div className="decorRating col-4 offset-1">
+        <div className="decorRating col-8 col-md-4 offset-2">
           <p>Decor:</p>
             { this.createDecorButtons() }
         </div>
-        <div className="cleanlinessRating col-4 offset-1">
+        <div className="cleanlinessRating col-8 col-md-4 offset-2 offset-md-0">
           <p>Cleanliness:</p>
             { this.createCleanlinessButtons() }
         </div>
@@ -240,7 +240,7 @@ class ReviewPage extends React.Component {
 
         <Form onSubmit={this.submitNewReview}>
           <Row form>
-            <Col md={{ size: 4, offset: 1 }}>
+            <Col md={{ size: 4, offset: 4 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
                 <Label for="restroomType">Which did you go into?</Label>
                 <Input
@@ -257,7 +257,9 @@ class ReviewPage extends React.Component {
                 </Input>
               </FormGroup>
             </Col>
-            <Col md={{ size: 4, offset: 1 }}>
+          </Row>
+          <Row form>
+            <Col md={{ size: 4, offset: 4 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
                 <Label for="timeStamp">When did you go?</Label>
                 <Input
@@ -272,9 +274,9 @@ class ReviewPage extends React.Component {
             </Col>
           </Row>
           <Row form>
-            <Col md={{ size: 4, offset: 1 }}>
+            <Col md={{ size: 4, offset: 2 }} sm={{ size: 5, offset: 1 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
-                <Label for="amenitiesTheyHave">Which amenities did they have?</Label>
+                <Label for="amenitiesTheyHave">Which did they have?</Label>
                 <Input
                   type="select"
                   name="amenitiesTheyHave"
@@ -292,9 +294,9 @@ class ReviewPage extends React.Component {
                 </FormText>
               </FormGroup>
             </Col>
-            <Col md={{ size: 4, offset: 1 }}>
+            <Col md={{ size: 4, offset: 0 }} sm={{ size: 5, offset: 0 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
-                <Label for="amenitiesTheyDoNotHave">Which amenities did they NOT have?</Label>
+                <Label for="amenitiesTheyDoNotHave">Which did they NOT have?</Label>
                 <Input
                   type="select"
                   name="amenitiesTheyDoNotHave"
@@ -313,18 +315,23 @@ class ReviewPage extends React.Component {
               </FormGroup>
             </Col>
           </Row>
-          <FormGroup>
-            <Label for="review">Review</Label>
-            <Input
-              type="textarea"
-              name="review"
-              id="review"
-              value={newReview.review}
-              onChange={this.formFieldStringState}
-              placeholder="This bathroom is awesome!"
-              required
-            />
-          </FormGroup>
+          <Row form>
+            <Col xs={{ size: 10, offset: 1 }} md={{ size: 8, offset: 2 }}>
+              <FormGroup>
+                <Label for="review">Review</Label>
+                <Input
+                  type="textarea"
+                  name="review"
+                  id="review"
+                  rows="4"
+                  value={newReview.review}
+                  onChange={this.formFieldStringState}
+                  placeholder="This bathroom is awesome!"
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
           <Button type="submit" className="btn btn-success">Submit Review!</Button>
         </Form>
       </div>
