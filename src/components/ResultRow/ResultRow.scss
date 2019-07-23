@@ -1,6 +1,16 @@
 .ResultRow {
   display: block;
   max-height: 15em;
+  margin-bottom: 1em;
+  .result-image-div {
+    max-height: 14em;
+    .result-image {
+      max-height: 100%;
+    }
+  }
+  .result-name {
+    text-align: start;
+  }
   .unisexRating {
     color: green;
   }
@@ -9,6 +19,8 @@
   }
   .femaleRating {
     color: pink;
-
+  }
+  .red-baby {
+    color: red;
   }
 }

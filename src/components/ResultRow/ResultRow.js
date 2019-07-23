@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -10,7 +11,7 @@ import amenityData from '../../helpers/data/amenityData';
 
 import yelpDataShape from '../../helpers/propz/yelpDataShape';
 import './ResultRow.scss';
-import { throwServerError } from 'apollo-link-http-common';
+
 
 const businessUndefined = {
   yelpId: 'undefined',
@@ -189,19 +190,20 @@ class ResultRow extends React.Component {
       }
       return (
         <div className='col-12 row'>
-          <p className='unisexRating col-4'>{unisexRating}</p>
-          <p className='maleRating col-4'>{maleRating}</p>
-          <p className='femaleRating col-4'>{femaleRating}</p>
+          <p className="col-3">Rating:</p>
+          <p className='unisexRating col-3'>{unisexRating}</p>
+          <p className='maleRating col-3'>{maleRating}</p>
+          <p className='femaleRating col-3'>{femaleRating}</p>
         </div>
       );
     };
 
     const changingTableDisplay = (uniTables, mTables, fTables) => (
         <div className='col-12 row'>
-          <p className="col">Changing Tables: </p>
-          <p className="col">{uniTables.length > 0 ? `${uniTables[0].status}` : 'Unknown'}</p>
-          <p className="col">{mTables.length > 0 ? `${mTables[0].status}` : 'Unknown'}</p>
-          <p className="col">{fTables.length > 0 ? `${fTables[0].status}` : 'Unknown'}</p>
+          <p className="col">Changing Table:</p>
+          <p className="col">{uniTables.length > 0 ? uniTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
+          <p className="col">{mTables.length > 0 ? mTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
+          <p className="col">{fTables.length > 0 ? fTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
         </div>
     );
 
@@ -209,13 +211,17 @@ class ResultRow extends React.Component {
       <div className="ResultRow col-12 mb-2">
       <div className="card">
         <div className="row no-gutters">
-          <div className="col-md-4">
+          <div className="result-image-div col-md-3">
             <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>
           </div>
-          <div className="col-md-8">
-            <div className="card-body">
-              <Link to={{ pathname: bizPageLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
-              <p>{result.location.address1}</p>
+          <div className="col-md-9">
+            <div className="card-body row justify-content-between">
+              <Link className="col-8 result-name" to={{ pathname: bizPageLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
+              <div className="col-4">
+                <p>{result.location.address1}</p>
+                {/* <p>{result.phone}</p> */}
+              </div>
+            </div>
               { reviewDisplay(reviews) }
               <div className='container'>
               { ratingDisplay(unisexRatings, maleRatings, femaleRatings) }
@@ -224,7 +230,6 @@ class ResultRow extends React.Component {
                 { changingTableDisplay(unisexTables, maleTables, femaleTables)}
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
