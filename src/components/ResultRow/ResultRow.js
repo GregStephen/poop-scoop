@@ -216,7 +216,9 @@ class ResultRow extends React.Component {
           </div>
           <div className="col-md-9">
             <div className="card-body row justify-content-between">
-              <Link className="col-8 result-name" to={{ pathname: bizPageLink, search: bizSearch }}><h2 className="card-title">{result.name}</h2></Link>
+              <div className="col-8 result-name-div">
+                <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
+              </div>
               <div className="col-4">
                 <p>{result.location.address1}</p>
                 {/* <p>{result.phone}</p> */}
