@@ -2,7 +2,7 @@
 import React from 'react';
 import queryString from 'query-string';
 import {
-  Form, FormGroup, Label, Input, FormText, Button,
+  Form, FormGroup, Label, Input, FormText, Button, Row, Col,
 } from 'reactstrap';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -227,90 +227,105 @@ class ReviewPage extends React.Component {
     return (
       <div className="ReviewPage">
         <h1>Review {yelpResults.name}!</h1>
-        <div className="decorRating">
+        <div className="row mb-4 mt-4">
+        <div className="decorRating col-4 offset-1">
           <p>Decor:</p>
             { this.createDecorButtons() }
         </div>
-        <div className="cleanlinessRating">
+        <div className="cleanlinessRating col-4 offset-1">
           <p>Cleanliness:</p>
             { this.createCleanlinessButtons() }
         </div>
+        </div>
+
         <Form onSubmit={this.submitNewReview}>
-        <FormGroup>
-          <Label for="restroomType">Which did you go into?</Label>
-          <Input
-            type="select"
-            name="restroomType"
-            id="restroomType"
-            value={newReview.restroomType}
-            onChange={this.formFieldStringState}
-            required>
-            <option value="">Select a bathroom</option>
-          { restroomTypes.map(object => (
-              <option key={object.id} value={object.id}>{object.restroomType}</option>
-          )) }
-          </Input>
-        </FormGroup>
-        <FormGroup>
-          <Label for="timeStamp">When did you go?</Label>
-          <Input
-            type="date"
-            name="timeStamp"
-            id="timeStamp"
-            onChange={this.formFieldStringState}
-            max={moment().format('YYYY[-]MM[-]DD')}
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label for="amenitiesTheyHave">Which amenities did they have?</Label>
-          <Input
-            type="select"
-            name="amenitiesTheyHave"
-            id="amenitiesTheyHave"
-            value={this.state.amenitiesTheyHave}
-            onChange={this.addToAmenityTheyHaveArray}
-            multiple
-            >
-              { newReview.restroomType === '' ? <option value="">Select a bathroom first</option>
-                : this.amenityTheyHaveList()
-          }
-          </Input>
-          <FormText color="muted">
-            cmd + click to remove the last selection
-          </FormText>
-        </FormGroup>
-        <FormGroup>
-          <Label for="amenitiesTheyDoNotHave">Which amenities did they NOT have?</Label>
-          <Input
-            type="select"
-            name="amenitiesTheyDoNotHave"
-            id="amenitiesTheyDoNotHave"
-            value={this.state.amenitiesTheyDoNotHave}
-            onChange={this.addToAmenitiesTheyDoNotHaveArray}
-            multiple
-            >
-              { newReview.restroomType === '' ? <option value="">Select a bathroom first</option>
-                : this.amenityTheyDoNotHaveList()
-          }
-          </Input>
-          <FormText color="muted">
-            cmd + click to remove the last selection
-          </FormText>
-        </FormGroup>
-        <FormGroup>
-          <Label for="review">Review</Label>
-          <Input
-            type="textarea"
-            name="review"
-            id="review"
-            value={newReview.review}
-            onChange={this.formFieldStringState}
-            placeholder="This bathroom is awesome!"
-            required
-          />
-        </FormGroup>
-        <Button type="submit" className="btn btn-success">Submit Review!</Button>
+          <Row form>
+            <Col md={{ size: 4, offset: 1 }}>
+              <FormGroup>
+                <Label for="restroomType">Which did you go into?</Label>
+                <Input
+                  type="select"
+                  name="restroomType"
+                  id="restroomType"
+                  value={newReview.restroomType}
+                  onChange={this.formFieldStringState}
+                  required>
+                  <option value="">Select a bathroom</option>
+                { restroomTypes.map(object => (
+                    <option key={object.id} value={object.id}>{object.restroomType}</option>
+                )) }
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col md={{ size: 4, offset: 1 }}>
+              <FormGroup>
+                <Label for="timeStamp">When did you go?</Label>
+                <Input
+                  type="date"
+                  name="timeStamp"
+                  id="timeStamp"
+                  onChange={this.formFieldStringState}
+                  max={moment().format('YYYY[-]MM[-]DD')}
+                  required
+                />
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row form>
+            <Col md={{ size: 4, offset: 1 }}>
+              <FormGroup>
+                <Label for="amenitiesTheyHave">Which amenities did they have?</Label>
+                <Input
+                  type="select"
+                  name="amenitiesTheyHave"
+                  id="amenitiesTheyHave"
+                  value={this.state.amenitiesTheyHave}
+                  onChange={this.addToAmenityTheyHaveArray}
+                  multiple
+                  >
+                    { newReview.restroomType === '' ? <option value="">Select a bathroom first</option>
+                      : this.amenityTheyHaveList()
+                }
+                </Input>
+                <FormText color="muted">
+                  cmd + click to remove the last selection
+                </FormText>
+              </FormGroup>
+            </Col>
+            <Col md={{ size: 4, offset: 1 }}>
+              <FormGroup>
+                <Label for="amenitiesTheyDoNotHave">Which amenities did they NOT have?</Label>
+                <Input
+                  type="select"
+                  name="amenitiesTheyDoNotHave"
+                  id="amenitiesTheyDoNotHave"
+                  value={this.state.amenitiesTheyDoNotHave}
+                  onChange={this.addToAmenitiesTheyDoNotHaveArray}
+                  multiple
+                  >
+                    { newReview.restroomType === '' ? <option value="">Select a bathroom first</option>
+                      : this.amenityTheyDoNotHaveList()
+                }
+                </Input>
+                <FormText color="muted">
+                  cmd + click to remove the last selection
+                </FormText>
+              </FormGroup>
+            </Col>
+          </Row>
+          <FormGroup>
+            <Label for="review">Review</Label>
+            <Input
+              type="textarea"
+              name="review"
+              id="review"
+              value={newReview.review}
+              onChange={this.formFieldStringState}
+              placeholder="This bathroom is awesome!"
+              required
+            />
+          </FormGroup>
+          <Button type="submit" className="btn btn-success">Submit Review!</Button>
         </Form>
       </div>
     );
