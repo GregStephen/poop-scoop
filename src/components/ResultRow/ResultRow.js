@@ -211,10 +211,10 @@ class ResultRow extends React.Component {
       <div className="ResultRow col-12 mb-2">
       <div className="card">
         <div className="row no-gutters">
-          <div className="result-image-div col-md-3">
+          <div className="result-image-div col-3">
             <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>
           </div>
-          <div className="col-md-9">
+          <div className="col-9">
             <div className="card-body row justify-content-between">
               <div className="col-8 result-name-div">
                 <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
