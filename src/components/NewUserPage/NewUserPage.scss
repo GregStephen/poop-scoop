@@ -1,3 +1,9 @@
 .NewUserPage {
   display: block;
+  .selected {
+    box-shadow: 0px 0px 15px green;
+  }
+  .avatar-image {
+    width: 100%;
+  }
 }

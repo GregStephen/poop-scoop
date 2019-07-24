@@ -1,7 +1,9 @@
 import React from 'react';
+import $ from 'jquery';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import avatarData from '../../helpers/data/avatarData';
 import userData from '../../helpers/data/userData';
 import './NewUserPage.scss';
 
@@ -21,6 +23,13 @@ class NewUserPage extends React.Component {
     email: '',
     password: '',
     newUser: defaultUser,
+    avatars: [],
+  }
+
+  componentDidMount() {
+    avatarData.getAvatars()
+      .then(avatars => this.setState({ avatars }))
+      .catch(err => console.error('trouble getting avatars', err));
   }
 
   formSubmit = (e) => {
@@ -49,6 +58,29 @@ class NewUserPage extends React.Component {
     this.setState({
       [e.target.id]: e.target.value,
     });
+  };
+
+  selectAvatar = (e) => {
+    e.preventDefault();
+    const avatarSelection = $('.avatar-image');
+    for (let i = 0; i < avatarSelection.length; i += 1) {
+      avatarSelection[i].classList.remove('selected');
+    }
+    e.target.classList.add('selected');
+    const tempUser = { ...this.state.newUser };
+    tempUser[e.target.id] = e.target.src;
+    this.setState({ newUser: tempUser });
+  }
+
+  createAvatarSelection = () => {
+    const { avatars } = this.state;
+    const avatarSelection = [];
+    Object.keys(avatars).forEach((key, index) => {
+      avatarSelection.push(<div className="avatar col-3 mb-4">
+      <button><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
+      </div>);
+    });
+    return avatarSelection;
   };
 
   render() {
@@ -116,9 +148,12 @@ class NewUserPage extends React.Component {
             required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="imageUrl">Image</label>
-            <input
+          <div className="form-group justify-content-center">
+            <p>Select Your Avatar</p>
+            <div className="row col-10 ">
+              { this.createAvatarSelection()}
+            </div>
+            {/* <input
             type="url"
             className="form-control"
             id="imageUrl"
@@ -126,7 +161,7 @@ class NewUserPage extends React.Component {
             onChange={this.formFieldStringState}
             placeholder="www.linkToMyPicture.com"
             required
-            />
+            /> */}
           </div>
           <button type="submit" className="btn btn-primary">Join PoopScoop</button>
         </form>
