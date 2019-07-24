@@ -15,26 +15,28 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import userData from '../../helpers/data/userData';
+// import userData from '../../helpers/data/userData';
 
 import './MyNavbar.scss';
+import userData from '../../helpers/data/userData';
 
-const defaultUser = {
-  id: '',
-  name: '',
-  city: '',
-  state: '',
-  imageUrl: '',
-};
+// const defaultUser = {
+//   id: '',
+//   name: '',
+//   city: '',
+//   state: '',
+//   imageUrl: '',
+// };
 
 class MyNavbar extends React.Component {
   state = {
     isOpen: false,
-    user: defaultUser,
+    // user: defaultUser,
   }
 
   static propTypes = {
     authed: PropTypes.bool.isRequired,
+    userObj: PropTypes.object,
   }
 
   toggle = () => {
@@ -43,30 +45,30 @@ class MyNavbar extends React.Component {
     });
   }
 
-  componentDidMount() {
-    const { authed } = this.props;
-    if (authed) {
-      const firebaseId = firebase.auth().currentUser.uid;
-      userData.getUserByUID(firebaseId)
-        .then((user) => {
-          this.setState({ user });
-        }).catch();
-    }
-  }
+  // componentDidMount() {
+  //   const { authed } = this.props;
+  //   if (authed) {
+  //     const firebaseId = firebase.auth().currentUser.uid;
+  //     userData.getUserByUID(firebaseId)
+  //       .then((user) => {
+  //         this.setState({ user });
+  //       }).catch(err => console.error('trouble fetching user on navbar mount', err));
+  //   }
+  // }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.authed !== prevProps.authed) {
-      if (this.props.authed) {
-        const firebaseId = firebase.auth().currentUser.uid;
-        userData.getUserByUID(firebaseId)
-          .then((user) => {
-            this.setState({ user });
-          }).catch();
-      } else {
-        this.setState({ user: defaultUser });
-      }
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.authed !== prevProps.authed) {
+  //     if (this.props.authed) {
+  //       const firebaseId = firebase.auth().currentUser.uid;
+  //       userData.getUserByUID(firebaseId)
+  //         .then((user) => {
+  //           this.setState({ user });
+  //         }).catch(err => console.error('trouble fetching user on navbar update', err));
+  //     } else {
+  //       this.setState({ user: defaultUser });
+  //     }
+  //   }
+  // }
 
   logMeOut = (e) => {
     e.preventDefault();
@@ -74,25 +76,28 @@ class MyNavbar extends React.Component {
   };
 
   render() {
-    const { user } = this.state;
-    const { authed } = this.props;
+    // const { user } = this.state;
+    const { authed, userObj, getUser } = this.props;
     const buildNavbar = () => {
       let userLink = '';
-      if (user !== undefined) {
-        userLink = `/user/${user.id}`;
+      if (userObj !== undefined) {
+        userLink = `/user/${userObj.id}`;
       }
-      if (authed) {
+      if (userObj === 'undefined' || userObj === undefined) {
+        getUser();
+      }
+      if (authed && userObj !== undefined) {
         return (
           <Nav className="ml-auto" navbar>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret className="navbar-user-button">
-                <img className="navbar-user-image" src={user.imageUrl} alt="the user"></img>
+                <img className="navbar-user-image" src={userObj.imageUrl} alt="the user"></img>
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem header>
                   <div>
-                    <p>{user.name}</p>
-                    <p>{user.city}</p>
+                    <p>{userObj.name}</p>
+                    <p>{userObj.city}</p>
                   </div>
                 </DropdownItem>
                 <DropdownItem divider />
