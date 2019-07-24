@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 
 import ReviewOnBusinessPage from '../ReviewOnBusinessPage/ReviewOnBusinessPage';
 
+import createStars from '../../helpers/createStars';
+import ratingMath from '../../helpers/ratingMath';
+
 import yelpData from '../../helpers/data/yelpData';
 import ratingData from '../../helpers/data/ratingData';
 import amenityData from '../../helpers/data/amenityData';
@@ -27,10 +30,6 @@ class Business extends React.Component {
     femaleAmenities: [],
   }
 
-  ratingMath = (ratings) => {
-    const total = ratings.reduce((acc, c) => acc + c, 0);
-    return total / ratings.length;
-  };
 
   seperateRatings = () => {
     const { reviews, restroomTypes } = this.state;
@@ -131,17 +130,17 @@ class Business extends React.Component {
       let maleRating = '';
       let femaleRating = '';
       if (unisexRatings.length > 0) {
-        unisexRating = this.ratingMath(unisexRatings);
+        unisexRating = ratingMath(unisexRatings);
       } else {
         unisexRating = 'No Rating';
       }
       if (maleRatings.length > 0) {
-        maleRating = this.ratingMath(maleRatings);
+        maleRating = ratingMath(maleRatings);
       } else {
         maleRating = 'No Rating';
       }
       if (femaleRatings.length > 0) {
-        femaleRating = this.ratingMath(femaleRatings);
+        femaleRating = ratingMath(femaleRatings);
       } else {
         femaleRating = 'No Rating';
       }
@@ -150,7 +149,7 @@ class Business extends React.Component {
         {unisexRating === 'No Rating' ? ''
           : <div className="col">
               <h1>Unisex</h1>
-              <p className='unisexRating'>{unisexRating}</p>
+              <p className='unisexRating'>{createStars(unisexRating)}</p>
               <ul>
                 {unisexAmenities.map(amenity => (
                 <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
@@ -159,7 +158,7 @@ class Business extends React.Component {
         {maleRating === 'No Rating' ? ''
           : <div className="col">
               <h1>Male</h1>
-              <p className='maleRating'>{maleRating}</p>
+              <p className='maleRating'>{createStars(maleRating)}</p>
               <ul>
                 {maleAmenities.map(amenity => (
                 <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
@@ -168,7 +167,7 @@ class Business extends React.Component {
         {femaleRating === 'No Rating' ? ''
           : <div className="col">
               <h1>Female</h1>
-              <p className='femaleRating'>{femaleRating}</p>
+              <p className='femaleRating'>{createStars(femaleRating)}</p>
               <ul>
               {femaleAmenities.map(amenity => (
                   <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
