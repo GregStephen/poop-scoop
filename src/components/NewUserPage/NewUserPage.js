@@ -77,7 +77,7 @@ class NewUserPage extends React.Component {
     const avatarSelection = [];
     Object.keys(avatars).forEach((key, index) => {
       avatarSelection.push(<div className="avatar col-3 mb-4">
-      <button><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
+      <button className="avatar-btn"><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
       </div>);
     });
     return avatarSelection;
@@ -154,7 +154,7 @@ class NewUserPage extends React.Component {
               { this.createAvatarSelection()}
             </div>
           </div>
-          <button type="submit" className="btn btn-primary">Join PoopScoop</button>
+          <button type="submit" className="new-user-btn btn btn-primary">Join PoopScoop</button>
         </form>
       </div>
     );
