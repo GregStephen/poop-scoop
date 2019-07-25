@@ -13,6 +13,18 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
+const userIcon = L.icon({
+  iconUrl: 'https://image.flaticon.com/icons/svg/10/10601.svg',
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+
+
+  iconSize: [38, 95],
+  shadowSize: [50, 64],
+  iconAnchor: [2, 50],
+  shadowAnchor: [10, 45],
+  popupAnchor: [20, -30],
+});
+
 class Map extends React.Component {
   componentDidMount() {
     this.map = L.map('map', {
@@ -30,7 +42,7 @@ class Map extends React.Component {
 
     const onLocationFound = (e) => {
       this.props.findDude(e.latlng);
-      L.marker(e.latlng).addTo(this.map)
+      L.marker((e.latlng), { icon: userIcon }).addTo(this.map)
         .bindPopup('Here You Are').openPopup();
     };
 
