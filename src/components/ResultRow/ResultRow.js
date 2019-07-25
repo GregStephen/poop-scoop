@@ -9,6 +9,9 @@ import businessData from '../../helpers/data/businessData';
 import ratingData from '../../helpers/data/ratingData';
 import amenityData from '../../helpers/data/amenityData';
 
+import ratingMath from '../../helpers/ratingMath';
+import createStars from '../../helpers/createStars';
+
 import yelpDataShape from '../../helpers/propz/yelpDataShape';
 import './ResultRow.scss';
 
@@ -137,11 +140,6 @@ class ResultRow extends React.Component {
     this.makeTheMarker();
   }
 
-  ratingMath = (ratings) => {
-    const total = ratings.reduce((acc, c) => acc + c, 0);
-    return total / ratings.length;
-  };
-
   render() {
     const { result } = this.props;
     const {
@@ -174,26 +172,26 @@ class ResultRow extends React.Component {
       let maleRating = '';
       let femaleRating = '';
       if (unisexRatingsArray.length > 0) {
-        unisexRating = this.ratingMath(unisexRatingsArray);
+        unisexRating = ratingMath(unisexRatingsArray);
       } else {
         unisexRating = 'No Rating';
       }
       if (maleRatingsArray.length > 0) {
-        maleRating = this.ratingMath(maleRatingsArray);
+        maleRating = ratingMath(maleRatingsArray);
       } else {
         maleRating = 'No Rating';
       }
       if (femaleRatingsArray.length > 0) {
-        femaleRating = this.ratingMath(femaleRatingsArray);
+        femaleRating = ratingMath(femaleRatingsArray);
       } else {
         femaleRating = 'No Rating';
       }
       return (
         <div className='col-12 row'>
           <p className="col-3">Rating:</p>
-          <p className='unisexRating col-3'>{unisexRating}</p>
-          <p className='maleRating col-3'>{maleRating}</p>
-          <p className='femaleRating col-3'>{femaleRating}</p>
+          <p className='unisexRating col-3'>{createStars(unisexRating)}</p>
+          <p className='maleRating col-3'>{createStars(maleRating)}</p>
+          <p className='femaleRating col-3'>{createStars(femaleRating)}</p>
         </div>
       );
     };

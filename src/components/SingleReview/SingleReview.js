@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import createStars from '../../helpers/createStars';
+
 import businessData from '../../helpers/data/businessData';
 import yelpData from '../../helpers/data/yelpData';
 import './SingleReview.scss';
@@ -37,6 +39,7 @@ class SingleReview extends React.Component {
         </div>
       );
     };
+
     return (
       <div className="SingleReview col-8 card">
         {/* <div className="card"> */}
@@ -51,8 +54,8 @@ class SingleReview extends React.Component {
               </div>
               { forWhichBathroom() }
               <div className="row col-12">
-                <p className="col">Cleanliness: {review.cleanliness}</p>
-                <p className="col">Decor: {review.decor}</p>
+                <p className="col">Cleanliness: {createStars(review.cleanliness)}</p>
+                <p className="col">Decor: {createStars(review.decor)}</p>
               </div>
               <div className="col-12">
                 <p>"{review.review}"</p>

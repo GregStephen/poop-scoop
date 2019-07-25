@@ -4,5 +4,6 @@
   "amenities": "amenities",
   "amenityType": "amenityType",
   "restroomType": "restroomType",
-  "businessRating": "businessRating"
+  "businessRating": "businessRating",
+  "avatars": "avatars"
 }

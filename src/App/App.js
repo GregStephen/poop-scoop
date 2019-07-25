@@ -15,6 +15,7 @@ import EditReview from '../components/EditReview/EditReview';
 import NewUserPage from '../components/NewUserPage/NewUserPage';
 
 import yelpClient from '../helpers/data/yelpData';
+import userData from '../helpers/data/userData';
 
 import './App.scss';
 import fbConnect from '../helpers/data/fbConnection';
@@ -40,12 +41,37 @@ const PublicRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
+    userObj: {
+      name: 'Greg',
+    },
+  }
+
+  getUser = () => {
+    if (this.state.authed) {
+      const firebaseId = firebase.auth().currentUser.uid;
+      userData.getUserByUID(firebaseId)
+        .then(userObj => this.setState({ userObj }))
+        .catch(err => console.error('trouble fetching user data', err));
+    }
+  }
+
+  createUser = (saveMe) => {
+    userData.postUser(saveMe)
+      .then(() => {
+        this.getUser();
+      })
+      .catch();
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ authed: true });
+        userData.getUserByUID(user.uid)
+          .then((userObj) => {
+            this.setState({ userObj });
+            this.setState({ authed: true });
+          })
+          .catch(err => console.error('trouble fetching user data', err));
       } else {
         this.setState({ authed: false });
       }
@@ -57,18 +83,18 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, userObj } = this.state;
     return (
       <ApolloProvider client={yelpClient.client}r>
         <div className="App">
           <BrowserRouter>
             <React.Fragment>
-              <MyNavbar authed={ authed }/>
+              <MyNavbar authed={ authed } userObj={ userObj } getUser={ this.getUser }/>
               <Switch>
                 <PublicRoute path='/auth' component={Auth} authed={authed}/>
                 <PrivateRoute path='/home' component={Home} authed={authed}/>
                 <PrivateRoute path='/user/:id' component={User} authed={authed}/>
-                <Route path='/new-user' component={NewUserPage} authed={authed}/>
+                <Route path='/new-user' component={NewUserPage} authed={authed} createUser={ this.createUser }/>
                 <PrivateRoute path='/business/:yelpId' component={Business} authed={authed}/>
                 <PrivateRoute path='/review/:yelpId' component={ReviewPage} authed={authed}/>
                 <PrivateRoute path='/edit-review/:yelpId' component={EditReview} authed={authed}/>
