@@ -37,7 +37,7 @@ class NewUserPage extends React.Component {
     const { email, password } = this.state;
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const dateCreated = moment().format('YYYY-MM-DD');
+        const dateCreated = moment().format('LL');
         const saveMe = { ...this.state.newUser };
         saveMe.uid = firebase.auth().currentUser.uid;
         saveMe.dateCreated = dateCreated;
@@ -153,15 +153,6 @@ class NewUserPage extends React.Component {
             <div className="row col-10 ">
               { this.createAvatarSelection()}
             </div>
-            {/* <input
-            type="url"
-            className="form-control"
-            id="imageUrl"
-            value={newUser.imageUrl}
-            onChange={this.formFieldStringState}
-            placeholder="www.linkToMyPicture.com"
-            required
-            /> */}
           </div>
           <button type="submit" className="btn btn-primary">Join PoopScoop</button>
         </form>

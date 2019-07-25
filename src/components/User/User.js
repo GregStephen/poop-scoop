@@ -47,11 +47,11 @@ class User extends React.Component {
     }));
   }
 
-  updateUser = (userObj) => {
+  updateTheUser = (userObj) => {
+    const { updateUser } = this.props;
     const userId = this.props.match.params.id;
-    userData.putUser(userObj, userId).then(() => {
-      this.loadPage();
-    }).catch();
+    updateUser(userObj, userId);
+    this.loadPage();
   }
 
   deleteProfile = (e) => {
@@ -73,15 +73,21 @@ class User extends React.Component {
 
 
     return (
-      <div className="User">
-        <h1>{user.name}</h1>
-        <img src={user.imageUrl} alt="user smiling at ya"></img>
-        <p>Number of reviews: {reviews.length}</p>
-        <p>{user.city}</p>
-        <p>{user.state}</p>
-        {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-info" onClick={this.toggleUserEdit}>Edit Profile</button> : ''}
-        {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-danger" onClick={this.deleteProfile}>Delete Profile</button> : ''}
+      <div className="User row">
+        <div className="name col-12">
+          <h1>{user.name}</h1>
+        </div>
+        <div className="avatar-div col-3">
+          <img className="user-avatar" src={user.imageUrl} alt="User's avatar"></img>
+        </div>
         <div>
+          <p>Pooper since: {user.dateCreated}</p>
+          <p>Number of reviews: {reviews.length}</p>
+          <p>{user.city}, {user.state}</p>
+          {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-info" onClick={this.toggleUserEdit}>Edit Profile</button> : ''}
+          {firebase.auth().currentUser.uid === user.uid ? <button className="btn btn-danger" onClick={this.deleteProfile}>Delete Profile</button> : ''}
+        </div>
+        <div className="col-12">
           <h1>Ratings</h1>
           <div className="row justify-content-center">
             { displayReviews }
@@ -93,7 +99,7 @@ class User extends React.Component {
             <EditUserModalForm
             toggleUserEdit={this.toggleUserEdit}
             user={user}
-            updateUser={this.updateUser}
+            updateTheUser={this.updateTheUser}
             />
           </Modal>
         </div>
