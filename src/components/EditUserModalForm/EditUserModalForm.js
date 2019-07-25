@@ -8,7 +8,7 @@ class EditUserModalForm extends React.Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
     toggleUserEdit: PropTypes.func.isRequired,
-    updateUser: PropTypes.func.isRequired,
+    updateTheUser: PropTypes.func.isRequired,
   }
 
   state = {
@@ -33,10 +33,10 @@ class EditUserModalForm extends React.Component {
 
   handleUpdatedUserSubmit = (e) => {
     e.preventDefault();
-    const { updateUser } = this.props;
+    const { updateTheUser } = this.props;
     const { updatedUser } = this.state;
     const saveUpdatedUser = { ...updatedUser };
-    updateUser(saveUpdatedUser);
+    updateTheUser(saveUpdatedUser);
     this.toggleModal();
   }
 

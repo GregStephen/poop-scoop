@@ -15,23 +15,11 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-// import userData from '../../helpers/data/userData';
-
 import './MyNavbar.scss';
-import userData from '../../helpers/data/userData';
-
-// const defaultUser = {
-//   id: '',
-//   name: '',
-//   city: '',
-//   state: '',
-//   imageUrl: '',
-// };
 
 class MyNavbar extends React.Component {
   state = {
     isOpen: false,
-    // user: defaultUser,
   }
 
   static propTypes = {
@@ -45,38 +33,12 @@ class MyNavbar extends React.Component {
     });
   }
 
-  // componentDidMount() {
-  //   const { authed } = this.props;
-  //   if (authed) {
-  //     const firebaseId = firebase.auth().currentUser.uid;
-  //     userData.getUserByUID(firebaseId)
-  //       .then((user) => {
-  //         this.setState({ user });
-  //       }).catch(err => console.error('trouble fetching user on navbar mount', err));
-  //   }
-  // }
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.authed !== prevProps.authed) {
-  //     if (this.props.authed) {
-  //       const firebaseId = firebase.auth().currentUser.uid;
-  //       userData.getUserByUID(firebaseId)
-  //         .then((user) => {
-  //           this.setState({ user });
-  //         }).catch(err => console.error('trouble fetching user on navbar update', err));
-  //     } else {
-  //       this.setState({ user: defaultUser });
-  //     }
-  //   }
-  // }
-
   logMeOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
   };
 
   render() {
-    // const { user } = this.state;
     const { authed, userObj, getUser } = this.props;
     const buildNavbar = () => {
       let userLink = '';

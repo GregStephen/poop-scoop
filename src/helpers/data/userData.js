@@ -27,6 +27,8 @@ const deleteUser = id => axios.delete(`${firebaseUrl}/user/${id}.json`);
 
 const putUser = (userObj, id) => axios.put(`${firebaseUrl}/user/${id}.json`, userObj);
 
+const changeAvatar = (avatar, id) => axios.patch(`${firebaseUrl}/user/${id}.json`, { imageUrl: avatar });
+
 export default
 {
   getUserByUID,
@@ -34,4 +36,5 @@ export default
   getUserById,
   deleteUser,
   putUser,
+  changeAvatar,
 };

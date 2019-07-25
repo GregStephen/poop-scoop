@@ -63,6 +63,13 @@ class App extends React.Component {
       .catch();
   }
 
+  updateUser = (userObj, userId) => {
+    userData.putUser(userObj, userId)
+      .then(() => {
+        this.getUser();
+      }).catch();
+  }
+
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -93,7 +100,7 @@ class App extends React.Component {
               <Switch>
                 <PublicRoute path='/auth' component={Auth} authed={authed}/>
                 <PrivateRoute path='/home' component={Home} authed={authed}/>
-                <PrivateRoute path='/user/:id' component={User} authed={authed}/>
+                <PrivateRoute path='/user/:id' component={User} authed={authed} updateUser={this.updateUser}/>
                 <Route path='/new-user' component={NewUserPage} authed={authed} createUser={ this.createUser }/>
                 <PrivateRoute path='/business/:yelpId' component={Business} authed={authed}/>
                 <PrivateRoute path='/review/:yelpId' component={ReviewPage} authed={authed}/>
