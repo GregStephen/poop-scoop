@@ -13,6 +13,9 @@ class EditUserModalForm extends React.Component {
 
   state = {
     updatedUser: {
+      name: '',
+      city: '',
+      state: '',
     },
   }
 
