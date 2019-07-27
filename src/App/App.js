@@ -22,9 +22,11 @@ import fbConnect from '../helpers/data/fbConnection';
 
 fbConnect();
 
-const PrivateRoute = ({ component: Component, authed, ...rest }) => {
+const PrivateRoute = ({
+  component: Component, authed, userObj, userFunc, ...rest
+}) => {
   const routeChecker = props => (authed === true
-    ? (<Component {...props} />)
+    ? (<Component {...props} userObj={userObj} userFunc={userFunc} />)
     : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }}/>)
   );
   return <Route {...rest} render={props => routeChecker(props)}/>;
@@ -99,12 +101,12 @@ class App extends React.Component {
               <MyNavbar authed={ authed } userObj={ userObj } getUser={ this.getUser }/>
               <Switch>
                 <PublicRoute path='/auth' component={Auth} authed={authed}/>
-                <PrivateRoute path='/home' component={Home} authed={authed}/>
-                <PrivateRoute path='/user/:id' component={User} authed={authed} updateUser={this.updateUser}/>
+                <PrivateRoute path='/home' component={Home} authed={authed} userObj={ userObj }/>
+                <PrivateRoute path='/user/:id' component={User} authed={authed} userFunc={this.updateUser} userObj={ userObj }/>
                 <Route path='/new-user' component={NewUserPage} authed={authed} createUser={ this.createUser }/>
-                <PrivateRoute path='/business/:yelpId' component={Business} authed={authed}/>
-                <PrivateRoute path='/review/:yelpId' component={ReviewPage} authed={authed}/>
-                <PrivateRoute path='/edit-review/:yelpId' component={EditReview} authed={authed}/>
+                <PrivateRoute path='/business/:yelpId' component={Business} authed={authed} userObj={ userObj }/>
+                <PrivateRoute path='/review/:yelpId' component={ReviewPage} authed={authed} userObj={ userObj }/>
+                <PrivateRoute path='/edit-review/:yelpId' component={EditReview} authed={authed} userObj={ userObj }/>
                 <Redirect from='*' to='/auth'/>
               </Switch>
             </React.Fragment>

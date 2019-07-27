@@ -48,7 +48,7 @@ class User extends React.Component {
     this.setState(state => ({ collapse: !state.collapse }));
   }
 
-  loadPage = () => {
+  getUserInfo = () => {
     const userId = this.props.match.params.id;
     userData.getUserById(userId)
       .then((userPromise) => {
@@ -60,6 +60,12 @@ class User extends React.Component {
           });
       })
       .catch(err => console.error('problem getting single user', err));
+  }
+
+  loadPage = () => {
+    // const { userObj } = this.props;
+    // this.setState({ userObj: userObj });
+    this.getUserInfo();
     restroomTypeData.getRestroomType()
       .then(restroomTypes => this.setState({ restroomTypes }))
       .catch();
@@ -79,10 +85,10 @@ class User extends React.Component {
   }
 
   updateTheUser = (userObj) => {
-    const { updateUser } = this.props;
+    const { userFunc } = this.props;
     const userId = this.props.match.params.id;
-    updateUser(userObj, userId);
-    this.loadPage();
+    userFunc(userObj, userId);
+    this.setState({ user: userObj });
   }
 
   deleteProfile = (e) => {
@@ -103,6 +109,8 @@ class User extends React.Component {
       avatarSelection[i].classList.remove('selected');
     }
     e.target.classList.add('selected');
+    const tempUser = { ...this.state.user };
+    tempUser[e.target.id] = this.state.avatarChoice;
     let tempAvatar = this.state.avatarChoice;
     tempAvatar = e.target.src;
     this.setState({ avatarChoice: tempAvatar });
@@ -121,7 +129,9 @@ class User extends React.Component {
 
   saveNewAvatar = () => {
     const userId = this.props.match.params.id;
+    const { userFunc } = this.props;
     const { avatarChoice } = this.state;
+    userFunc(this.state.user, userId);
     userData.changeAvatar(avatarChoice, userId)
       .then(() => {
         this.loadPage();
