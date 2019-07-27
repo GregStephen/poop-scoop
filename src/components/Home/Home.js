@@ -2,7 +2,7 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import Map from '../Map/Map';
+import ScoopMap from '../ScoopMap/ScoopMap';
 import ResultRow from '../ResultRow/ResultRow';
 
 import restroomType from '../../helpers/data/restroomTypeData';
@@ -106,10 +106,11 @@ class Home extends React.Component {
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="mapDiv">
-          <Map
+          <ScoopMap markersData={ markersData } findDude={ this.findDude } />
+          {/* <Map
             markersData={ markersData }
             findDude={ this.findDude }
-          />
+          /> */}
         </div>
         <div className="container">
           <div className="row">
