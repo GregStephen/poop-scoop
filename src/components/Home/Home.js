@@ -33,6 +33,11 @@ class Home extends React.Component {
     yelpData.searchBusinessesByTerm(latitude, longitude)
       .then((res) => {
         const yelpRes = res;
+        res.forEach((yelpie, index) => {
+          if (yelpie.coordinates === undefined || yelpie.coordinates === 'undefined') {
+            yelpRes.splice(index, 1);
+          }
+        });
         this.setState({ markersData: [] });
         this.setState({ yelpResults: yelpRes });
         this.state.yelpResults.map(result => (
@@ -41,8 +46,10 @@ class Home extends React.Component {
               ...this.state.markersData,
               {
                 title: result.name,
-                latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
-                image: result.photos,
+                latlng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+                image: result.photos[0],
+                key: result.id,
+                content: 'PopUp',
               }],
           })
         ));
@@ -77,7 +84,7 @@ class Home extends React.Component {
         ...this.state.markersData,
         {
           title: markerInfo.name,
-          latLng: markerInfo.latLng,
+          latlng: markerInfo.latlng,
           image: markerInfo.image,
         }],
     });

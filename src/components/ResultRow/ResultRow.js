@@ -57,9 +57,11 @@ class ResultRow extends React.Component {
   makeTheMarker = () => {
     const { addMarker, result } = this.props;
     const newMarker = {
+      key: result.id,
       name: result.name,
       latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
       image: result.image_url,
+      content: 'PopUp',
     };
     addMarker(newMarker);
   }

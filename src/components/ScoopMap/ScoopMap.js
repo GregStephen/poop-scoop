@@ -28,26 +28,62 @@ const userIcon = L.icon({
   popupAnchor: [20, -30],
 });
 
+// const MyPopupMarker = ({ content, latlng }) => (
+//   <Marker position={latlng}>
+//     <Popup>{content}</Popup>
+//   </Marker>
+// );
+
+// const MyMarkersList = ({ markers }) => {
+//   const items = markers.map(({ key, ...props }) => (
+//     <MyPopupMarker key={key} {...props} />
+//   ));
+//   return <Fragment>{items}</Fragment>;
+// };
+
 
 class ScoopMap extends Component {
   state = {
     hasLocation: false,
     latlng: {
-      lat: 51.505,
-      lng: -0.09,
+      lat: 36.129,
+      lng: -86.67,
     },
     zoom: 13,
   }
 
-myRef = createRef();
+  myRef = createRef();
 
-componentDidMount() {
-  const map = this.myRef.current;
-  if (map != null) {
-    console.error('mounted');
-    map.leafletElement.locate();
+
+  updateMarkers = () => {
+    const { markersData } = this.props;
+    if (markersData !== undefined) {
+      console.error(markersData);
+      markersData.map(markerD => (
+    <Marker
+    key={markerD.title}
+    position={markerD.latlng}
+    icon={userIcon}
+    ><Popup><div><p>{markerD.tite}</p></div></Popup>
+    </Marker>
+      ));
+    }
+  };
+
+  componentDidMount() {
+    const map = this.myRef.current;
+    if (map != null) {
+      map.leafletElement.locate();
+      this.updateMarkers();
+    }
   }
-}
+
+  componentDidUpdate({ markersData }) {
+    if (this.props.markersData !== markersData) {
+      console.error('update');
+      this.updateMarkers(this.props.markersData);
+    }
+  }
 
   handleLocationFound = (e) => {
     console.error(e);
@@ -60,14 +96,17 @@ componentDidMount() {
 
   render() {
     const marker = this.state.hasLocation ? (
-      <Marker position={this.state.latlng}>
+      <Marker
+      position={this.state.latlng}
+      icon={userIcon}
+      >
         <Popup>You are here</Popup>
       </Marker>
     ) : null;
 
     return (
       <div className="ScoopMap">
-      <Map 
+      <Map
       ref={this.myRef}
       center={this.state.latlng}
       zoom={this.state.zoom}
@@ -76,12 +115,8 @@ componentDidMount() {
         <TileLayer
           attribution='<a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-      <Marker position={this.state.latlng}>
-        <Popup>
-          a pretty popup.
-        </Popup>
-      </Marker>
       {marker}
+      {this.updateMarkers()}
       </Map>
       </div>
     );
