@@ -2,9 +2,10 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import Map from '../Map/Map';
+import ScoopMap from '../ScoopMap/ScoopMap';
 import ResultRow from '../ResultRow/ResultRow';
 
+import businessData from '../../helpers/data/businessData';
 import restroomType from '../../helpers/data/restroomTypeData';
 import amenityTypeData from '../../helpers/data/amenityTypeData';
 import yelpData from '../../helpers/data/yelpData';
@@ -33,18 +34,30 @@ class Home extends React.Component {
     yelpData.searchBusinessesByTerm(latitude, longitude)
       .then((res) => {
         const yelpRes = res;
-        this.setState({ markersData: [] });
+        res.forEach((yelpie, index) => {
+          if (yelpie.coordinates === undefined || yelpie.coordinates === 'undefined' || yelpie.coordinates === null) {
+            yelpRes.splice(index, 1);
+          }
+        });
         this.setState({ yelpResults: yelpRes });
+        // this.setState({ markersData: [] });
+        const tempMarkers = [];
         this.state.yelpResults.map(result => (
-          this.setState({
-            markersData: [
-              ...this.state.markersData,
-              {
+          businessData.getBusinessesById(result.id)
+            .then((bizData) => {
+              const tempMarker = {
                 title: result.name,
-                latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
-                image: result.photos,
-              }],
-          })
+                latlng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+                bizLink: `/business/${result.id}`,
+                bizSearch: `?biz=${bizData !== undefined ? bizData.id : 'undefined'}`,
+                image: result.photos[0],
+                key: result.id,
+                content: `<div><h1>${result.name}</h1></div>`,
+              };
+              tempMarkers.push(tempMarker);
+              this.setState({ markersData: tempMarkers });
+            })
+            .catch()
         ));
       })
       .catch(err => console.error('cant get yelp data', err));
@@ -71,18 +84,6 @@ class Home extends React.Component {
       }).catch(err => console.error('can not get user', err));
   }
 
-  addMarker = (markerInfo) => {
-    this.setState({
-      markersData: [
-        ...this.state.markersData,
-        {
-          title: markerInfo.name,
-          latLng: markerInfo.latLng,
-          image: markerInfo.image,
-        }],
-    });
-  }
-
   findDude = (latLing) => {
     this.setState({ latitude: latLing.lat, longitude: latLing.lng });
   }
@@ -97,7 +98,6 @@ class Home extends React.Component {
       result={ result }
       restroomTypes={ restroomTypes }
       amenityTypes={ amenityTypes }
-      addMarker={ this.addMarker }
       />
     ));
     return (
@@ -106,10 +106,7 @@ class Home extends React.Component {
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="mapDiv">
-          <Map
-            markersData={ markersData }
-            findDude={ this.findDude }
-          />
+          <ScoopMap markersData={ markersData } findDude={ this.findDude } />
         </div>
         <div className="container">
           <div className="row">
