@@ -51,20 +51,19 @@ class ResultRow extends React.Component {
     result: yelpDataShape.yelpDataShape,
     restroomTypes: PropTypes.array.isRequired,
     amenityTypes: PropTypes.object.isRequired,
-    addMarker: PropTypes.func.isRequired,
   }
 
-  makeTheMarker = () => {
-    const { addMarker, result } = this.props;
-    const newMarker = {
-      key: result.id,
-      name: result.name,
-      latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
-      image: result.image_url,
-      content: 'PopUp',
-    };
-    addMarker(newMarker);
-  }
+  // makeTheMarker = () => {
+  //   const { addMarker, result } = this.props;
+  //   const newMarker = {
+  //     key: result.id,
+  //     name: result.name,
+  //     latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+  //     image: result.image_url,
+  //     content: 'PopUp',
+  //   };
+  //   addMarker(newMarker);
+  // }
 
   seperateRatings = () => {
     const { reviews } = this.state;
@@ -139,7 +138,6 @@ class ResultRow extends React.Component {
             });
         }
       });
-    this.makeTheMarker();
   }
 
   render() {
@@ -221,7 +219,6 @@ class ResultRow extends React.Component {
               </div>
               <div className="col-4">
                 <p>{result.location.address1}</p>
-                {/* <p>{result.phone}</p> */}
               </div>
             </div>
               { reviewDisplay(reviews) }
