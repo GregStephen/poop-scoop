@@ -20,24 +20,6 @@ class Auth extends React.Component {
       }).catch();
   }
 
-  // logIn = (e) => {
-  //   e.preventDefault();
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   firebase.auth().signInWithPopup(provider)
-  //     .then(() => {
-  //       const firebaseId = firebase.auth().currentUser.uid;
-  //       userData.getUserByUID(firebaseId)
-  //         .then((resp) => {
-  //           if (resp === undefined) {
-  //             console.error('new User');
-  //             this.props.history.push('/new-user');
-  //           } else {
-  //             this.props.history.push('/home');
-  //           }
-  //         });
-  //     });
-  // };
-
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
