@@ -41,25 +41,23 @@ class Home extends React.Component {
         });
         this.setState({ yelpResults: yelpRes });
         this.setState({ markersData: [] });
+        const tempMarkers = [];
         this.state.yelpResults.map(result => (
           businessData.getBusinessesById(result.id)
             .then((bizData) => {
-              this.setState({
-                markersData: [
-                  ...this.state.markersData,
-                  {
-                    title: result.name,
-                    latlng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
-                    bizLink: `/business/${result.id}`,
-                    bizSearch: `?biz=${bizData !== undefined ? bizData.id : 'undefined'}`,
-                    image: result.photos[0],
-                    key: result.id,
-                    content: `<div><h1>${result.name}</h1></div>`,
-                  }],
-              });
+              const tempMarker = {
+                title: result.name,
+                latlng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
+                bizLink: `/business/${result.id}`,
+                bizSearch: `?biz=${bizData !== undefined ? bizData.id : 'undefined'}`,
+                image: result.photos[0],
+                key: result.id,
+                content: `<div><h1>${result.name}</h1></div>`,
+              };
+              tempMarkers.push(tempMarker);
+              this.setState({ markersData: tempMarkers });
             })
             .catch()
-
         ));
       })
       .catch(err => console.error('cant get yelp data', err));

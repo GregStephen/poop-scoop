@@ -52,13 +52,12 @@ class ScoopMap extends Component {
 
   componentDidUpdate({ markersData }) {
     if (this.props.markersData !== markersData) {
-      console.error('update');
+      console.error('update', markersData);
       this.setState({ markersData: this.props.markersData });
     }
   }
 
   handleLocationFound = (e) => {
-    console.error(e);
     this.props.findDude(e.latlng);
     this.setState({
       hasLocation: true,
@@ -70,6 +69,7 @@ class ScoopMap extends Component {
     const updateMarkers = () => {
       const { markersData } = this.state;
       if (markersData.length > 0) {
+        console.error('hey');
         return (markersData.map(markerD => (
           <Marker
           key={markerD.title}
