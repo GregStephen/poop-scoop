@@ -34,8 +34,8 @@ class ScoopMap extends Component {
   state = {
     hasLocation: false,
     latlng: {
-      lat: 36.129,
-      lng: -86.67,
+      lat: 0,
+      lng: 0,
     },
     zoom: 13,
     markersData: [],
@@ -69,8 +69,24 @@ class ScoopMap extends Component {
     const updateMarkers = () => {
       const { markersData } = this.state;
       if (markersData.length > 0) {
-        console.error('hey');
-        return (markersData.map(markerD => (
+        // const markersToShow = [];
+        console.error('hey this is making markers', markersData.length);
+        // for (let i = 0; i < markersData.length; i += 1) {
+        //   markersToShow.push(
+        //     <Marker
+        //   key={markersData[i].title}
+        //   position={markersData[i].latlng}
+        //   >
+        //   <Popup>
+        //   <div>
+        //   <img className="popup-image" src={markersData[i].image} alt={markersData[i].title}></img>
+        //     <Link to={{ pathname: markersData[i].bizLink, search: markersData[i].bizSearch }}>{markersData[i].title}</Link>
+        //   </div>
+        //   </Popup>
+        //   </Marker>,
+        //   );
+        // }
+        const markersToShow = markersData.map(markerD => (
           <Marker
           key={markerD.title}
           position={markerD.latlng}
@@ -82,8 +98,10 @@ class ScoopMap extends Component {
           </div>
           </Popup>
           </Marker>
-        )));
+        ));
+        return markersToShow;
       }
+      return null;
     };
 
     const userMarker = (

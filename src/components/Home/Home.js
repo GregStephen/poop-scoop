@@ -40,7 +40,7 @@ class Home extends React.Component {
           }
         });
         this.setState({ yelpResults: yelpRes });
-        this.setState({ markersData: [] });
+        // this.setState({ markersData: [] });
         const tempMarkers = [];
         this.state.yelpResults.map(result => (
           businessData.getBusinessesById(result.id)
