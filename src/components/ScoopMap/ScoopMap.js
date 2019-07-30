@@ -4,8 +4,10 @@ import React, { createRef, Component } from 'react';
 import {
   Map, TileLayer, Marker, Popup,
 } from 'react-leaflet';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import L from 'leaflet';
+
+import ScoopMarker from './ScoopMarker';
 
 import './ScoopMap.scss';
 
@@ -21,8 +23,6 @@ L.Icon.Default.mergeOptions({
 const userIcon = L.icon({
   iconUrl: 'https://image.flaticon.com/icons/svg/10/10601.svg',
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-
-
   iconSize: [38, 95],
   shadowSize: [50, 64],
   iconAnchor: [2, 50],
@@ -39,6 +39,7 @@ class ScoopMap extends Component {
     },
     zoom: 13,
     markersData: [],
+    selectedMarker: '',
   }
 
   myRef = createRef();
@@ -50,9 +51,12 @@ class ScoopMap extends Component {
     }
   }
 
-  componentDidUpdate({ markersData }) {
+  componentDidUpdate({ markersData, selectedMarker }) {
     if (this.props.markersData !== markersData) {
       this.setState({ markersData: this.props.markersData });
+    }
+    if (this.props.selectedMarker !== selectedMarker) {
+      this.setState({ selectedMarker: this.props.selectedMarker });
     }
   }
 
@@ -66,20 +70,14 @@ class ScoopMap extends Component {
 
   render() {
     const updateMarkers = () => {
-      const { markersData } = this.state;
+      const { markersData, selectedMarker } = this.state;
       if (markersData.length > 0) {
         const markersToShow = markersData.map(markerD => (
-          <Marker
-          key={markerD.bizLink}
-          position={markerD.latlng}
-          >
-          <Popup>
-          <div>
-          <img className="popup-image" src={markerD.image} alt={markerD.title}></img>
-            <Link to={{ pathname: markerD.bizLink, search: markerD.bizSearch }}>{markerD.title}</Link>
-          </div>
-          </Popup>
-          </Marker>
+         <ScoopMarker
+         key={markerD.key}
+         marker={markerD}
+         selectedMarker={selectedMarker}
+         />
         ));
         return markersToShow;
       }

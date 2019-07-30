@@ -51,19 +51,8 @@ class ResultRow extends React.Component {
     result: yelpDataShape.yelpDataShape,
     restroomTypes: PropTypes.array.isRequired,
     amenityTypes: PropTypes.object.isRequired,
+    selectBusiness: PropTypes.func.isRequired,
   }
-
-  // makeTheMarker = () => {
-  //   const { addMarker, result } = this.props;
-  //   const newMarker = {
-  //     key: result.id,
-  //     name: result.name,
-  //     latLng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
-  //     image: result.image_url,
-  //     content: 'PopUp',
-  //   };
-  //   addMarker(newMarker);
-  // }
 
   seperateRatings = () => {
     const { reviews } = this.state;
@@ -140,6 +129,11 @@ class ResultRow extends React.Component {
       });
   }
 
+  showPopup = () => {
+    const { result, selectBusiness } = this.props;
+    selectBusiness(result.id);
+  }
+
   render() {
     const { result } = this.props;
     const {
@@ -207,7 +201,7 @@ class ResultRow extends React.Component {
 
     return (
       <div className="ResultRow col-12 mb-2">
-      <div className="card">
+      <div className="card" onClick={this.showPopup}>
         <div className="row no-gutters">
           <div className="result-image-div col-3">
             <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>

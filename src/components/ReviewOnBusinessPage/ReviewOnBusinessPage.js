@@ -42,7 +42,6 @@ class ReviewOnBusinessPage extends React.Component {
 
   editThisReview = (e) => {
     e.preventDefault();
-    console.error('edit!');
   }
 
   render() {
