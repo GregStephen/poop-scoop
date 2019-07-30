@@ -94,11 +94,7 @@ class Home extends React.Component {
 
   render() {
     const {
-      yelpResults,
-      restroomTypes,
-      amenityTypes,
-      markersData,
-      selectedMarker,
+      yelpResults, restroomTypes, amenityTypes, markersData, selectedMarker,
     } = this.state;
     const resultComponents = yelpResults.map(result => (
       <ResultRow
@@ -112,18 +108,13 @@ class Home extends React.Component {
     return (
       <div className="Home">
         <form onSubmit={this.yelpSearch}>
-          <button
-            type="submit"
-            className="search-btn btn btn-danger">
-            Search Restrooms Near Me
-          </button>
+          <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="mapDiv">
           <ScoopMap
           markersData={ markersData }
           findDude={ this.findDude }
-          selectedMarker={ selectedMarker }
-          />
+          selectedMarker={ selectedMarker }/>
         </div>
         <div className="container">
           <div className="row">

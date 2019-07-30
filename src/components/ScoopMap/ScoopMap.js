@@ -4,8 +4,10 @@ import React, { createRef, Component } from 'react';
 import {
   Map, TileLayer, Marker, Popup,
 } from 'react-leaflet';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import L from 'leaflet';
+
+import ScoopMarker from './ScoopMarker';
 
 import './ScoopMap.scss';
 
@@ -21,8 +23,6 @@ L.Icon.Default.mergeOptions({
 const userIcon = L.icon({
   iconUrl: 'https://image.flaticon.com/icons/svg/10/10601.svg',
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-
-
   iconSize: [38, 95],
   shadowSize: [50, 64],
   iconAnchor: [2, 50],
@@ -68,35 +68,16 @@ class ScoopMap extends Component {
     });
   }
 
-  popItUp = () => {
-    const { selectedMarker } = this.props;
-    if (selectedMarker !== '') {
-      const popThis = document.getElementById(selectedMarker);
-      console.error(popThis);
-    }
-  }
-
   render() {
-    // const map = this.myRef.current;
     const updateMarkers = () => {
-      const { markersData } = this.state;
+      const { markersData, selectedMarker } = this.state;
       if (markersData.length > 0) {
         const markersToShow = markersData.map(markerD => (
-          <Marker
-          key={markerD.key}
-          id={markerD.key}
-          position={markerD.latlng}
-          ref={markerD.key}
-          >
-            <Popup
-            key={markerD.key}
-            >
-              <div>
-              <img className="popup-image" src={markerD.image} alt={markerD.title}></img>
-                <Link to={{ pathname: markerD.bizLink, search: markerD.bizSearch }}>{markerD.title}</Link>
-              </div>
-            </Popup>
-          </Marker>
+         <ScoopMarker
+         key={markerD.key}
+         marker={markerD}
+         selectedMarker={selectedMarker}
+         />
         ));
         return markersToShow;
       }
@@ -125,7 +106,6 @@ class ScoopMap extends Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
       {userMarker}
       {updateMarkers()}
-      {this.popItUp()}
       </Map>
       </div>
     );

@@ -4,20 +4,18 @@ import { Popup } from 'react-leaflet';
 
 class ScoopPopUp extends React.Component {
   render() {
-    const { markerData } = this.props;
+    const { marker } = this.props;
     return (
-      <div className="ScoopPopUp">
         <Popup
         >
           <div>
-          <img className="popup-image" src={markerData.image} alt={markerData.title}></img>
+          <img className="popup-image" src={marker.image} alt={marker.title}></img>
             <Link
-              to={{ pathname: markerData.bizLink, search: markerData.bizSearch }}>
-              {markerData.title}
+              to={{ pathname: marker.bizLink, search: marker.bizSearch }}>
+              {marker.title}
             </Link>
           </div>
         </Popup>
-      </div>
     );
   }
 }
