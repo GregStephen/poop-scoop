@@ -52,7 +52,7 @@ class Home extends React.Component {
                 bizSearch: `?biz=${bizData !== undefined ? bizData.id : 'undefined'}`,
                 image: result.photos[0],
                 key: result.id,
-                content: `<div><h1>${result.name}</h1></div>`,
+                isRated: bizData !== undefined,
               };
               tempMarkers.push(tempMarker);
               this.setState({ markersData: tempMarkers });
