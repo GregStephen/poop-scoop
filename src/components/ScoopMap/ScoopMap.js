@@ -68,6 +68,14 @@ class ScoopMap extends Component {
     });
   }
 
+  popItUp = () => {
+    const { selectedMarker } = this.props;
+    if (selectedMarker !== '') {
+      const popThis = document.getElementById(selectedMarker);
+      console.error(popThis);
+    }
+  }
+
   render() {
     // const map = this.myRef.current;
     const updateMarkers = () => {
@@ -76,7 +84,9 @@ class ScoopMap extends Component {
         const markersToShow = markersData.map(markerD => (
           <Marker
           key={markerD.key}
+          id={markerD.key}
           position={markerD.latlng}
+          ref={markerD.key}
           >
             <Popup
             key={markerD.key}
@@ -115,6 +125,7 @@ class ScoopMap extends Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
       {userMarker}
       {updateMarkers()}
+      {this.popItUp()}
       </Map>
       </div>
     );
