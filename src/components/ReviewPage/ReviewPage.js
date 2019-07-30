@@ -222,6 +222,23 @@ class ReviewPage extends React.Component {
       .catch(err => console.error('trouble adding review', err));
   }
 
+  showAmenitiesChosen = (theyHave) => {
+    const { amenitiesTheyHave, amenitiesTheyDoNotHave, amenityTypes } = this.state;
+    const list = theyHave ? amenitiesTheyHave.map((thing, index) => {
+      if (index !== 0) {
+        return `, ${amenityTypes[thing]}`;
+      }
+      return amenityTypes[thing];
+    })
+      : amenitiesTheyDoNotHave.map((thing, index) => {
+        if (index !== 0) {
+          return `, ${amenityTypes[thing]}`;
+        }
+        return amenityTypes[thing];
+      });
+    return list;
+  }
+
   render() {
     const { yelpResults, restroomTypes, newReview } = this.state;
     return (
@@ -292,6 +309,7 @@ class ReviewPage extends React.Component {
                 <FormText color="muted">
                   cmd + click to remove the last selection
                 </FormText>
+                {this.showAmenitiesChosen(true)}
               </FormGroup>
             </Col>
             <Col md={{ size: 4, offset: 0 }} sm={{ size: 5, offset: 0 }} xs={{ size: 10, offset: 1 }}>
@@ -312,6 +330,7 @@ class ReviewPage extends React.Component {
                 <FormText color="muted">
                   cmd + click to remove the last selection
                 </FormText>
+                {this.showAmenitiesChosen(false)}
               </FormGroup>
             </Col>
           </Row>
