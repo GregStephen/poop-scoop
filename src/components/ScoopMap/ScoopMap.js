@@ -27,7 +27,7 @@ const userIcon = L.icon({
   shadowSize: [50, 64],
   iconAnchor: [2, 50],
   shadowAnchor: [10, 45],
-  popupAnchor: [20, -30],
+  popupAnchor: [20, -15],
 });
 
 class ScoopMap extends Component {
@@ -37,7 +37,7 @@ class ScoopMap extends Component {
       lat: 0,
       lng: 0,
     },
-    zoom: 13,
+    zoom: 14,
     markersData: [],
     selectedMarker: '',
   }
@@ -60,6 +60,13 @@ class ScoopMap extends Component {
     }
   }
 
+  setView = (latlng) => {
+    const map = this.myRef.current;
+    if (map != null) {
+      map.leafletElement.setView(latlng, 15);
+    }
+  }
+
   handleLocationFound = (e) => {
     this.props.findDude(e.latlng);
     this.setState({
@@ -77,6 +84,7 @@ class ScoopMap extends Component {
          key={markerD.key}
          marker={markerD}
          selectedMarker={selectedMarker}
+         setView={this.setView}
          />
         ));
         return markersToShow;

@@ -9,8 +9,10 @@ class ScoopMarker extends React.Component {
   componentDidUpdate({ selectedMarker }) {
     if (this.props.selectedMarker !== selectedMarker) {
       if (this.props.selectedMarker === this.props.marker.key) {
-        const marker = this.markerRef.current;
-        marker.leafletElement.openPopup();
+        const thisMarker = this.markerRef.current;
+        thisMarker.leafletElement.openPopup();
+        const { setView, marker } = this.props;
+        setView(marker.latlng);
       }
     }
   }
