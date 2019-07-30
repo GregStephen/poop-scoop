@@ -39,6 +39,7 @@ class ScoopMap extends Component {
     },
     zoom: 13,
     markersData: [],
+    selectedMarker: '',
   }
 
   myRef = createRef();
@@ -50,9 +51,12 @@ class ScoopMap extends Component {
     }
   }
 
-  componentDidUpdate({ markersData }) {
+  componentDidUpdate({ markersData, selectedMarker }) {
     if (this.props.markersData !== markersData) {
       this.setState({ markersData: this.props.markersData });
+    }
+    if (this.props.selectedMarker !== selectedMarker) {
+      this.setState({ selectedMarker: this.props.selectedMarker });
     }
   }
 
@@ -65,20 +69,23 @@ class ScoopMap extends Component {
   }
 
   render() {
+    // const map = this.myRef.current;
     const updateMarkers = () => {
       const { markersData } = this.state;
       if (markersData.length > 0) {
         const markersToShow = markersData.map(markerD => (
           <Marker
-          key={markerD.bizLink}
+          key={markerD.key}
           position={markerD.latlng}
           >
-          <Popup>
-          <div>
-          <img className="popup-image" src={markerD.image} alt={markerD.title}></img>
-            <Link to={{ pathname: markerD.bizLink, search: markerD.bizSearch }}>{markerD.title}</Link>
-          </div>
-          </Popup>
+            <Popup
+            key={markerD.key}
+            >
+              <div>
+              <img className="popup-image" src={markerD.image} alt={markerD.title}></img>
+                <Link to={{ pathname: markerD.bizLink, search: markerD.bizSearch }}>{markerD.title}</Link>
+              </div>
+            </Popup>
           </Marker>
         ));
         return markersToShow;

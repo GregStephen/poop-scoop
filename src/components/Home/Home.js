@@ -23,6 +23,7 @@ class Home extends React.Component {
     longitude: -86.7816,
     businessResults: [],
     markersData: [],
+    selectedMarker: '',
   }
 
   yelpSearch = (e) => {
@@ -40,7 +41,6 @@ class Home extends React.Component {
           }
         });
         this.setState({ yelpResults: yelpRes });
-        // this.setState({ markersData: [] });
         const tempMarkers = [];
         this.state.yelpResults.map(result => (
           businessData.getBusinessesById(result.id)
@@ -88,9 +88,17 @@ class Home extends React.Component {
     this.setState({ latitude: latLing.lat, longitude: latLing.lng });
   }
 
+  selectBusiness = (bizId) => {
+    this.setState({ selectedMarker: bizId });
+  }
+
   render() {
     const {
-      yelpResults, restroomTypes, amenityTypes, markersData,
+      yelpResults,
+      restroomTypes,
+      amenityTypes,
+      markersData,
+      selectedMarker,
     } = this.state;
     const resultComponents = yelpResults.map(result => (
       <ResultRow
@@ -98,15 +106,24 @@ class Home extends React.Component {
       result={ result }
       restroomTypes={ restroomTypes }
       amenityTypes={ amenityTypes }
+      selectBusiness={ this.selectBusiness }
       />
     ));
     return (
       <div className="Home">
         <form onSubmit={this.yelpSearch}>
-          <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
+          <button
+            type="submit"
+            className="search-btn btn btn-danger">
+            Search Restrooms Near Me
+          </button>
         </form>
         <div className="mapDiv">
-          <ScoopMap markersData={ markersData } findDude={ this.findDude } />
+          <ScoopMap
+          markersData={ markersData }
+          findDude={ this.findDude }
+          selectedMarker={ selectedMarker }
+          />
         </div>
         <div className="container">
           <div className="row">
