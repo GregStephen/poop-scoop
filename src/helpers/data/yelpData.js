@@ -26,7 +26,7 @@ const client = new ApolloClient({
   link: authLink.concat(httpLink),
 });
 
-const searchBusinessesByTerm = (latitude, longitude) => new Promise((resolve, reject) => {
+const searchBusinessesByTerm = (latitude, longitude, offset) => new Promise((resolve, reject) => {
   client
     .query({
       query: gql`
@@ -35,6 +35,8 @@ const searchBusinessesByTerm = (latitude, longitude) => new Promise((resolve, re
         latitude: ${latitude},
         longitude: ${longitude},
         radius: 3000,
+        limit: 15,
+        offset: ${offset},
         sort_by: "distance") {
         total
         business {

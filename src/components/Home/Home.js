@@ -21,18 +21,18 @@ class Home extends React.Component {
     yelpResults: [],
     latitude: 36.1627,
     longitude: -86.7816,
+    offset: 0,
     businessResults: [],
     markersData: [],
     selectedMarker: '',
   }
 
-  yelpSearch = (e) => {
+  yelpSearch = (offset) => {
     const {
       latitude,
       longitude,
     } = this.state;
-    e.preventDefault();
-    yelpData.searchBusinessesByTerm(latitude, longitude)
+    yelpData.searchBusinessesByTerm(latitude, longitude, offset)
       .then((res) => {
         const yelpRes = res;
         res.forEach((yelpie, index) => {
@@ -92,9 +92,33 @@ class Home extends React.Component {
     this.setState({ selectedMarker: bizId });
   }
 
+  showNextResults = (e) => {
+    e.preventDefault();
+    const increase = 15;
+    const tempOffset = this.state.offset;
+    const newOffset = tempOffset + increase;
+    this.setState({ offset: newOffset });
+    this.yelpSearch(newOffset);
+  }
+
+  showPrevResults = (e) => {
+    e.preventDefault();
+    const decrease = 15;
+    const tempOffset = this.state.offset;
+    const newOffset = tempOffset - decrease;
+    this.setState({ offset: newOffset });
+    this.yelpSearch(newOffset);
+  }
+
+  firstSearch = (e) => {
+    e.preventDefault();
+    this.setState({ offset: 0 });
+    this.yelpSearch(0);
+  }
+
   render() {
     const {
-      yelpResults, restroomTypes, amenityTypes, markersData, selectedMarker,
+      yelpResults, restroomTypes, amenityTypes, markersData, selectedMarker, offset,
     } = this.state;
     const resultComponents = yelpResults.map(result => (
       <ResultRow
@@ -107,7 +131,7 @@ class Home extends React.Component {
     ));
     return (
       <div className="Home">
-        <form onSubmit={this.yelpSearch}>
+        <form onSubmit={this.firstSearch}>
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="mapDiv">
@@ -119,6 +143,8 @@ class Home extends React.Component {
         <div className="container">
           <div className="row">
           { resultComponents }
+          { offset > 0 ? <button className="btn btn-danger" onClick={this.showPrevResults}>Previous</button> : ''}
+          { yelpResults.length > 0 ? <button className="btn btn-success" onClick={this.showNextResults}>Next</button> : ''}
           </div>
         </div>
       </div>
