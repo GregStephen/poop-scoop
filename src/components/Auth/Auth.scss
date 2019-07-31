@@ -1,3 +1,25 @@
 .Auth {
   display: block;
+  .welcome-div {
+    margin-top: 2em;
+    .welcome-header {
+      font-size: 4em;
+      margin-bottom: .25em;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+    }
+    .bold {
+      font-weight: 800;
+    }
+  }
+  .sign-in-form {
+    margin-top: 5em;
+    border: 2px solid saddlebrown;
+    background-color: burlywood;
+    padding: 2em;
+    height: 25em;
+    .sign-in-header {
+      margin-bottom: 1em;
+    }
+  }
 }
