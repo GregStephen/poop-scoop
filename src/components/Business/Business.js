@@ -2,6 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 
+import BusinessMap from '../BusinessMap/BusinessMap';
 import ReviewOnBusinessPage from '../ReviewOnBusinessPage/ReviewOnBusinessPage';
 
 import createStars from '../../helpers/createStars';
@@ -204,6 +205,7 @@ class Business extends React.Component {
       <div className="Business">
         <img className="businessPhoto" src={yelpResults.photos} alt=''></img>
         <h1>{yelpResults.name}</h1>
+        <BusinessMap yelpResults={yelpResults} />
         <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
         <div className="business-body container">
           { this.businessStuff() }
