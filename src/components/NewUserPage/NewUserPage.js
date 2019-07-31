@@ -76,7 +76,7 @@ class NewUserPage extends React.Component {
     const { avatars } = this.state;
     const avatarSelection = [];
     Object.keys(avatars).forEach((key, index) => {
-      avatarSelection.push(<div className="avatar col-3 mb-4">
+      avatarSelection.push(<div className="avatar col-6 col-md-4 col-lg-3 mb-4">
       <button className="avatar-btn"><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
       </div>);
     });
@@ -86,10 +86,10 @@ class NewUserPage extends React.Component {
   render() {
     const { newUser, email, password } = this.state;
     return (
-      <div className="NewUserPage">
-        <h1>JOIN US!</h1>
-        <form onSubmit={this.formSubmit}>
-          <div className="form-group">
+      <div className="NewUserPage container">
+        <h1 className="join-header">JOIN US!</h1>
+        <form className="row justify-content-center new-user-form" onSubmit={this.formSubmit}>
+          <div className="form-group col-11 col-md-9 col-lg-7">
             <label htmlFor="name">Name</label>
             <input
             type="text"
@@ -101,7 +101,7 @@ class NewUserPage extends React.Component {
             required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group col-11 col-md-9 col-lg-7">
             <label htmlFor="email">Email</label>
             <input
             type="email"
@@ -113,7 +113,7 @@ class NewUserPage extends React.Component {
             required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group col-11 col-md-9 col-lg-7">
             <label htmlFor="password">Password</label>
             <input
             type="password"
@@ -124,37 +124,39 @@ class NewUserPage extends React.Component {
             required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="city">City</label>
-            <input
-            type="text"
-            className="form-control"
-            id="city"
-            value={newUser.city}
-            onChange={this.formFieldStringState}
-            placeholder="Nashville"
-            required
-            />
+          <div className="city-state col-12 row justify-content-center">
+            <div className="form-group col-3 col-md-2">
+              <label htmlFor="state">State</label>
+              <input
+              type="text"
+              className="form-control"
+              id="state"
+              value={newUser.state}
+              onChange={this.formFieldStringState}
+              placeholder="TN"
+              required
+              />
+            </div>
+            <div className="form-group col-8 col-md-5">
+              <label htmlFor="city">City</label>
+              <input
+              type="text"
+              className="form-control"
+              id="city"
+              value={newUser.city}
+              onChange={this.formFieldStringState}
+              placeholder="Nashville"
+              required
+              />
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="state">State</label>
-            <input
-            type="text"
-            className="form-control"
-            id="state"
-            value={newUser.state}
-            onChange={this.formFieldStringState}
-            placeholder="TN"
-            required
-            />
-          </div>
-          <div className="form-group justify-content-center">
-            <p>Select Your Avatar</p>
-            <div className="row col-10 ">
+          <div className="form-group col-12 row justify-content-center">
+            <p className="avatar-select-header col-12">Select Your Avatar</p>
+            <div className="row col-10 justify-content-around">
               { this.createAvatarSelection()}
             </div>
           </div>
-          <button type="submit" className="new-user-btn btn btn-primary">Join PoopScoop</button>
+          <button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</button>
         </form>
       </div>
     );
