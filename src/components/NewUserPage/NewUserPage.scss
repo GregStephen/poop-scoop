@@ -1,5 +1,15 @@
 .NewUserPage {
   display: block;
+  .join-header {
+    font-weight: 800;
+  }
+  .new-user-form{
+    margin-bottom: 2em;
+  }
+  .avatar-select-header {
+    font-size: 2em;
+    font-weight: 800;
+  }
   .selected {
     border: 5px solid black;
     border-radius: 5%;
