@@ -1,9 +1,9 @@
 .ResultRow {
   display: block;
   max-height: 20em;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   @media (min-width: 768px) {
-  max-height: 15em;
+  max-height: 20em;
   }
   .card {
     background-color: #CBBF7A;

@@ -1,17 +1,15 @@
 .ScoopMap {
   margin-bottom: 1em;
+  .leaflet-container {
+    display: block;
+    height: 35em;
+    border: 1px solid rgb(201, 195, 195);
+    width: 100%;
+    margin: auto;
+  }
 }
 
-.leaflet-container {
-  display: block;
-  height: 35em;
-  border: 1px solid rgb(201, 195, 195);
-  width: 100%;
-  margin: auto;
-  @media (min-width: 768px) {
-    width: 80%;
-    }
-}
+
 
 .popup-image {
   width: 75%;
