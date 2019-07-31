@@ -130,21 +130,23 @@ class Home extends React.Component {
       />
     ));
     return (
-      <div className="Home">
+      <div className="Home container">
         <form onSubmit={this.firstSearch}>
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
-        <div className="mapDiv">
-          <ScoopMap
-          markersData={ markersData }
-          findDude={ this.findDude }
-          selectedMarker={ selectedMarker }/>
-        </div>
-        <div className="container">
-          <div className="row">
-          { resultComponents }
+        <div className="row">
+          <div className="mapDiv col-5">
+            <ScoopMap
+            markersData={ markersData }
+            findDude={ this.findDude }
+            selectedMarker={ selectedMarker }/>
           { offset > 0 ? <button className="btn btn-danger" onClick={this.showPrevResults}>Previous</button> : ''}
           { yelpResults.length > 0 ? <button className="btn btn-success" onClick={this.showNextResults}>Next</button> : ''}
+          </div>
+          <div className="container col-7">
+            <div className="result-component row">
+            { resultComponents }
+            </div>
           </div>
         </div>
       </div>

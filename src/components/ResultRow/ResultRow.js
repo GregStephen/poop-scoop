@@ -200,7 +200,7 @@ class ResultRow extends React.Component {
     );
 
     return (
-      <div className="ResultRow col-12 mb-2">
+      <div className="ResultRow col-12 mb-2 mt-2">
       <div className="card" onClick={this.showPopup}>
         <div className="row no-gutters">
           <div className="result-image-div col-3">
