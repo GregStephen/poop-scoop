@@ -29,6 +29,7 @@ class NewUserPage extends React.Component {
     newUser: defaultUser,
     avatars: [],
     stateList: [],
+    cities: [],
   }
 
   componentDidMount() {
@@ -100,6 +101,25 @@ class NewUserPage extends React.Component {
     return options;
   }
 
+  setCites = () => {
+    const { newUser } = this.state;
+    const selectedState = newUser.state;
+    stateData.getCities(selectedState)
+      .then((cities) => {
+        this.setState({ cities });
+      })
+      .catch(err => console.error('cities not found', err));
+  }
+
+  cityList = () => {
+    this.setCites();
+    const citiesList = this.state.cities;
+    const options = citiesList.map(city => (
+          <option key={city} value={city}>{city}</option>
+    ));
+    return options;
+  }
+
   render() {
     const { newUser, email, password } = this.state;
     return (
@@ -158,14 +178,16 @@ class NewUserPage extends React.Component {
             <div className="form-group col-8 col-md-5">
               <Label for="city">City</Label>
               <Input
-              type="text"
+              type="select"
               className="form-control"
               id="city"
               value={newUser.city}
               onChange={this.formFieldStringState}
-              placeholder="Nashville"
               required
-              />
+              >
+              {newUser.state === '' ? <option value="">Select A State First</option>
+                : this.cityList()}
+              </Input>
             </div>
           </div>
           <div className="form-group col-12 row justify-content-center">
