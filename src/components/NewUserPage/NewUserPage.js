@@ -2,7 +2,11 @@ import React from 'react';
 import $ from 'jquery';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import {
+  Form, Label, Input, Button,
+} from 'reactstrap';
 
+import stateData from '../../helpers/data/stateData';
 import avatarData from '../../helpers/data/avatarData';
 import userData from '../../helpers/data/userData';
 import './NewUserPage.scss';
@@ -12,7 +16,7 @@ const moment = require('moment');
 const defaultUser = {
   city: '',
   dateCreated: '',
-  imageUrl: '',
+  imageUrl: 'https://image.flaticon.com/icons/svg/1691/1691442.svg',
   name: '',
   state: '',
   uid: '',
@@ -24,12 +28,16 @@ class NewUserPage extends React.Component {
     password: '',
     newUser: defaultUser,
     avatars: [],
+    stateList: [],
   }
 
   componentDidMount() {
     avatarData.getAvatars()
       .then(avatars => this.setState({ avatars }))
       .catch(err => console.error('trouble getting avatars', err));
+    stateData.getStates()
+      .then(stateList => this.setState({ stateList }))
+      .catch(err => console.error('trouble getting states', err));
   }
 
   formSubmit = (e) => {
@@ -76,22 +84,31 @@ class NewUserPage extends React.Component {
     const { avatars } = this.state;
     const avatarSelection = [];
     Object.keys(avatars).forEach((key, index) => {
-      avatarSelection.push(<div className="avatar col-6 col-md-4 col-lg-3 mb-4">
+      avatarSelection.push(<div key={index} className="avatar col-6 col-md-4 col-lg-3 mb-4">
       <button className="avatar-btn"><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
       </div>);
     });
     return avatarSelection;
   };
 
+  stateList = () => {
+    const { stateList } = this.state;
+    const options = stateList.map(state => (
+      <option key={state} value={state}>{state}</option>
+    ));
+    options.unshift(<option key='pick not' value="">State</option>);
+    return options;
+  }
+
   render() {
     const { newUser, email, password } = this.state;
     return (
       <div className="NewUserPage container">
         <h1 className="join-header">JOIN US!</h1>
-        <form className="row justify-content-center new-user-form" onSubmit={this.formSubmit}>
+        <Form className="row justify-content-center new-user-form" onSubmit={this.formSubmit}>
           <div className="form-group col-11 col-md-9 col-lg-7">
-            <label htmlFor="name">Name</label>
-            <input
+            <Label for="name">Name</Label>
+            <Input
             type="text"
             className="form-control"
             id="name"
@@ -102,8 +119,8 @@ class NewUserPage extends React.Component {
             />
           </div>
           <div className="form-group col-11 col-md-9 col-lg-7">
-            <label htmlFor="email">Email</label>
-            <input
+            <Label for="email">Email</Label>
+            <Input
             type="email"
             className="form-control"
             id="email"
@@ -114,8 +131,8 @@ class NewUserPage extends React.Component {
             />
           </div>
           <div className="form-group col-11 col-md-9 col-lg-7">
-            <label htmlFor="password">Password</label>
-            <input
+            <Label for="password">Password</Label>
+            <Input
             type="password"
             className="form-control"
             id="password"
@@ -126,20 +143,21 @@ class NewUserPage extends React.Component {
           </div>
           <div className="city-state col-12 row justify-content-center">
             <div className="form-group col-3 col-md-2">
-              <label htmlFor="state">State</label>
-              <input
-              type="text"
+              <Label for="state">State</Label>
+              <Input
+              type="select"
               className="form-control"
               id="state"
               value={newUser.state}
               onChange={this.formFieldStringState}
-              placeholder="TN"
               required
-              />
+              >
+              {this.stateList()}
+              </Input>
             </div>
             <div className="form-group col-8 col-md-5">
-              <label htmlFor="city">City</label>
-              <input
+              <Label for="city">City</Label>
+              <Input
               type="text"
               className="form-control"
               id="city"
@@ -156,8 +174,8 @@ class NewUserPage extends React.Component {
               { this.createAvatarSelection()}
             </div>
           </div>
-          <button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</button>
-        </form>
+          <Button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</Button>
+        </Form>
       </div>
     );
   }
