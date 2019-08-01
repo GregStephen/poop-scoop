@@ -13,4 +13,14 @@ const getStates = () => new Promise((resolve, reject) => {
     .catch(err => reject(err));
 });
 
-export default { getStates };
+const getCities = state => new Promise((resolve, reject) => {
+  axios.get(`${firebaseUrl}/states.json`)
+    .then((resp) => {
+      const stateResults = resp.data;
+      const cityResults = stateResults[state];
+      resolve(cityResults);
+    })
+    .catch(err => reject(err));
+});
+
+export default { getStates, getCities };
