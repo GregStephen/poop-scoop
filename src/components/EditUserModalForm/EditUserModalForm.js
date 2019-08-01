@@ -4,6 +4,8 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+import stateData from '../../helpers/data/stateData';
+
 class EditUserModalForm extends React.Component {
   static propTypes = {
     user: PropTypes.object.isRequired,
@@ -17,10 +19,14 @@ class EditUserModalForm extends React.Component {
       city: '',
       state: '',
     },
+    stateList: [],
   }
 
   componentDidMount() {
     this.setState({ updatedUser: this.props.user });
+    stateData.getStates()
+      .then(stateList => this.setState({ stateList }))
+      .catch(err => console.error('trouble getting states', err));
   }
 
   toggleModal = () => {
@@ -43,6 +49,15 @@ class EditUserModalForm extends React.Component {
     this.toggleModal();
   }
 
+  stateList = () => {
+    const { stateList } = this.state;
+    const options = stateList.map(state => (
+      <option key={state} value={state}>{state}</option>
+    ));
+    options.unshift(<option key='pick not' value="">State</option>);
+    return options;
+  }
+
   render() {
     const { updatedUser } = this.state;
     return (
@@ -59,7 +74,16 @@ class EditUserModalForm extends React.Component {
             </FormGroup>
             <FormGroup>
               <Label for="state">State:</Label>
-              <Input type="input" name="state" id="state" value={updatedUser.state} onChange={this.formFieldStringState} required/>
+              <Input
+              type="select"
+              className="form-control"
+              id="state"
+              value={updatedUser.state}
+              onChange={this.formFieldStringState}
+              required
+              >
+              {this.stateList()}
+              </Input>
             </FormGroup>
           </ModalBody>
           <ModalFooter>
