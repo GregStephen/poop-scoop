@@ -20,6 +20,7 @@ class EditUserModalForm extends React.Component {
       state: '',
     },
     stateList: [],
+    cities: [],
   }
 
   componentDidMount() {
@@ -58,6 +59,25 @@ class EditUserModalForm extends React.Component {
     return options;
   }
 
+  setCites = () => {
+    const { newUser } = this.state;
+    const selectedState = newUser.state;
+    stateData.getCities(selectedState)
+      .then((cities) => {
+        this.setState({ cities });
+      })
+      .catch(err => console.error('cities not found', err));
+  }
+
+  cityList = () => {
+    this.setCites();
+    const citiesList = this.state.cities;
+    const options = citiesList.map(city => (
+          <option key={city} value={city}>{city}</option>
+    ));
+    return options;
+  }
+
   render() {
     const { updatedUser } = this.state;
     return (
@@ -83,6 +103,20 @@ class EditUserModalForm extends React.Component {
               required
               >
               {this.stateList()}
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="city">City</Label>
+              <Input
+              type="select"
+              className="form-control"
+              id="city"
+              value={updatedUser.city}
+              onChange={this.formFieldStringState}
+              required
+              >
+              {updatedUser.state === '' ? <option value="">Select A State First</option>
+                : this.cityList()}
               </Input>
             </FormGroup>
           </ModalBody>
