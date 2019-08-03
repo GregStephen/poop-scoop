@@ -5,6 +5,11 @@
       width: 100%
     }
   }
+  .avatar-selector {
+    border: 2px solid saddlebrown;
+    background-color: burlywood;
+    margin-top: 1em;
+  }
   .selected {
     box-shadow: 0px 0px 15px green;
   }

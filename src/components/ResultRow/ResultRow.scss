@@ -20,13 +20,18 @@
       max-height: 100%;
     }
   }
+  .underline {
+    border-bottom: 1px solid black;
+    padding-bottom: 0em;
+    margin-bottom: .5em;
+  }
   .result-name-div {
     text-align: start;
     .result-name {
       color: rgb(39, 42, 44);
-      font-size: 1.25em;
+      font-size: 1em;
       @media (min-width: 768px) {
-      font-size: 2em;
+      font-size: 1.25em;
       }
     }
     .result-name:hover {

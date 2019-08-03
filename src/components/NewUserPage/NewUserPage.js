@@ -217,7 +217,7 @@ class NewUserPage extends React.Component {
             </div>
           </div>
           <h2 className="error col-12">{error}</h2>
-          <Button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</Button>
+          <Button type="submit" className="new-user-btn btn btn-success btn-lg">Join PoopScoop</Button>
         </Form>
       </div>
     );

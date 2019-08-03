@@ -120,7 +120,7 @@ class User extends React.Component {
     const { avatars } = this.state;
     const avatarSelection = [];
     Object.keys(avatars).forEach((key, index) => {
-      avatarSelection.push(<div key={key}className="avatar col-3 mb-4">
+      avatarSelection.push(<div key={key}className="avatar col-2 mb-4">
       <button><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
       </div>);
     });
@@ -165,7 +165,7 @@ class User extends React.Component {
         <div className="col-12">
         {firebase.auth().currentUser.uid === user.uid
           ? <div className="col-12 row justify-content-start">
-        <Button className="col-auto offset-1" color="primary" onClick={this.toggle}>Edit Avatar</Button>
+        <Button className="col-auto offset-1 mt-4" color="primary" onClick={this.toggle}>Edit Avatar</Button>
         <Collapse
           isOpen={this.state.collapse}
           onEntering={this.onEntering}
@@ -174,10 +174,12 @@ class User extends React.Component {
           onExited={this.onExited}
         >
           <div className="row justify-content-center">
-          <Card className="col-10">
-            <CardBody className="col-12 row">
+          <Card className="col-10 avatar-selector">
+            <CardBody className="col-12 row justify-content-around">
             { this.createAvatarSelection()}
+            <div className="col-12 row justify-content-center">
             <Button className="btn btn-info" onClick={this.saveNewAvatar}>Save New Avatar</Button>
+            </div>
             </CardBody>
           </Card>
           </div>
