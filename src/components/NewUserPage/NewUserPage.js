@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 
 import stateData from '../../helpers/data/stateData';
+import cityData from '../../helpers/data/cityData';
 import avatarData from '../../helpers/data/avatarData';
 import userData from '../../helpers/data/userData';
 import './NewUserPage.scss';
@@ -28,8 +29,10 @@ class NewUserPage extends React.Component {
     password: '',
     newUser: defaultUser,
     avatars: [],
+    chosenState: '',
     stateList: [],
     cities: [],
+    error: '',
   }
 
   componentDidMount() {
@@ -40,6 +43,18 @@ class NewUserPage extends React.Component {
       .then(stateList => this.setState({ stateList }))
       .catch(err => console.error('trouble getting states', err));
   }
+
+  // componentDidUpdate({ prevState }) {
+  //   console.error('update');
+  //   if (this.state.chosenState !== prevState.chosenState) {
+  //     console.error('chosenstate', this.state.chosenState);
+  //     cityData.getCities(this.state.chosenState)
+  //       .then((cities) => {
+  //         this.setState({ cities });
+  //       })
+  //       .catch(err => console.error('cities not found', err));
+  //   }
+  // }
 
   formSubmit = (e) => {
     e.preventDefault();
@@ -54,13 +69,16 @@ class NewUserPage extends React.Component {
           .then(() => this.props.history.push('/home'))
           .catch(err => console.error('unable to save', err));
       })
-      .catch(err => console.error('trouble logging in with email', err));
+      .catch(err => this.setState({ error: err.message }));
   }
 
   formFieldStringState = (e) => {
     const tempUser = { ...this.state.newUser };
     tempUser[e.target.id] = e.target.value;
     this.setState({ newUser: tempUser });
+    if (e.target.id === 'state') {
+      this.setState({ chosenState: e.target.value });
+    }
   }
 
   handleChange = (e) => {
@@ -101,10 +119,10 @@ class NewUserPage extends React.Component {
     return options;
   }
 
-  setCites = () => {
+  setCities = () => {
     const { newUser } = this.state;
     const selectedState = newUser.state;
-    stateData.getCities(selectedState)
+    cityData.getCities(selectedState)
       .then((cities) => {
         this.setState({ cities });
       })
@@ -112,16 +130,18 @@ class NewUserPage extends React.Component {
   }
 
   cityList = () => {
-    this.setCites();
+    this.setCities();
     const citiesList = this.state.cities;
-    const options = citiesList.map(city => (
-          <option key={city} value={city}>{city}</option>
+    const options = citiesList.map((city, index) => (
+          <option key={index} value={city}>{city}</option>
     ));
     return options;
   }
 
   render() {
-    const { newUser, email, password } = this.state;
+    const {
+      newUser, email, password, error,
+    } = this.state;
     return (
       <div className="NewUserPage container">
         <h1 className="join-header">JOIN US!</h1>
@@ -196,6 +216,7 @@ class NewUserPage extends React.Component {
               { this.createAvatarSelection()}
             </div>
           </div>
+          <h2 className="error col-12">{error}</h2>
           <Button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</Button>
         </Form>
       </div>

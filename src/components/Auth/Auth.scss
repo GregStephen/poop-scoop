@@ -17,9 +17,13 @@
     border: 2px solid saddlebrown;
     background-color: burlywood;
     padding: 2em;
-    height: 25em;
+    height: 28em;
     .sign-in-header {
       margin-bottom: 1em;
+    }
+    .error {
+      margin-top: 1em;
+      color: red;
     }
   }
 }

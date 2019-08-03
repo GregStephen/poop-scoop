@@ -9,6 +9,7 @@ class Auth extends React.Component {
   state = {
     email: '',
     password: '',
+    error: '',
   }
 
   logIntoPoopScoop = (e) => {
@@ -17,7 +18,7 @@ class Auth extends React.Component {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
         this.props.history.push('/home');
-      }).catch();
+      }).catch(err => this.setState({ error: err.message }));
   }
 
   handleChange = (e) => {
@@ -27,7 +28,7 @@ class Auth extends React.Component {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, error } = this.state;
     return (
       <div className="Auth container">
         <div className="row">
@@ -69,6 +70,7 @@ class Auth extends React.Component {
               />
             </div>
             <button className="btn btn-success">Log In</button>
+            <p className="error">{error}</p>
           </form>
         </div>
       </div>
