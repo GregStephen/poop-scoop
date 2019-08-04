@@ -135,7 +135,7 @@ class Home extends React.Component {
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="row">
-          <div className="mapDiv col-5">
+          <div className="mapDiv col-12 col-md-6 col-lg-5">
             <ScoopMap
             markersData={ markersData }
             findDude={ this.findDude }
@@ -143,7 +143,7 @@ class Home extends React.Component {
           { offset > 0 ? <button className="btn btn-danger" onClick={this.showPrevResults}>Previous</button> : ''}
           { yelpResults.length > 0 ? <button className="btn btn-success" onClick={this.showNextResults}>Next</button> : ''}
           </div>
-          <div className="container col-7">
+          <div className="container review-div col-12 col-md-6 col-lg-7 mt-2">
             <div className="result-component row">
             { resultComponents }
             </div>

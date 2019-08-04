@@ -44,18 +44,6 @@ class NewUserPage extends React.Component {
       .catch(err => console.error('trouble getting states', err));
   }
 
-  // componentDidUpdate({ prevState }) {
-  //   console.error('update');
-  //   if (this.state.chosenState !== prevState.chosenState) {
-  //     console.error('chosenstate', this.state.chosenState);
-  //     cityData.getCities(this.state.chosenState)
-  //       .then((cities) => {
-  //         this.setState({ cities });
-  //       })
-  //       .catch(err => console.error('cities not found', err));
-  //   }
-  // }
-
   formSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
