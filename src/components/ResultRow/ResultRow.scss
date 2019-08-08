@@ -10,30 +10,40 @@
     border: 1px solid grey;
     box-shadow: 0px 0px 5px grey;
   }
-  .result-image-div {
-    max-height: 6em;
-    @media (min-width: 768px) {
-    max-height: 14em;
-     }
+  // .result-image-div {
+  //   max-height: 6em;
+  //   @media (min-width: 768px) {
+  //   max-height: 14em;
+  //    }
 
-    .result-image {
-      max-height: 100%;
-    }
+  //   .result-image {
+  //     max-height: 100%;
+  //   }
+  // }
+  .underline {
+    border-bottom: 1px solid black;
+    padding-bottom: 0em;
+    margin-bottom: .5em;
   }
   .result-name-div {
     text-align: start;
     .result-name {
       color: rgb(39, 42, 44);
-      font-size: 1.25em;
+      font-size: 1.5em;
       @media (min-width: 768px) {
-      font-size: 2em;
+      font-size: 1.25em;
       }
     }
     .result-name:hover {
       color: blue;
     }
   }
-
+  .business-address {
+    font-size: .75em;
+    @media (min-width: 768px) {
+      font-size: 1em;
+    }
+  }
   .unisexRating {
     color: green;
   }

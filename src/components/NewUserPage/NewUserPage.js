@@ -44,18 +44,6 @@ class NewUserPage extends React.Component {
       .catch(err => console.error('trouble getting states', err));
   }
 
-  // componentDidUpdate({ prevState }) {
-  //   console.error('update');
-  //   if (this.state.chosenState !== prevState.chosenState) {
-  //     console.error('chosenstate', this.state.chosenState);
-  //     cityData.getCities(this.state.chosenState)
-  //       .then((cities) => {
-  //         this.setState({ cities });
-  //       })
-  //       .catch(err => console.error('cities not found', err));
-  //   }
-  // }
-
   formSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
@@ -217,7 +205,7 @@ class NewUserPage extends React.Component {
             </div>
           </div>
           <h2 className="error col-12">{error}</h2>
-          <Button type="submit" className="new-user-btn btn btn-primary btn-lg">Join PoopScoop</Button>
+          <Button type="submit" className="new-user-btn btn btn-success btn-lg">Join PoopScoop</Button>
         </Form>
       </div>
     );

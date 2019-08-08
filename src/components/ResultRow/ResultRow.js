@@ -203,19 +203,27 @@ class ResultRow extends React.Component {
       <div className="ResultRow col-12 mb-2 mt-2">
       <div className="card" onClick={this.showPopup}>
         <div className="row no-gutters">
-          <div className="result-image-div col-3">
+          {/* <div className="result-image-div col-3">
             <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>
-          </div>
-          <div className="col-9">
+          </div> */}
+          <div className="col-12">
             <div className="card-body row justify-content-between">
               <div className="col-8 result-name-div">
                 <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
               </div>
               <div className="col-4">
-                <p>{result.location.address1}</p>
+                <p className="business-address">{result.location.address1}</p>
               </div>
             </div>
               { reviewDisplay(reviews) }
+              <div className='container'>
+                <div className='col-12 row'>
+                  <p className='col underline'>Sex:</p>
+                  <p className='col underline'>Unisex</p>
+                  <p className='col underline'>Male</p>
+                  <p className='col underline'>Female</p>
+                </div>
+              </div>
               <div className='container'>
               { ratingDisplay(unisexRatings, maleRatings, femaleRatings) }
               </div>
