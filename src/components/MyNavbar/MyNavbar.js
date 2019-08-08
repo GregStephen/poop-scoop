@@ -59,7 +59,7 @@ class MyNavbar extends React.Component {
                 <DropdownItem header>
                   <div>
                     <p>{userObj.name}</p>
-                    <p>{userObj.city}</p>
+                    <p>{userObj.city}, {userObj.state}</p>
                   </div>
                 </DropdownItem>
                 <DropdownItem divider />
@@ -78,7 +78,7 @@ class MyNavbar extends React.Component {
 
     return (
       <div className="MyNavbar">
-        <Navbar expand="md">
+        <Navbar dark color="dark" expand="md">
           <NavbarBrand tag={RRNavLink} to='/home'>PoopScoop</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

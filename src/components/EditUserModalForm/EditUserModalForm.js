@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 
 import stateData from '../../helpers/data/stateData';
+import cityData from '../../helpers/data/cityData';
 
 class EditUserModalForm extends React.Component {
   static propTypes = {
@@ -59,10 +60,10 @@ class EditUserModalForm extends React.Component {
     return options;
   }
 
-  setCites = () => {
-    const { newUser } = this.state;
-    const selectedState = newUser.state;
-    stateData.getCities(selectedState)
+  setCities = () => {
+    const { updatedUser } = this.state;
+    const selectedState = updatedUser.state;
+    cityData.getCities(selectedState)
       .then((cities) => {
         this.setState({ cities });
       })
@@ -70,7 +71,7 @@ class EditUserModalForm extends React.Component {
   }
 
   cityList = () => {
-    this.setCites();
+    this.setCities();
     const citiesList = this.state.cities;
     const options = citiesList.map(city => (
           <option key={city} value={city}>{city}</option>
@@ -87,10 +88,6 @@ class EditUserModalForm extends React.Component {
             <FormGroup>
               <Label for="name">Name:</Label>
               <Input type="input" name="name" id="name" value={updatedUser.name} onChange={this.formFieldStringState} required/>
-            </FormGroup>
-            <FormGroup>
-              <Label for="city">City:</Label>
-              <Input type="input" name="city" id="city" value={updatedUser.city} onChange={this.formFieldStringState} required/>
             </FormGroup>
             <FormGroup>
               <Label for="state">State:</Label>

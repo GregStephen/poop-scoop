@@ -120,7 +120,7 @@ class User extends React.Component {
     const { avatars } = this.state;
     const avatarSelection = [];
     Object.keys(avatars).forEach((key, index) => {
-      avatarSelection.push(<div key={key}className="avatar col-2 mb-4">
+      avatarSelection.push(<div key={key}className="avatar col-5 col-md-2 mb-4">
       <button><img id='imageUrl' className={ index === 0 ? 'avatar-image selected' : 'avatar-image'} src={avatars[key]} alt={key} onClick={this.selectAvatar}></img></button>
       </div>);
     });

@@ -212,7 +212,7 @@ class ResultRow extends React.Component {
                 <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
               </div>
               <div className="col-4">
-                <p>{result.location.address1}</p>
+                <p className="business-address">{result.location.address1}</p>
               </div>
             </div>
               { reviewDisplay(reviews) }
