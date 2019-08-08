@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import Review from '../Review/Review';
@@ -161,51 +162,26 @@ class ResultRow extends React.Component {
       );
     };
 
-    const ratingDisplay = (unisexRatingsArray, maleRatingsArray, femaleRatingsArray) => {
-      let unisexRating = '';
-      let maleRating = '';
-      let femaleRating = '';
-      if (unisexRatingsArray.length > 0) {
-        unisexRating = ratingMath(unisexRatingsArray);
+    const ratingDisplay = (ratingsArray) => {
+      let displayRating = '';
+      if (ratingsArray.length > 0) {
+        displayRating = ratingMath(ratingsArray);
       } else {
-        unisexRating = 'No Rating';
-      }
-      if (maleRatingsArray.length > 0) {
-        maleRating = ratingMath(maleRatingsArray);
-      } else {
-        maleRating = 'No Rating';
-      }
-      if (femaleRatingsArray.length > 0) {
-        femaleRating = ratingMath(femaleRatingsArray);
-      } else {
-        femaleRating = 'No Rating';
+        displayRating = 'X';
       }
       return (
-        <div className='col-12 row'>
-          <p className="col-3">Rating:</p>
-          <p className='unisexRating col-3'>{createStars(unisexRating)}</p>
-          <p className='maleRating col-3'>{createStars(maleRating)}</p>
-          <p className='femaleRating col-3'>{createStars(femaleRating)}</p>
-        </div>
+          <td>{createStars(displayRating)}</td>
       );
     };
 
-    const changingTableDisplay = (uniTables, mTables, fTables) => (
-        <div className='col-12 row'>
-          <p className="col">Changing Table:</p>
-          <p className="col">{uniTables.length > 0 ? uniTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
-          <p className="col">{mTables.length > 0 ? mTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
-          <p className="col">{fTables.length > 0 ? fTables[0].status === true ? <i className="fas fa-baby"></i> : <i className="fas red-baby fa-baby"></i> : '??'}</p>
-        </div>
+    const changingTableDisplay = tables => (
+          <td>{tables.length > 0 ? tables[0].status === true ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i> : '?'}</td>
     );
 
     return (
       <div className="ResultRow col-12 mb-2 mt-2">
-      <div className="card" onClick={this.showPopup}>
-        <div className="row no-gutters">
-          {/* <div className="result-image-div col-3">
-            <img className="result-image img-fluid" src={result.photos[0]} alt={result.name}></img>
-          </div> */}
+      <div className="card mb-2" onClick={this.showPopup}>
+        <div className="row">
           <div className="col-12">
             <div className="card-body row justify-content-between">
               <div className="col-8 result-name-div">
@@ -216,20 +192,32 @@ class ResultRow extends React.Component {
               </div>
             </div>
               { reviewDisplay(reviews) }
-              <div className='container'>
-                <div className='col-12 row'>
-                  <p className='col underline'>Sex:</p>
-                  <p className='col underline'>Unisex</p>
-                  <p className='col underline'>Male</p>
-                  <p className='col underline'>Female</p>
-                </div>
-              </div>
-              <div className='container'>
-              { ratingDisplay(unisexRatings, maleRatings, femaleRatings) }
-              </div>
-              <div className='container'>
-                { changingTableDisplay(unisexTables, maleTables, femaleTables)}
-              </div>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Sex:</th>
+                    <th>Review:</th>
+                    <th><i className="fas fa-baby"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">&#x26A5;</th>
+                    { ratingDisplay(unisexRatings) }
+                    { changingTableDisplay(unisexTables) }
+                  </tr>
+                  <tr>
+                    <th scope="row">&#x2642;</th>
+                    { ratingDisplay(maleRatings) }
+                    { changingTableDisplay(maleTables) }
+                  </tr>
+                  <tr>
+                    <th scope="row">&#x2640;</th>
+                    { ratingDisplay(femaleRatings) }
+                    { changingTableDisplay(femaleTables) }
+                  </tr>
+                </tbody>
+              </Table>
             </div>
         </div>
       </div>

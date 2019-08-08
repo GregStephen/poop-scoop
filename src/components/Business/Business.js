@@ -133,21 +133,21 @@ class Business extends React.Component {
       if (unisexRatings.length > 0) {
         unisexRating = ratingMath(unisexRatings);
       } else {
-        unisexRating = 'No Rating';
+        unisexRating = 'X';
       }
       if (maleRatings.length > 0) {
         maleRating = ratingMath(maleRatings);
       } else {
-        maleRating = 'No Rating';
+        maleRating = 'X';
       }
       if (femaleRatings.length > 0) {
         femaleRating = ratingMath(femaleRatings);
       } else {
-        femaleRating = 'No Rating';
+        femaleRating = 'X';
       }
       return (
       <div className='col-12 row'>
-        {unisexRating === 'No Rating' ? ''
+        {unisexRating === 'X' ? ''
           : <div className="col">
               <h1>Unisex</h1>
               <p className='unisexRating'>{createStars(unisexRating)}</p>
@@ -156,7 +156,7 @@ class Business extends React.Component {
                 <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
               </ul>
             </div>}
-        {maleRating === 'No Rating' ? ''
+        {maleRating === 'X' ? ''
           : <div className="col">
               <h1>Male</h1>
               <p className='maleRating'>{createStars(maleRating)}</p>
@@ -165,7 +165,7 @@ class Business extends React.Component {
                 <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
               </ul>
             </div>}
-        {femaleRating === 'No Rating' ? ''
+        {femaleRating === 'X' ? ''
           : <div className="col">
               <h1>Female</h1>
               <p className='femaleRating'>{createStars(femaleRating)}</p>
