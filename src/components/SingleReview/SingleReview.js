@@ -37,35 +37,28 @@ class SingleReview extends React.Component {
       const { restroomTypes } = this.props;
       const restroom = restroomTypes.filter(type => type.id === review.restroomType);
       return (
-        <div className="col-2 single-review-sex">
-          <p>{restroom[0].restroomType}</p>
-        </div>
+          <p className="col-5 col-md-2 single-review-sex">{restroom[0].restroomType}</p>
       );
     };
 
     return (
-      <div className="SingleReview col-8 card">
-        {/* <div className="card"> */}
-          <div className="row no-gutters">
-            <div className="col-3">
-             <img className="single-review-photo img-fluid"src={yelpResp.photos} alt=''></img>
-            </div>
-            <div className="card-body col-9 row">
-              <Link className="single-review-name col-7" to={{ pathname: bizLink, search: bizSearch }}>{yelpResp.name}</Link>
-              <div className="col-3">
-                <p className="single-review-date">{reviewDate}</p>
-              </div>
-              { forWhichBathroom() }
-              <div className="row col-12">
-                <p className="col">Cleanliness: {createStars(review.cleanliness)}</p>
-                <p className="col">Decor: {createStars(review.decor)}</p>
-              </div>
-              <div className="col-12">
-                <p>"{review.review}"</p>
-              </div>
-            </div>
-          </div>
-        {/* </div> */}
+      <div className="SingleReview col-12">
+      <div className="card">
+        <Link className="single-review-name col-12" to={{ pathname: bizLink, search: bizSearch }}>{yelpResp.name}</Link>
+        <div className="col-12 justify-content-around row">
+          <p className="single-review-date col-5 col-md-3">{reviewDate}</p>
+          { forWhichBathroom() }
+        </div>
+        <div className="row col-12 justify-content-around">
+            <p className="col-6">Cleanliness:</p>
+            <p className="col-6">{createStars(review.cleanliness)}</p>
+            <p className="col-6">Decor:</p>
+            <p className="col-6">{createStars(review.decor)}</p>
+        </div>
+        <div className="col-12">
+          <p>"{review.review}"</p>
+        </div>
+        </div>
       </div>
     );
   }

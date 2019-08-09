@@ -1,8 +1,8 @@
 import React from 'react';
 
 const createStars = (rating) => {
-  if (rating === 'X') {
-    return 'X';
+  if (rating === '?') {
+    return '?';
   }
   const ratingDisplay = [];
   for (let i = 1; i < rating + 1; i += 1) {

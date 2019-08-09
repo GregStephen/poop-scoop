@@ -167,7 +167,7 @@ class ResultRow extends React.Component {
       if (ratingsArray.length > 0) {
         displayRating = ratingMath(ratingsArray);
       } else {
-        displayRating = 'X';
+        displayRating = '?';
       }
       return (
           <td>{createStars(displayRating)}</td>
