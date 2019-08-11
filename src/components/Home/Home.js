@@ -140,7 +140,7 @@ class Home extends React.Component {
             markersData={ markersData }
             findDude={ this.findDude }
             selectedMarker={ selectedMarker }/>
-          { offset > 0 ? <button className="btn btn-danger" onClick={this.showPrevResults}>Previous</button> : ''}
+          { offset > 0 ? <button className="btn btn-danger mr-4" onClick={this.showPrevResults}>Previous</button> : ''}
           { yelpResults.length > 0 ? <button className="btn btn-success" onClick={this.showNextResults}>Next</button> : ''}
           </div>
           <div className="container review-div col-12 col-md-6 col-lg-7 mt-2">

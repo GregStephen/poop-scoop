@@ -145,7 +145,7 @@ class Business extends React.Component {
     return (
     <div>
       {displayRating === '?' ? ''
-        : <div className="col">
+        : <div className="col mt-4">
             <h1>{type}</h1>
             <p className='unisexRating'>{createStars(displayRating)}</p>
             { this.amenitiesTable(bizAmenities) }
@@ -188,7 +188,7 @@ class Business extends React.Component {
       ));
 
       return (
-      <div className="Business">
+      <div className="Business container">
         <h1>{yelpResults.name}</h1>
         <BusinessMap yelpResults={yelpResults} />
         <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
@@ -199,8 +199,8 @@ class Business extends React.Component {
             { this.businessStuff(femaleRatings, femaleAmenities, 'Female') }
           </div>
         </div>
-        <div className="reviews">
-          <h1>Reviews!</h1>
+        <div className="reviews row justify-content-center">
+          <h1 className="col-12">Reviews!</h1>
           { displayReviews }
         </div>
       </div>

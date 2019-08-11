@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import forWhichBathroom from '../../helpers/forWhichBathroom';
 import createStars from '../../helpers/createStars';
 
 import businessData from '../../helpers/data/businessData';
@@ -29,18 +30,11 @@ class SingleReview extends React.Component {
   }
 
   render() {
-    const { review } = this.props;
+    const { review, restroomTypes } = this.props;
     const { yelpId, yelpResp } = this.state;
     const bizLink = `/business/${yelpId}`;
     const bizSearch = `?biz=${review.businessId}`;
     const reviewDate = moment(review.timeStamp, 'YYYY-MM-DD').format('LL');
-    const forWhichBathroom = () => {
-      const { restroomTypes } = this.props;
-      const restroom = restroomTypes.filter(type => type.id === review.restroomType);
-      return (
-          <p className="col-5 col-md-2 single-review-sex">{restroom[0].restroomType === 'Unisex' ? <i>&#x26A5;</i> : restroom[0].restroomType === 'Male' ? <i>&#x2642;</i> : <i>&#x2640;</i>}</p>
-      );
-    };
 
     return (
       <div className="SingleReview col-12 col-md-10 col-lg-8 col-xl-6">
@@ -48,7 +42,7 @@ class SingleReview extends React.Component {
         <Link className="single-review-name col-12" to={{ pathname: bizLink, search: bizSearch }}>{yelpResp.name}</Link>
         <div className="col-12 justify-content-around row">
           <p className="single-review-date col-5 col-md-3">{reviewDate}</p>
-          { forWhichBathroom() }
+          { forWhichBathroom(restroomTypes, review) }
         </div>
         <div className="row col-12 justify-content-around">
             <p className="col-6">Cleanliness:</p>
