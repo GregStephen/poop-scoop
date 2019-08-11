@@ -117,30 +117,42 @@ class Business extends React.Component {
       });
   }
 
-    businessStuff = (bizRatings, bizAmenities, type) => {
-      const {
-        amenityTypes,
-      } = this.state;
-      let displayRating = '';
-      if (bizRatings.length > 0) {
-        displayRating = ratingMath(bizRatings);
-      } else {
-        displayRating = '?';
-      }
-      return (
-      <div>
-        {displayRating === '?' ? ''
-          : <div className="col">
-              <h1>{type}</h1>
-              <p className='unisexRating'>{createStars(displayRating)}</p>
-              <ul>
-                {bizAmenities.map(amenity => (
-                <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
-      </div>
-      );
-    };
+  amenitiesTable = (bizAmenities) => {
+    const {
+      amenityTypes,
+    } = this.state;
+    return (<table>
+              <thead>
+                <tr>
+                  <th>Amenitiy:</th>
+                  <th>Status:</th>
+                </tr>
+              </thead>
+              <tbody>
+              {bizAmenities.map(amenity => (
+              <tr key={amenity.id}><td>{amenityTypes[amenity.type]}</td><td> {amenity.status ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</td></tr>))}
+              </tbody>
+            </table>);
+  }
+
+  businessStuff = (bizRatings, bizAmenities, type) => {
+    let displayRating = '';
+    if (bizRatings.length > 0) {
+      displayRating = ratingMath(bizRatings);
+    } else {
+      displayRating = '?';
+    }
+    return (
+    <div>
+      {displayRating === '?' ? ''
+        : <div className="col">
+            <h1>{type}</h1>
+            <p className='unisexRating'>{createStars(displayRating)}</p>
+            { this.amenitiesTable(bizAmenities) }
+          </div>}
+    </div>
+    );
+  };
 
     deleteReview = (id) => {
       ratingData.deleteReviewFromDatabase(id)

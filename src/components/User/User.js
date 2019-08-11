@@ -188,8 +188,10 @@ class User extends React.Component {
       </div>
         <div className="col-12">
           <h1>Ratings</h1>
-          <div className="container justify-content-center">
-            { displayReviews }
+          <div className="container">
+            <div className="row justify-content-center">
+             { displayReviews }
+            </div>
           </div>
         </div>
         <div>
