@@ -130,8 +130,8 @@ class User extends React.Component {
   saveNewAvatar = () => {
     const userId = this.props.match.params.id;
     const { userFunc } = this.props;
-    const { avatarChoice } = this.state;
-    userFunc(this.state.user, userId);
+    const { avatarChoice, user } = this.state;
+    userFunc(user, userId);
     userData.changeAvatar(avatarChoice, userId)
       .then(() => {
         this.loadPage();

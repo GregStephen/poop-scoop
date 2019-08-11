@@ -117,61 +117,25 @@ class Business extends React.Component {
       });
   }
 
-    businessStuff = () => {
+    businessStuff = (bizRatings, bizAmenities, type) => {
       const {
-        unisexRatings,
-        maleRatings,
-        femaleRatings,
-        unisexAmenities,
-        maleAmenities,
-        femaleAmenities,
         amenityTypes,
       } = this.state;
-      let unisexRating = '';
-      let maleRating = '';
-      let femaleRating = '';
-      if (unisexRatings.length > 0) {
-        unisexRating = ratingMath(unisexRatings);
+      let displayRating = '';
+      if (bizRatings.length > 0) {
+        displayRating = ratingMath(bizRatings);
       } else {
-        unisexRating = '?';
-      }
-      if (maleRatings.length > 0) {
-        maleRating = ratingMath(maleRatings);
-      } else {
-        maleRating = '?';
-      }
-      if (femaleRatings.length > 0) {
-        femaleRating = ratingMath(femaleRatings);
-      } else {
-        femaleRating = '?';
+        displayRating = '?';
       }
       return (
-      <div className='col-12 row'>
-        {unisexRating === '?' ? ''
+      <div>
+        {displayRating === '?' ? ''
           : <div className="col">
-              <h1>Unisex</h1>
-              <p className='unisexRating'>{createStars(unisexRating)}</p>
+              <h1>{type}</h1>
+              <p className='unisexRating'>{createStars(displayRating)}</p>
               <ul>
-                {unisexAmenities.map(amenity => (
+                {bizAmenities.map(amenity => (
                 <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
-        {maleRating === '?' ? ''
-          : <div className="col">
-              <h1>Male</h1>
-              <p className='maleRating'>{createStars(maleRating)}</p>
-              <ul>
-                {maleAmenities.map(amenity => (
-                <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
-        {femaleRating === '?' ? ''
-          : <div className="col">
-              <h1>Female</h1>
-              <p className='femaleRating'>{createStars(femaleRating)}</p>
-              <ul>
-              {femaleAmenities.map(amenity => (
-                  <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
               </ul>
             </div>}
       </div>
@@ -185,7 +149,17 @@ class Business extends React.Component {
     }
 
     render() {
-      const { yelpResults, reviews, restroomTypes } = this.state;
+      const {
+        yelpResults,
+        reviews,
+        restroomTypes,
+        unisexRatings,
+        maleRatings,
+        femaleRatings,
+        unisexAmenities,
+        maleAmenities,
+        femaleAmenities,
+      } = this.state;
       const { yelpId } = this.props.match.params;
       const values = queryString.parse(this.props.location.search);
       const bizLink = `/review/${yelpId}`;
@@ -203,12 +177,15 @@ class Business extends React.Component {
 
       return (
       <div className="Business">
-        <img className="businessPhoto" src={yelpResults.photos} alt=''></img>
         <h1>{yelpResults.name}</h1>
         <BusinessMap yelpResults={yelpResults} />
         <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
         <div className="business-body container">
-          { this.businessStuff() }
+          <div className="row justify-content-around">
+            { this.businessStuff(unisexRatings, unisexAmenities, 'Unisex') }
+            { this.businessStuff(maleRatings, maleAmenities, 'Male') }
+            { this.businessStuff(femaleRatings, femaleAmenities, 'Female') }
+          </div>
         </div>
         <div className="reviews">
           <h1>Reviews!</h1>
