@@ -157,12 +157,12 @@ class ResultRow extends React.Component {
       unisexTables,
       reviewer,
     } = this.state;
+    const milesAway = Math.round((result.distance / 1609.344) * 10) / 10;
     const bizLink = `/review/${result.id}`;
     const bizPageLink = `/business/${result.id}`;
     const bizSearch = `?biz=${business.id}`;
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
-      // const restroomType = restroomTypes[firstReview.restroomType];
       return (
       <Review
         key={ firstReview.id }
@@ -201,11 +201,12 @@ class ResultRow extends React.Component {
               <div className="col-8 result-name-div">
                 <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
               </div>
-              <div className="col-4">
+              <div className="col-4 result-address-div">
                 <form action="http://maps.google.com/maps" method="get" target="_blank">
                 <p className="business-address">{result.location.address1}</p>
                 <input type="hidden" name="saddr" value={userLocation}/>
                 <input type="hidden" name="daddr" value={bizLocation}/>
+                <p>{milesAway} miles away</p>
                 <button type="submit" className="btn btn-sm btn-info">Directions</button>
                 </form>
               </div>

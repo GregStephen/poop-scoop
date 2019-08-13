@@ -31,22 +31,22 @@ class Auth extends React.Component {
     const { email, password, error } = this.state;
     return (
       <div className="Auth container">
-        <div className="row">
+        <div className="row justify-content-center">
           <div className="col-12 col-lg-8 welcome-div row justify-content-center">
             <h1 className="welcome-header col-12">Welcome to PoopScoop!</h1>
-            <h4 className="col-11 col-md-8">Welcome to the #2 site on the web for
+            <h4 className="col-12 col-md-8">Welcome to the #2 site on the web for
             rating and finding the best bathrooms around!</h4>
-            <h4 className="col-11 col-md-8">Need to find the closest changing table?</h4>
-            <h4 className="bold col-11 col-md-8">WE GOT YA COVERED</h4>
-            <h4 className="col-11 col-md-8">Terrified to go into a urine soaked,
+            <h4 className="col-12 col-md-8">Need to find the closest changing table?</h4>
+            <h4 className="bold col-12 col-md-8">WE GOT YA COVERED</h4>
+            <h4 className="col-12 col-md-8">Terrified to go into a urine soaked,
             permanently sticky, wretched smelling bathroom?</h4>
-            <h4 className="bold col-11 col-md-8">WE GOT YA COVERED</h4>
-            <h4 className="col-11 col-md-8">Excited to get searching?</h4>
+            <h4 className="bold col-12 col-md-8">WE GOT YA COVERED</h4>
+            <h4 className="col-12 col-md-8">Excited to get searching?</h4>
             <Link className="btn btn-info col-8" to={'/new-user'}>Create an Account!</Link>
           </div>
           <form className="col-10 col-lg-4 container sign-in-form" onSubmit={this.logIntoPoopScoop}>
-          <h3 className="sign-in-header">All Ready Have An Account?</h3>
-          <div className="form-group">
+            <h3 className="sign-in-header">All Ready Have An Account?</h3>
+            <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
               type="email"

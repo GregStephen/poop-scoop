@@ -50,6 +50,7 @@ class Home extends React.Component {
                 latlng: { lat: result.coordinates.latitude, lng: result.coordinates.longitude },
                 bizLink: `/business/${result.id}`,
                 bizSearch: `?biz=${bizData !== undefined ? bizData.id : 'undefined'}`,
+                distance: result.distance,
                 image: result.photos[0],
                 key: result.id,
                 isRated: bizData !== undefined,

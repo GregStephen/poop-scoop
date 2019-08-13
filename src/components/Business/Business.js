@@ -20,6 +20,7 @@ import './Business.scss';
 class Business extends React.Component {
   state = {
     yelpResults: {},
+    userLocation: {},
     restroomTypes: [],
     amenityTypes: {},
     reviews: [],
@@ -156,6 +157,15 @@ class Business extends React.Component {
     );
   };
 
+  findDude = (latLng) => {
+    const lati = latLng.lat;
+    const long = latLng.lng;
+    const tempUser = {
+      lat: lati,
+      lng: long,
+    };
+    this.setState({ userLocation: tempUser });
+  }
 
   deleteReview = (id) => {
     ratingData.deleteReviewFromDatabase(id)
@@ -164,13 +174,18 @@ class Business extends React.Component {
   }
 
   printAddress = () => {
-    const { yelpResults } = this.state;
+    const { yelpResults, userLocation } = this.state;
     if (yelpResults.location !== undefined) {
+      const bizLocation = `${yelpResults.location.address1} ${yelpResults.location.city}, ${yelpResults.location.state}`;
+      const userOrigin = `${userLocation.lat}, ${userLocation.lng}`;
       return (
-      <div>
-      <p>{yelpResults.location.address1}</p>
-      <p>{yelpResults.location.city}, {yelpResults.location.state} {yelpResults.location.postal_code}</p>
-      </div>
+          <form className="business-address-form" action="http://maps.google.com/maps" method="get" target="_blank">
+            <p className="business-address">{yelpResults.location.address1}</p>
+            <p>{yelpResults.location.city}, {yelpResults.location.state}</p>
+            <input type="hidden" name="saddr" value={userOrigin}/>
+            <input type="hidden" name="daddr" value={bizLocation}/>
+            <button type="submit" className="btn btn-sm btn-info">Directions</button>
+          </form>
       );
     }
     return '';
@@ -208,7 +223,7 @@ class Business extends React.Component {
     <div className="business-info row">
       <h1 className="business-name col-12">{yelpResults.name}</h1>
       <div className="business-map col-12 col-md-6 col-lg-4">
-        <BusinessMap yelpResults={yelpResults} />
+        <BusinessMap yelpResults={yelpResults} findDude={this.findDude} />
       </div>
       <div className="business-stats col-12 col-md-6 col-lg-4">
         {this.printAddress()}
