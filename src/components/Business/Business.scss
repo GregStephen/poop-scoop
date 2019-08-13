@@ -1,20 +1,17 @@
 .Business {
-  .businessPhoto {
-    width: 15em;
-  }
   ul {
     list-style: none;
   }
-  .unisexRating {
-    color: green;
+  .business-name {
+    margin-top: .25em;
+    margin-bottom: .25em;
+    font-size: 4.5em;
   }
-  .maleRating {
-    color: blue;
+  .business-stats {
+    text-align: start;
+    margin-top: 2em;
   }
-  .femaleRating {
-    color: pink;
-  }
-  .red-baby {
-    color: red;
+  .reviews {
+    margin-top: 1.5em;
   }
 }

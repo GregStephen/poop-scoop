@@ -34,7 +34,7 @@ class Auth extends React.Component {
         <div className="row">
           <div className="col-12 col-lg-8 welcome-div row justify-content-center">
             <h1 className="welcome-header col-12">Welcome to PoopScoop!</h1>
-            <h4 className="col-11 col-md-8">Welcome to the #4 site on the web for
+            <h4 className="col-11 col-md-8">Welcome to the #2 site on the web for
             rating and finding the best bathrooms around!</h4>
             <h4 className="col-11 col-md-8">Need to find the closest changing table?</h4>
             <h4 className="bold col-11 col-md-8">WE GOT YA COVERED</h4>

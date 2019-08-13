@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
@@ -117,106 +118,118 @@ class Business extends React.Component {
       });
   }
 
-    businessStuff = () => {
-      const {
-        unisexRatings,
-        maleRatings,
-        femaleRatings,
-        unisexAmenities,
-        maleAmenities,
-        femaleAmenities,
-        amenityTypes,
-      } = this.state;
-      let unisexRating = '';
-      let maleRating = '';
-      let femaleRating = '';
-      if (unisexRatings.length > 0) {
-        unisexRating = ratingMath(unisexRatings);
-      } else {
-        unisexRating = 'No Rating';
-      }
-      if (maleRatings.length > 0) {
-        maleRating = ratingMath(maleRatings);
-      } else {
-        maleRating = 'No Rating';
-      }
-      if (femaleRatings.length > 0) {
-        femaleRating = ratingMath(femaleRatings);
-      } else {
-        femaleRating = 'No Rating';
-      }
+  amenitiesTable = (bizAmenities) => {
+    const {
+      amenityTypes,
+    } = this.state;
+    return (
+    <table>
+      <thead>
+        <tr>
+          <th>Amenitiy:</th>
+          <th>Status:</th>
+        </tr>
+      </thead>
+      <tbody>
+      {bizAmenities.map(amenity => (
+      <tr key={amenity.id}><td>{amenityTypes[amenity.type]}</td><td> {amenity.status ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i>}</td></tr>))}
+      </tbody>
+    </table>);
+  }
+
+  businessStuff = (bizRatings, bizAmenities, type) => {
+    let displayRating = '';
+    if (bizRatings.length > 0) {
+      displayRating = ratingMath(bizRatings);
+    } else {
+      displayRating = '?';
+    }
+    return (
+    <div>
+      {displayRating === '?' ? ''
+        : <div className="col mt-4">
+            <h1>{type}</h1>
+            <p>{createStars(displayRating)}</p>
+            { this.amenitiesTable(bizAmenities) }
+          </div>}
+    </div>
+    );
+  };
+
+
+  deleteReview = (id) => {
+    ratingData.deleteReviewFromDatabase(id)
+      .then(() => this.setRatingStuff())
+      .catch(err => console.error('can not delete review', err));
+  }
+
+  printAddress = () => {
+    const { yelpResults } = this.state;
+    if (yelpResults.location !== undefined) {
       return (
-      <div className='col-12 row'>
-        {unisexRating === 'No Rating' ? ''
-          : <div className="col">
-              <h1>Unisex</h1>
-              <p className='unisexRating'>{createStars(unisexRating)}</p>
-              <ul>
-                {unisexAmenities.map(amenity => (
-                <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
-        {maleRating === 'No Rating' ? ''
-          : <div className="col">
-              <h1>Male</h1>
-              <p className='maleRating'>{createStars(maleRating)}</p>
-              <ul>
-                {maleAmenities.map(amenity => (
-                <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
-        {femaleRating === 'No Rating' ? ''
-          : <div className="col">
-              <h1>Female</h1>
-              <p className='femaleRating'>{createStars(femaleRating)}</p>
-              <ul>
-              {femaleAmenities.map(amenity => (
-                  <li key={amenity.id}>{amenityTypes[amenity.type]} : {amenity.status ? 'Yes' : 'No'}</li>))}
-              </ul>
-            </div>}
+      <div>
+      <p>{yelpResults.location.address1}</p>
+      <p>{yelpResults.location.city}, {yelpResults.location.state} {yelpResults.location.postal_code}</p>
       </div>
       );
-    };
-
-    deleteReview = (id) => {
-      ratingData.deleteReviewFromDatabase(id)
-        .then(() => this.setRatingStuff())
-        .catch(err => console.error('can not delete review', err));
     }
+    return '';
+  }
 
-    render() {
-      const { yelpResults, reviews, restroomTypes } = this.state;
-      const { yelpId } = this.props.match.params;
-      const values = queryString.parse(this.props.location.search);
-      const bizLink = `/review/${yelpId}`;
-      const bizSearch = `?biz=${values.biz}`;
+  render() {
+    const {
+      yelpResults,
+      reviews,
+      restroomTypes,
+      unisexRatings,
+      maleRatings,
+      femaleRatings,
+      unisexAmenities,
+      maleAmenities,
+      femaleAmenities,
+    } = this.state;
+    const { yelpId } = this.props.match.params;
+    const values = queryString.parse(this.props.location.search);
+    const bizLink = `/review/${yelpId}`;
+    const bizSearch = `?biz=${values.biz}`;
 
-      const displayReviews = reviews.map(review => (
-      <ReviewOnBusinessPage
-      key={ review.id }
-      restroomTypes={ restroomTypes }
-      review={ review }
-      deleteReview={ this.deleteReview }
-      yelpId={ yelpId }
-      />
-      ));
+    const displayReviews = reviews.map(review => (
+    <ReviewOnBusinessPage
+    key={ review.id }
+    restroomTypes={ restroomTypes }
+    review={ review }
+    deleteReview={ this.deleteReview }
+    yelpId={ yelpId }
+    />
+    ));
 
-      return (
-      <div className="Business">
-        <img className="businessPhoto" src={yelpResults.photos} alt=''></img>
-        <h1>{yelpResults.name}</h1>
+    return (
+    <div className="Business container">
+    <div className="business-info row">
+      <h1 className="business-name col-12">{yelpResults.name}</h1>
+      <div className="business-map col-12 col-md-6 col-lg-4">
         <BusinessMap yelpResults={yelpResults} />
-        <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
-        <div className="business-body container">
-          { this.businessStuff() }
-        </div>
-        <div className="reviews">
-          <h1>Reviews!</h1>
-          { displayReviews }
+      </div>
+      <div className="business-stats col-12 col-md-6 col-lg-4">
+        {this.printAddress()}
+        <p>Number of reviews: {reviews.length}</p>
+      </div>
+    </div>
+      <Link to={{ pathname: bizLink, search: bizSearch }}>Review their bathrooms!</Link>
+      <div className="business-body container">
+        <div className="row justify-content-around">
+          { this.businessStuff(unisexRatings, unisexAmenities, 'Unisex') }
+          { this.businessStuff(maleRatings, maleAmenities, 'Male') }
+          { this.businessStuff(femaleRatings, femaleAmenities, 'Female') }
         </div>
       </div>
-      );
-    }
+      <div className="reviews row justify-content-center">
+        <h1 className="col-12">Reviews!</h1>
+        { displayReviews }
+      </div>
+    </div>
+    );
+  }
 }
 
 export default Business;

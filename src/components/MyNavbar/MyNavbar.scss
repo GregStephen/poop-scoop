@@ -1,10 +1,13 @@
 .MyNavbar {
   display: block;
-  .navbar-user-button{
+  .navbar-user-button {
     width: 5em;
     .navbar-user-image {
       width: 100%;
     }
+  }
+  .navbar-brand {
+    font-size: 2em;
   }
 }
 // $bgDefault      : #9f956c;

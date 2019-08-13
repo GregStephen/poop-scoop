@@ -1,8 +1,8 @@
 import React from 'react';
 
 const createStars = (rating) => {
-  if (rating === 'No Rating') {
-    return 'No Rating';
+  if (rating === '?') {
+    return <i className="fas fa-question"></i>;
   }
   const ratingDisplay = [];
   for (let i = 1; i < rating + 1; i += 1) {

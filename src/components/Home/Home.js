@@ -118,7 +118,14 @@ class Home extends React.Component {
 
   render() {
     const {
-      yelpResults, restroomTypes, amenityTypes, markersData, selectedMarker, offset,
+      yelpResults,
+      restroomTypes,
+      amenityTypes,
+      markersData,
+      selectedMarker,
+      offset,
+      latitude,
+      longitude,
     } = this.state;
     const resultComponents = yelpResults.map(result => (
       <ResultRow
@@ -127,6 +134,8 @@ class Home extends React.Component {
       restroomTypes={ restroomTypes }
       amenityTypes={ amenityTypes }
       selectBusiness={ this.selectBusiness }
+      latitude = { latitude }
+      longitude = { longitude }
       />
     ));
     return (
@@ -135,15 +144,15 @@ class Home extends React.Component {
           <button type="submit" className="search-btn btn btn-danger">Search Restrooms Near Me</button>
         </form>
         <div className="row">
-          <div className="mapDiv col-12 col-md-6 col-lg-5">
+          <div className="mapDiv col-12 col-md-6">
             <ScoopMap
             markersData={ markersData }
             findDude={ this.findDude }
             selectedMarker={ selectedMarker }/>
-          { offset > 0 ? <button className="btn btn-danger" onClick={this.showPrevResults}>Previous</button> : ''}
+          { offset > 0 ? <button className="btn btn-danger mr-4" onClick={this.showPrevResults}>Previous</button> : ''}
           { yelpResults.length > 0 ? <button className="btn btn-success" onClick={this.showNextResults}>Next</button> : ''}
           </div>
-          <div className="container review-div col-12 col-md-6 col-lg-7 mt-2">
+          <div className="container review-div col-12 col-md-6 mt-2 mt-md-0">
             <div className="result-component row">
             { resultComponents }
             </div>
