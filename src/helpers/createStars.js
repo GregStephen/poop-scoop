@@ -2,7 +2,7 @@ import React from 'react';
 
 const createStars = (rating) => {
   if (rating === '?') {
-    return '?';
+    return <i className="fas fa-question"></i>;
   }
   const ratingDisplay = [];
   for (let i = 1; i < rating + 1; i += 1) {

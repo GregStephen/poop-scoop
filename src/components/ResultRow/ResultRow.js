@@ -9,6 +9,7 @@ import Review from '../Review/Review';
 import businessData from '../../helpers/data/businessData';
 import ratingData from '../../helpers/data/ratingData';
 import amenityData from '../../helpers/data/amenityData';
+import userData from '../../helpers/data/userData';
 
 import ratingMath from '../../helpers/ratingMath';
 import createStars from '../../helpers/createStars';
@@ -38,6 +39,7 @@ class ResultRow extends React.Component {
   state = {
     business: businessUndefined,
     reviews: ratingUndefined,
+    reviewer: {},
     amenities: [],
     maleRatings: [],
     femaleRatings: [],
@@ -115,6 +117,9 @@ class ResultRow extends React.Component {
               if (reviews.length > 0) {
                 this.setState({ reviews });
                 this.seperateRatings();
+                userData.getUserByUID(reviews[0].uid)
+                  .then(reviewer => this.setState({ reviewer }))
+                  .catch(err => console.error('could not get reviewer', err));
               }
             });
           amenityData.getAmenitiesByBusinessId(business.id)
@@ -136,7 +141,11 @@ class ResultRow extends React.Component {
   }
 
   render() {
-    const { result } = this.props;
+    const {
+      result, latitude, longitude, restroomTypes,
+    } = this.props;
+    const userLocation = `${latitude}, ${longitude}`;
+    const bizLocation = `${result.location.address1} ${result.location.city}, ${result.location.state}`;
     const {
       business,
       reviews,
@@ -146,16 +155,21 @@ class ResultRow extends React.Component {
       maleTables,
       femaleTables,
       unisexTables,
+      reviewer,
     } = this.state;
     const bizLink = `/review/${result.id}`;
     const bizPageLink = `/business/${result.id}`;
     const bizSearch = `?biz=${business.id}`;
     const reviewDisplay = (reviewsArray) => {
       const firstReview = reviewsArray[0];
+      // const restroomType = restroomTypes[firstReview.restroomType];
       return (
       <Review
         key={ firstReview.id }
         review={ firstReview.review }
+        restroomType={ firstReview.restroomType }
+        restroomTypes={ restroomTypes }
+        reviewer={ reviewer }
         bizLink={ bizLink }
         bizSearch= { bizSearch }
       />
@@ -175,7 +189,7 @@ class ResultRow extends React.Component {
     };
 
     const changingTableDisplay = tables => (
-          <td>{tables.length > 0 ? tables[0].status === true ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i> : '?'}</td>
+          <td>{tables.length > 0 ? tables[0].status === true ? <i className="fas fa-check"></i> : <i className="fas fa-times"></i> : <i className="fas fa-question"></i>}</td>
     );
 
     return (
@@ -188,7 +202,12 @@ class ResultRow extends React.Component {
                 <Link className="result-name card-title" to={{ pathname: bizPageLink, search: bizSearch }}>{result.name}</Link>
               </div>
               <div className="col-4">
+                <form action="http://maps.google.com/maps" method="get" target="_blank">
                 <p className="business-address">{result.location.address1}</p>
+                <input type="hidden" name="saddr" value={userLocation}/>
+                <input type="hidden" name="daddr" value={bizLocation}/>
+                <button type="submit" className="btn btn-sm btn-info">Directions</button>
+                </form>
               </div>
             </div>
               { reviewDisplay(reviews) }
@@ -202,17 +221,17 @@ class ResultRow extends React.Component {
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">&#x26A5;</th>
+                    <th className="sex-symbol" scope="row">&#x26A5;</th>
                     { ratingDisplay(unisexRatings) }
                     { changingTableDisplay(unisexTables) }
                   </tr>
                   <tr>
-                    <th scope="row">&#x2642;</th>
+                    <th className="sex-symbol" scope="row">&#x2642;</th>
                     { ratingDisplay(maleRatings) }
                     { changingTableDisplay(maleTables) }
                   </tr>
                   <tr>
-                    <th scope="row">&#x2640;</th>
+                    <th className="sex-symbol" scope="row">&#x2640;</th>
                     { ratingDisplay(femaleRatings) }
                     { changingTableDisplay(femaleTables) }
                   </tr>

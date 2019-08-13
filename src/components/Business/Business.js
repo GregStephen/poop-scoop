@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
