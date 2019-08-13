@@ -24,10 +24,13 @@
       color: blue;
     }
   }
-  .business-address {
+  .result-address-div {
     font-size: .75em;
     @media (min-width: 768px) {
       font-size: 1em;
+    }
+    .business-address {
+      margin-bottom: 0em;
     }
   }
   .sex-symbol {

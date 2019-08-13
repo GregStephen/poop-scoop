@@ -8,9 +8,31 @@
     margin: auto;
   }
 }
-
-
-
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+  background: #CBBF7A !important;
+  border: 1.5px solid grey !important;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: black !important;
+}
+.leaflet-container a.leaflet-popup-close-button:hover {
+  color: grey !important;
+}
+.popup {
+  text-align: center;
+  font-size: 1.25em;
+}
+.popup-business-name {
+  font-size: 1.5em;
+  color: black !important;
+}
+.popup-business-name:hover {
+  font-size: 1.5em;
+  color: blue !important;
+}
 .popup-image {
+  display: block;
+  margin: auto;
   width: 75%;
+  max-height: 10em;
 }
