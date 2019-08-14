@@ -20,6 +20,7 @@ const getRatingByBusinessId = businessId => new Promise((resolve, reject) => {
 });
 
 const getRatingByUserId = uid => new Promise((resolve, reject) => {
+  console.error('from data');
   axios.get(`${firebaseUrl}/businessRating.json?orderBy="uid"&equalTo="${uid}"`)
     .then((results) => {
       const reviewResults = results.data;
