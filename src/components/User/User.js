@@ -63,8 +63,6 @@ class User extends React.Component {
   }
 
   loadPage = () => {
-    // const { userObj } = this.props;
-    // this.setState({ userObj: userObj });
     this.getUserInfo();
     restroomTypeData.getRestroomType()
       .then(restroomTypes => this.setState({ restroomTypes }))
@@ -93,11 +91,22 @@ class User extends React.Component {
 
   deleteProfile = (e) => {
     const userId = this.props.match.params.id;
+    const user = firebase.auth().currentUser;
+    const { reviews } = this.state;
     e.preventDefault();
+    if (reviews.length > 0) {
+      console.error('deleted reviews');
+      reviews.forEach((review) => {
+        reviewData.deleteReviewFromDatabase(review.id);
+      });
+    }
     userData.deleteUser(userId)
       .then(() => {
-        firebase.auth().signOut();
-        this.props.history.push('/auth');
+        user.delete()
+          .then(() => {
+            firebase.auth().signOut();
+          })
+          .catch(err => console.error('trouble deleting user', err));
       })
       .catch(err => console.error('can not delete user', err));
   }

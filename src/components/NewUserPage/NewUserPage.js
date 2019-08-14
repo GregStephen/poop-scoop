@@ -44,6 +44,12 @@ class NewUserPage extends React.Component {
       .catch(err => console.error('trouble getting states', err));
   }
 
+  // componentDidUpdate(chosenState) {
+  //   if (this.state.chosenState !== chosenState) {
+  //     this.cityList();
+  //   }
+  // }
+
   formSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
@@ -123,6 +129,7 @@ class NewUserPage extends React.Component {
     const options = citiesList.map((city, index) => (
           <option key={index} value={city}>{city}</option>
     ));
+    options.unshift(<option key={'pick'} value="">Pick a city</option>);
     return options;
   }
 
