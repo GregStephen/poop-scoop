@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Modal, ModalHeader,
+} from 'reactstrap';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import PasswordResetModal from './PasswordResetModal';
 import './Auth.scss';
 
 class Auth extends React.Component {
@@ -10,6 +14,7 @@ class Auth extends React.Component {
     email: '',
     password: '',
     error: '',
+    passwordResetModal: false,
   }
 
   logIntoPoopScoop = (e) => {
@@ -26,6 +31,21 @@ class Auth extends React.Component {
       [e.target.id]: e.target.value,
     });
   };
+
+  toggleResetPasswordModal = () => {
+    this.setState(prevState => ({
+      passwordResetModal: !prevState.passwordResetModal,
+    }));
+  }
+
+  resetPassword = (e) => {
+    e.preventDefault();
+    firebase.auth().sendPasswordResetEmail()
+      .then(() => {
+        console.error('reset pass emails sent');
+      })
+      .catch(err => console.error('could not send password reset email', err));
+  }
 
   render() {
     const { email, password, error } = this.state;
@@ -69,9 +89,18 @@ class Auth extends React.Component {
               required
               />
             </div>
-            <button className="btn btn-success">Log In</button>
+            <button type="button" onClick={this.toggleResetPasswordModal}>Forgot Your Password</button>
+            <button type="submit" className="btn btn-success">Log In</button>
             <p className="error">{error}</p>
           </form>
+        </div>
+          <div>
+          <Modal isOpen={this.state.passwordResetModal} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleResetPasswordModal}>Reset Password</ModalHeader>
+            <PasswordResetModal
+            toggleResetPasswordModal={this.toggleResetPasswordModal}
+            />
+          </Modal>
         </div>
       </div>
     );
