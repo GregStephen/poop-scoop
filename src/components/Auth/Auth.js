@@ -38,15 +38,6 @@ class Auth extends React.Component {
     }));
   }
 
-  resetPassword = (e) => {
-    e.preventDefault();
-    firebase.auth().sendPasswordResetEmail()
-      .then(() => {
-        console.error('reset pass emails sent');
-      })
-      .catch(err => console.error('could not send password reset email', err));
-  }
-
   render() {
     const { email, password, error } = this.state;
     return (
@@ -88,8 +79,10 @@ class Auth extends React.Component {
               onChange={this.handleChange}
               required
               />
+              <small className="form-text text-muted">
+               <button type="button" className="forgotPasswordBtn" onClick={this.toggleResetPasswordModal}>Forgot Your Password?</button>
+              </small>
             </div>
-            <button type="button" onClick={this.toggleResetPasswordModal}>Forgot Your Password</button>
             <button type="submit" className="btn btn-success">Log In</button>
             <p className="error">{error}</p>
           </form>

@@ -25,6 +25,18 @@
     .sign-in-header {
       margin-bottom: 1em;
     }
+    .forgotPasswordBtn {
+      background:none;
+      color:inherit;
+      border:none; 
+      padding:0!important;
+      font: inherit;
+      cursor: pointer;
+    }
+    .forgotPasswordBtn:hover {
+      color: blue;
+      text-decoration: underline;
+    }
     .error {
       margin-top: 1em;
       color: red;
