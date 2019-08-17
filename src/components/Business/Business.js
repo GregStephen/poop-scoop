@@ -89,6 +89,8 @@ class Business extends React.Component {
         if (reviews.length > 0) {
           this.setState({ reviews });
           this.seperateRatings();
+        } else {
+          this.setState({ reviews: [] });
         }
       });
   }
