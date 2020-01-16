@@ -1,3 +1,41 @@
+# PoopScoop
+
+## Description
+A way to rate and review restrooms around your area. Great for people with kids who need access to changing tables or for people who just enjoy a clean restroom!
+Everything is styled for mobile, tablets and desktop computers.
+
+
+## Screenshots
+
+#### Landing Page
+What you see on page load before you log in or create an account
+![Landing Page](./assets/screenshots/landing_page.png)
+
+#### Create Account
+The new user sign up page. The city option populates depending on the state option picked.
+Allows the user to pick an avatar.
+![New User](./assets/screenshots/new_user.png)
+
+#### Home Page
+Allows the user to search restrooms around their location. Places that have already been reviewed are shown as a green marker while others are blue. The average ratings show up next to the map in desktop view, split between male, female and unisex, whether or not they have a changing table along with a single review. From here you can click the business page to see all reviews, click a user that reviewed to see all their reviews, get directions to the business of your choice or click the next button to search more restrooms in the same area.
+![Home Page](./assets/screenshots/home_page.png)
+
+#### Review Page
+You can rate the decor and cleanliness out of 5.
+You have to pick which restroom you went into, then the date.
+The amenities the restrooms have or don't options have are directly related to what has already been selected for them to prevent conflicting data. You also can't select both for having or not having.
+Then you must fill out a review.
+![Review Page](./assets/screenshots/review_page.png)
+
+#### Business Page
+The single business page shows every review for that business and breaks the restrooms into male, female and unisex with their respective ammenities that they do or do not have. You also have a map of its location and an ability to get directions.
+![Business Page](./assets/screenshots/business_page.png)
+
+#### User Profile
+The user profile is a way to see every review a user has added. If you are logged in as that user you have the ability to edit your name or location as well as your avatar. You can also edit any of your reviews if you changed your mind. Also you can delete your entire account.
+![User Profile](./assets/screenshots/user_profile_page.png)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -66,3 +104,10 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+#### Author
+# Greg Stephen
+
+## Deployed at
+https://poopscoop-83db3.web.app/
