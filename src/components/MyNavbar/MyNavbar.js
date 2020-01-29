@@ -38,6 +38,7 @@ class MyNavbar extends React.Component {
     firebase.auth().signOut();
   };
 
+
   render() {
     const { authed, userObj, getUser } = this.props;
     const buildNavbar = () => {
@@ -63,8 +64,8 @@ class MyNavbar extends React.Component {
                   </div>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
-                  <Link to={userLink}>Account Settings</Link>
+                <DropdownItem tag={Link} to={userLink}>
+                  Account Settings
                 </DropdownItem>
                 <DropdownItem onClick={this.logMeOut}>
                     Log Out
