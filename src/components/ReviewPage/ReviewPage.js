@@ -290,8 +290,8 @@ class ReviewPage extends React.Component {
               </FormGroup>
             </Col>
           </Row>
-          <Row form>
-            <Col md={{ size: 4, offset: 2 }} sm={{ size: 5, offset: 1 }} xs={{ size: 10, offset: 1 }}>
+          <Row className= 'd-none d-md-inline' form>
+            <Col md={{ size: 4, offset: 4 }} sm={{ size: 5, offset: 1 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
                 <Label for="amenitiesTheyHave">Which did they have?</Label>
                 <Input
@@ -312,7 +312,7 @@ class ReviewPage extends React.Component {
                 {this.showAmenitiesChosen(true)}
               </FormGroup>
             </Col>
-            <Col md={{ size: 4, offset: 0 }} sm={{ size: 5, offset: 0 }} xs={{ size: 10, offset: 1 }}>
+            <Col md={{ size: 4, offset: 4 }} sm={{ size: 5, offset: 0 }} xs={{ size: 10, offset: 1 }}>
               <FormGroup>
                 <Label for="amenitiesTheyDoNotHave">Which did they NOT have?</Label>
                 <Input
