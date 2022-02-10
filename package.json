@@ -51,6 +51,6 @@
     "@babel/preset-flow": "^7.0.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "flow-bin": "^0.104.0",
-    "node-sass": "^4.12.0"
+    "node-sass": "^7.0.0"
   }
 }
